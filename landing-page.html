@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SPADE - Smart Python Agent Development Environment. A multi-agent systems platform written in Python and based on XMPP.">
+    <meta name="keywords" content="SPADE, Python, Multi-agent, XMPP, Agent-based, MAS">
+    <meta name="author" content="SPADE Team">
+    <title>SPADE - Smart Python Agent Development Environment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-dark.min.css" media="(prefers-color-scheme: dark)">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="landing-assets/favicon-spade-new.svg">
+    <link rel="icon" type="image/png" href="landing-assets/spade_friend.png">
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="SPADE - Smart Python Agent Development Environment">
+    <meta property="og:description" content="A multi-agent systems platform written in Python and based on XMPP.">
+    <meta property="og:image" content="landing-assets/spade_index.png">
+    <meta property="og:url" content="https://github.com/javipalanca/spade">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="landing-assets/spade-agent-network-fixed.svg" alt="SPADE Logo" height="40" class="me-2">
+                <span class="fw-bold" style="color: var(--primary-color);">SPADE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#plugins">Plugins</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#examples">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#usecases">Use Cases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#docs">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="darkModeToggle" class="btn btn-sm btn-outline-secondary ms-2">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-lg-3 px-3" href="https://github.com/javipalanca/spade">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="landing-assets/spade-agent-network-fixed.svg" alt="SPADE Logo" height="80" class="me-3 d-none d-md-block">
+                        <h1 class="display-4 fw-bold mb-0">Smart Python Agent Development Environment</h1>
+                    </div>
+                    <p class="lead mb-4">A powerful multi-agent systems platform written in Python and based on instant messaging (XMPP). Develop intelligent agents that can communicate with both other agents and humans.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://spade-mas.readthedocs.io" class="btn btn-light btn-lg px-4">Get Started</a>
+                        <a href="https://pypi.python.org/pypi/spade" class="btn btn-outline-light btn-lg px-4">
+                            <i class="bi bi-download me-2"></i>Download
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block">
+                    <img src="landing-assets/spade_index.png" class="img-fluid rounded shadow-lg" alt="SPADE Agents">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Badges Section -->
+    <section class="badge-section py-4">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <img src="https://img.shields.io/pypi/v/spade.svg" alt="PyPI Version">
+                    <img src="https://img.shields.io/pypi/pyversions/spade.svg" alt="Python Versions">
+                    <img src="https://img.shields.io/pypi/l/spade" alt="MIT License">
+                    <img src="https://github.com/javipalanca/spade/actions/workflows/python-package.yml/badge.svg" alt="CI Status">
+                    <img src="https://coveralls.io/repos/github/javipalanca/spade/badge.svg?branch=master" alt="Coverage">
+                    <img src="https://readthedocs.org/projects/spade/badge/?version=latest" alt="Documentation">
+                    <img src="https://pepy.tech/badge/spade" alt="Downloads">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Key Features</h2>
+                <p class="lead text-muted">Discover what makes SPADE the perfect choice for multi-agent systems</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">🔌</div>
+                        <h4>XMPP-Based</h4>
+                        <p>Built on the XMPP protocol for robust, real-time messaging between agents and humans.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Standardized messaging</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Presence notification</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Security features</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">⚙️</div>
+                        <h4>Behaviour-Based Model</h4>
+                        <p>Define agent behaviors using cyclic, periodic, one-shot, and finite state machine patterns.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Modular design</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Task specialization</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Complex workflow support</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">🔄</div>
+                        <h4>Asyncio Support</h4>
+                        <p>Modern asynchronous programming with Python's asyncio for concurrent agent operations.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Non-blocking operations</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Efficient resource usage</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Modern Python practices</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">👁️</div>
+                        <h4>Presence Awareness</h4>
+                        <p>Real-time presence notification system to monitor agent status and availability.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Status tracking</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Automatic reconnection</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>System monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">🌐</div>
+                        <h4>Web Interface</h4>
+                        <p>Built-in web interface for easy monitoring and interaction with your agents.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Message visualization</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Agent status dashboard</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Customizable UI</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card p-4 bg-white h-100">
+                        <div class="feature-icon">🔍</div>
+                        <h4>FIPA Compliant</h4>
+                        <p>Supports FIPA metadata using XMPP Data Forms for standardized agent communication.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Standardized protocols</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Interoperability</li>
+                            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Advanced message handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section id="examples" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">See SPADE in Action</h2>
+                <p class="lead text-muted">Creating intelligent agents has never been easier</p>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="code-example">
+                        <span class="code-title">agent_example.py</span>
+                        <pre><code class="language-python">import spade
+from spade.agent import Agent
+from spade.behaviour import CyclicBehaviour
+from spade.message import Message
+
+class MyAgent(Agent):
+    class MyBehaviour(CyclicBehaviour):
+        async def run(self):
+            msg = await self.receive(timeout=10)
+            if msg:
+                print(f"Message received: {msg.body}")
+                reply = Message(to=str(msg.sender))
+                reply.body = "I received your message!"
+                await self.send(reply)
+
+    async def setup(self):
+        behaviour = self.MyBehaviour()
+        self.add_behaviour(behaviour)
+
+async def main():
+    agent = MyAgent("agent@localhost", "password")
+    await agent.start()
+
+if __name__ == "__main__":
+    spade.run(main())
+</code></pre>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Simple & Intuitive API</h3>
+                    <p>SPADE provides a clean, object-oriented API that makes it easy to create powerful multi-agent systems. Define your agents, their behaviors, and how they communicate with just a few lines of code.</p>
+                    <p>This example shows a basic agent that can receive messages and automatically reply to them. SPADE handles all the underlying communication details for you.</p>
+                    <a href="https://spade-mas.readthedocs.io/en/latest/usage.html" class="btn btn-primary">View More Examples</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plugins Section -->
+    <section id="plugins" class="plugins-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Extend SPADE with Plugins</h2>
+                <p class="lead text-muted">Enhance your agent platform with specialized capabilities</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">SPADE BDI</h5>
+                            <p class="card-text">Implement Belief-Desire-Intention agents with AgentSpeak language support.</p>
+                            <a href="https://github.com/javipalanca/spade_bdi" class="btn btn-sm btn-outline-primary">GitHub</a>
+                            <a href="https://spade-bdi.readthedocs.io" class="btn btn-sm btn-outline-secondary">Docs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">SPADE PubSub</h5>
+                            <p class="card-text">Add publish-subscribe communication patterns to your agent platform.</p>
+                            <a href="https://github.com/javipalanca/spade_pubsub" class="btn btn-sm btn-outline-primary">GitHub</a>
+                            <a href="https://spade-pubsub.readthedocs.io" class="btn btn-sm btn-outline-secondary">Docs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">SPADE Artifact</h5>
+                            <p class="card-text">Create and manage artifacts for your agents to interact with.</p>
+                            <a href="https://github.com/javipalanca/spade_artifact" class="btn btn-sm btn-outline-primary">GitHub</a>
+                            <a href="https://spade-artifact.readthedocs.io" class="btn btn-sm btn-outline-secondary">Docs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">SPADE Norms</h5>
+                            <p class="card-text">Implement normative systems to regulate agent behaviors.</p>
+                            <a href="https://github.com/javipalanca/spade_norms" class="btn btn-sm btn-outline-primary">GitHub</a>
+                            <a href="https://spade-norms.readthedocs.io" class="btn btn-sm btn-outline-secondary">Docs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">SPADE Bokeh</h5>
+                            <p class="card-text">Integrate interactive Bokeh plots with your agent interfaces.</p>
+                            <a href="https://github.com/javipalanca/spade_bokeh" class="btn btn-sm btn-outline-primary">GitHub</a>
+                            <a href="https://spade-bokeh.readthedocs.io" class="btn btn-sm btn-outline-secondary">Docs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Develop Your Own</h5>
+                            <p class="card-text">Extend SPADE with your own plugins to add custom functionality.</p>
+                            <a href="https://spade-mas.readthedocs.io/en/latest/extending.html" class="btn btn-sm btn-outline-primary">Learn How</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="usecases" class="py-5" style="background-color: #f9f9f9;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Real-World Use Cases</h2>
+                <p class="lead text-muted">See how SPADE is powering intelligent multi-agent systems</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Smart City Management</h5>
+                            </div>
+                            <p class="card-text">SPADE agents can be deployed to monitor and manage urban infrastructure, traffic flow, and resource allocation in smart city environments. Agents communicate in real-time to optimize city operations.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Traffic optimization</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Resource management</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Emergency response coordination</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-building"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Supply Chain Optimization</h5>
+                            </div>
+                            <p class="card-text">Multi-agent systems built with SPADE can model complex supply chains, with each agent representing different stakeholders. This enables better coordination and optimization of logistics networks.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Inventory management</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Transport optimization</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Dynamic replanning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-cpu"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Distributed IoT Systems</h5>
+                            </div>
+                            <p class="card-text">SPADE agents can be deployed on IoT devices to create intelligent, distributed systems. Agents can process sensor data locally, make decisions, and communicate only when necessary.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Smart home automation</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Industrial monitoring</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Agricultural sensing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <h5 class="card-title mb-0">Multi-Agent Simulation</h5>
+                            </div>
+                            <p class="card-text">SPADE provides a powerful framework for building agent-based simulations of complex systems. Researchers use it to model social dynamics, market behavior, and emergent phenomena.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Economic modeling</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Social simulations</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Emergency evacuation planning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Why Choose SPADE?</h2>
+                <p class="lead text-muted">See how SPADE compares to other agent frameworks</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" style="min-width: 180px;">Features</th>
+                            <th scope="col" style="min-width: 150px;" class="text-center">SPADE</th>
+                            <th scope="col" style="min-width: 150px;" class="text-center">JADE</th>
+                            <th scope="col" style="min-width: 150px;" class="text-center">Mesa</th>
+                            <th scope="col" style="min-width: 150px;" class="text-center">OSBRAIN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Language</td>
+                            <td class="text-center">Python</td>
+                            <td class="text-center">Java</td>
+                            <td class="text-center">Python</td>
+                            <td class="text-center">Python</td>
+                        </tr>
+                        <tr>
+                            <td>Communication Protocol</td>
+                            <td class="text-center">XMPP</td>
+                            <td class="text-center">Custom</td>
+                            <td class="text-center">In-memory</td>
+                            <td class="text-center">ZeroMQ</td>
+                        </tr>
+                        <tr>
+                            <td>Presence Awareness</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                            <td class="text-center"><i class="bi bi-dash text-muted"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Asyncio Support</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                        </tr>
+                        <tr>
+                            <td>FIPA Compliance</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Web Interface</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-dash text-muted"></i></td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Human-Agent Interaction</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-dash text-muted"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Plugin Ecosystem</td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-check-lg text-success"></i></td>
+                            <td class="text-center"><i class="bi bi-dash text-muted"></i></td>
+                            <td class="text-center"><i class="bi bi-x-lg text-danger"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="text-muted"><small>This comparison is based on publicly available information as of May 2025 and is subject to change as frameworks evolve.</small></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="docs" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Getting Started</h2>
+                <p class="lead text-muted">Start building your multi-agent system in minutes</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h4 class="card-title">Installation</h4>
+                            <div class="code-example">
+                                <pre><code class="language-bash">pip install spade</code></pre>
+                            </div>
+                            <p>SPADE requires Python 3.8 or higher and works on Windows, macOS, and Linux.</p>
+                            <div class="mt-3">
+                                <h5 class="h6">Quick Start</h5>
+                                <div class="code-example">
+                                    <pre><code class="language-python">import spade
+from spade.agent import Agent
+from spade.behaviour import OneShotBehaviour
+
+class MyAgent(Agent):
+    class MyBehav(OneShotBehaviour):
+        async def run(self):
+            print("Hello World!")
+
+    async def setup(self):
+        self.add_behaviour(self.MyBehav())
+
+async def main():
+    agent = MyAgent("agent@localhost", "password")
+    await agent.start()
+
+if __name__ == "__main__":
+    spade.run(main())
+</code></pre>
+                                </div>
+                            </div>
+                            <a href="https://spade-mas.readthedocs.io/en/latest/installation.html" class="btn btn-primary">Installation Guide</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h4 class="card-title">Documentation</h4>
+                            <p>Comprehensive documentation with tutorials, examples, and API reference.</p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item border-0 ps-0">📚 <a href="https://spade-mas.readthedocs.io/en/latest/usage.html">User Guide</a></li>
+                                <li class="list-group-item border-0 ps-0">👨‍💻 <a href="https://spade-mas.readthedocs.io/en/latest/api.html">API Reference</a></li>
+                                <li class="list-group-item border-0 ps-0">📝 <a href="https://spade-mas.readthedocs.io/en/latest/examples.html">Examples</a></li>
+                                <li class="list-group-item border-0 ps-0">🔧 <a href="https://spade-mas.readthedocs.io/en/latest/extending.html">Extension Guide</a></li>
+                            </ul>
+                            <a href="https://spade-mas.readthedocs.io" class="btn btn-primary">Read the Docs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Frequently Asked Questions</h2>
+                <p class="lead text-muted">Get answers to common questions about SPADE</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    What is SPADE and what makes it unique?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>SPADE (Smart Python Agent Development Environment) is a multi-agent systems platform built in Python that leverages XMPP (eXtensible Messaging and Presence Protocol) for communication. What makes SPADE unique is its combination of an intuitive behavior-based agent model with powerful instant messaging capabilities that allow agents to interact with both other agents and humans.</p>
+                                    <p>Unlike other agent frameworks, SPADE provides presence awareness, asynchronous operation through asyncio, and a web-based interface out of the box. It's designed to be both powerful for complex systems and approachable for developers new to agent-based programming.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Do I need to run my own XMPP server to use SPADE?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>No, SPADE includes a custom XMPP server (pyjabber) that you can use out of the box for development and testing. This means you can get started with SPADE without setting up any additional infrastructure.</p>
+                                    <p>However, for production environments or specific requirements, SPADE is compatible with any standard XMPP server like Prosody, ejabberd, or Openfire. This flexibility allows you to choose the best option for your specific deployment needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    What types of behaviors can SPADE agents have?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>SPADE provides several types of predefined behaviors to help you implement different agent tasks:</p>
+                                    <ul>
+                                        <li><strong>CyclicBehaviour</strong>: Executes repeatedly without end</li>
+                                        <li><strong>PeriodicBehaviour</strong>: Executes at regular time intervals</li>
+                                        <li><strong>OneShotBehaviour</strong>: Executes only once</li>
+                                        <li><strong>TimeoutBehaviour</strong>: Executes after a specified time delay</li>
+                                        <li><strong>FSMBehaviour</strong>: Implements a Finite State Machine for complex behavior patterns</li>
+                                    </ul>
+                                    <p>These behavior types can be combined and nested to create sophisticated agent logic, and each behavior can have its own message template to handle specific types of incoming communications.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 mb-3 shadow-sm">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Is SPADE suitable for large-scale multi-agent systems?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>Yes, SPADE is designed to scale for large multi-agent systems. Its architecture offers several advantages for scalability:</p>
+                                    <ul>
+                                        <li>The asyncio-based implementation allows efficient concurrent operation of many agents</li>
+                                        <li>XMPP servers can handle thousands of connected clients</li>
+                                        <li>The message-based architecture means agents can be distributed across multiple machines</li>
+                                        <li>Presence notification provides real-time awareness of the system state</li>
+                                    </ul>
+                                    <p>For very large deployments, you can use a distributed XMPP server setup and implement your own load balancing strategies. The plugin architecture also allows you to extend SPADE with custom functionality for specific scaling requirements.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border-0 shadow-sm">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    How can I contribute to SPADE?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p>SPADE is an open-source project and welcomes contributions from the community! Here's how you can contribute:</p>
+                                    <ul>
+                                        <li>Report bugs or suggest features on the <a href="https://github.com/javipalanca/spade/issues">GitHub issues page</a></li>
+                                        <li>Improve the documentation</li>
+                                        <li>Submit pull requests with bug fixes or new features</li>
+                                        <li>Create plugins that extend SPADE's functionality</li>
+                                        <li>Share your SPADE projects and use cases with the community</li>
+                                    </ul>
+                                    <p>Check out the <a href="https://github.com/javipalanca/spade/blob/master/CONTRIBUTING.rst">contribution guidelines</a> to get started. The SPADE community values all contributors and follows a <a href="https://github.com/javipalanca/spade/blob/master/CODE_OF_CONDUCT.rst">code of conduct</a> to ensure a welcoming environment for everyone.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-5" style="background-color: var(--dark-color);">
+        <div class="container">
+            <div class="text-center mb-5 text-white">
+                <h2 class="fw-bold">What Developers Say</h2>
+                <p class="lead">Testimonials from the SPADE community</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0">
+                        <div class="card-body">
+                            <div class="d-flex mb-4">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="card-text fs-5 mb-4">"SPADE has transformed our approach to building distributed systems. The agent model is intuitive and the XMPP backbone is rock solid."</p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fs-4">JM</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Javier Martínez</h6>
+                                    <small class="text-muted">Senior AI Developer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0">
+                        <div class="card-body">
+                            <div class="d-flex mb-4">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="card-text fs-5 mb-4">"For academic research in multi-agent systems, SPADE provides the perfect balance of flexibility and structure. The documentation is excellent too!"</p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fs-4">SL</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Dr. Sarah Lee</h6>
+                                    <small class="text-muted">Research Scientist</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0">
+                        <div class="card-body">
+                            <div class="d-flex mb-4">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <p class="card-text fs-5 mb-4">"We built our entire IoT management system using SPADE. The asyncio support and behaviour-based model made our system both efficient and maintainable."</p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <span class="fs-4">MK</span>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fw-bold">Michael Kim</h6>
+                                    <small class="text-muted">IoT Solutions Architect</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section id="interactive-demo" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Interactive Agent Demo</h2>
+                <p class="lead">See how SPADE agents communicate and interact in real-time</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-0">
+                            <div id="agent-demo-container" class="position-relative" style="height: 400px;">
+                                <!-- Canvas for agent animation -->
+                                <canvas id="agent-canvas" width="800" height="400" class="w-100 h-100"></canvas>
+                                
+                                <!-- Controls -->
+                                <div class="demo-controls position-absolute bottom-0 start-0 end-0 p-3 bg-light bg-opacity-75 dark-mode-aware">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <button id="start-demo" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-play-fill"></i> Start Demo
+                                            </button>
+                                            <button id="reset-demo" class="btn btn-outline-secondary btn-sm ms-2">
+                                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                                            </button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <select id="demo-scenario" class="form-select form-select-sm">
+                                                <option value="simple">Basic Communication</option>
+                                                <option value="behaviors">Agent Behaviors</option>
+                                                <option value="network">Agent Network</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2" id="demo-status" style="display: none;">
+                                        <div class="col">
+                                            <small class="text-muted">
+                                                <span id="demo-status-text">Demo status will appear here...</span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2" id="demo-legend" style="display: none;">
+                                        <div class="col">
+                                            <small class="text-muted">
+                                                <span class="badge bg-secondary me-2">Gray: Idle</span>
+                                                <span class="badge bg-warning me-2">Orange: Working</span>
+                                                <span class="text-muted">Hover over agents for more info</span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Explanation cards -->
+                    <div class="row" id="demo-explanation">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-person-circle text-primary me-2"></i>
+                                        Agents
+                                    </h5>
+                                    <p class="card-text">Each node represents an independent SPADE agent with its own identity, behaviors, and capabilities.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-chat-dots text-success me-2"></i>
+                                        Messages
+                                    </h5>
+                                    <p class="card-text">XMPP messages enable agents to communicate using a standardized protocol, supporting complex interactions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-gear text-warning me-2"></i>
+                                        Behaviors
+                                    </h5>
+                                    <p class="card-text">Behaviors define how agents act and react, from simple cyclic tasks to complex state machines and event responses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Code example -->
+                    <div class="code-example card border-0 shadow-sm mt-4">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <span>SPADE Code Example</span>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="codeExampleDropdown" data-bs-toggle="dropdown">
+                                    <i class="bi bi-code-slash me-1"></i> Example
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="codeExampleDropdown">
+                                    <li><a class="dropdown-item code-example-selector" href="#" data-example="simple">Basic Agent Communication</a></li>
+                                    <li><a class="dropdown-item code-example-selector" href="#" data-example="behavior">Agent Behaviors</a></li>
+                                    <li><a class="dropdown-item code-example-selector" href="#" data-example="network">Agent Network</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <pre class="bg-light p-3 rounded code-block" id="code-simple"><code class="language-python">from spade.agent import Agent</code></pre>
+
+                            <pre class="bg-light p-3 rounded code-block d-none" id="code-behavior"><code class="language-python">from spade.agent import Agent</code></pre>
+
+                            <pre class="bg-light p-3 rounded code-block d-none" id="code-network"><code class="language-python">from spade.agent import Agent</code></pre>
+                            
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-outline-primary copy-code-btn">
+                                    <i class="bi bi-clipboard me-1"></i> Copy Code
+                                </button>
+                                <a href="https://spade-mas.readthedocs.io/en/latest/usage.html" class="btn btn-sm btn-link ms-2">
+                                    View Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Latest News</h2>
+                <p class="lead text-muted">Stay updated with SPADE developments</p>
+            </div>
+            <div id="news-container" class="row g-4">
+                <!-- News items will be dynamically loaded here -->
+                <div class="col-12 text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-primary">View All News</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5" style="background-color: var(--primary-color);">
+        <div class="container text-center text-white">
+            <h2 class="fw-bold mb-4">Ready to Build Your Multi-Agent System?</h2>
+            <p class="lead mb-4">Join the community of developers using SPADE for intelligent agent applications.</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="https://pypi.python.org/pypi/spade" class="btn btn-light btn-lg px-4">Download SPADE</a>
+                <a href="https://github.com/javipalanca/spade" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-github me-2"></i>Star on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="landing-assets/spade-agent-network-fixed.svg" alt="SPADE Logo" height="50" class="me-2">
+                        <h5 class="text-uppercase mb-0">SPADE</h5>
+                    </div>
+                    <p>Smart Python Agent Development Environment</p>
+                    <p>A multi-agent systems platform written in Python and based on instant messaging (XMPP).</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="https://github.com/javipalanca/spade">GitHub</a></li>
+                        <li class="mb-2"><a href="https://pypi.python.org/pypi/spade">PyPI</a></li>
+                        <li class="mb-2"><a href="https://spade-mas.readthedocs.io">Documentation</a></li>
+                        <li class="mb-2"><a href="https://github.com/javipalanca/spade/issues">Issues</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Plugins</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="https://spade-bdi.readthedocs.io">SPADE BDI</a></li>
+                        <li class="mb-2"><a href="https://spade-pubsub.readthedocs.io">SPADE PubSub</a></li>
+                        <li class="mb-2"><a href="https://spade-artifact.readthedocs.io">SPADE Artifact</a></li>
+                        <li class="mb-2"><a href="https://spade-norms.readthedocs.io">SPADE Norms</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">About</h5>
+                    <p>SPADE is developed and maintained by Javier Palanca and contributors. It is licensed under the MIT License.</p>
+                    <p>© 2025 SPADE. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
