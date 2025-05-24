@@ -48,7 +48,7 @@
   },
 
   // Use 'postCreateCommand' to run commands after the container is created
-  "postCreateCommand": "cd spade-astro && npm install",
+  "postCreateCommand": "cd /workspaces/spade_githubio/spade-astro && npm install",
 
   // Use 'postStartCommand' to run commands after the container starts
   "postStartCommand": "echo 'Welcome to SPADE Astro Development Environment! Navigate to spade-astro/ and run npm run dev to start the dev server.'",
@@ -56,6 +56,11 @@
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root
   "remoteUser": "node",
 
-  // Set workspace folder to the astro project
-  "workspaceFolder": "/workspaces/spade-astro"
+  // Set workspace folder to the root directory so we can access both original and Astro project
+  "workspaceFolder": "/workspaces/spade_githubio",
+  
+  // Mount the workspace directory
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/spade_githubio,type=bind,consistency=cached"
+  ]
 }

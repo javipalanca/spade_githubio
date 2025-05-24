@@ -25,62 +25,53 @@ import '../styles/global.css';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     
     <!-- Prism.js for syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
     
     <!-- Custom Prism.js styling for light/dark mode -->
     <style>
-        /* Light mode - override Prism defaults */
+        /* Basic container styling - let Prism handle syntax colors */
         pre[class*="language-"] {
-            background-color: #f8f9fa !important;
+            border-radius: 6px;
             border: 1px solid #e9ecef;
+            font-size: 14px;
+            line-height: 1.4;
         }
         
-        code[class*="language-"] {
-            color: #212529 !important;
-        }
-        
-        /* Dark mode overrides */
+        /* Dark mode container adjustments */
         body.dark-mode pre[class*="language-"] {
-            background-color: #1a202c !important;
             border: 1px solid #333 !important;
         }
         
-        body.dark-mode code[class*="language-"] {
-            color: #e2e8f0 !important;
+        /* Copy button styling */
+        .code-block-container {
+            position: relative;
         }
         
-        /* Python syntax highlighting colors for light mode */
-        .token.keyword {
-            color: #0066cc !important;
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
         }
         
-        .token.string {
-            color: #008800 !important;
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.9);
         }
         
-        .token.function {
-            color: #cc6600 !important;
+        body.dark-mode .copy-button {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: #555;
+            color: #fff;
         }
         
-        .token.comment {
-            color: #999999 !important;
-        }
-        
-        /* Python syntax highlighting colors for dark mode */
-        body.dark-mode .token.keyword {
-            color: #66ccff !important;
-        }
-        
-        body.dark-mode .token.string {
-            color: #88dd88 !important;
-        }
-        
-        body.dark-mode .token.function {
-            color: #ffaa66 !important;
-        }
-        
-        body.dark-mode .token.comment {
-            color: #aaaaaa !important;
+        body.dark-mode .copy-button:hover {
+            background: rgba(0, 0, 0, 0.9);
         }
     </style>
     
@@ -100,19 +91,19 @@ import '../styles/global.css';
     <slot />
     
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Prism.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
     
     <!-- Custom Scripts -->
-    <script>
+    <script is:inline>
         // Global dark mode toggle function - available immediately
-        (window as any).toggleDarkMode = function() {
+        window.toggleDarkMode = function() {
             console.log('toggleDarkMode called');
             const body = document.body;
             const icon = document.getElementById('darkModeIcon');
@@ -151,7 +142,7 @@ import '../styles/global.css';
 
         // Also make it available as a regular function for compatibility
         function toggleDarkMode() {
-            (window as any).toggleDarkMode();
+            window.toggleDarkMode();
         }
 
         // Initialize everything when DOM is ready
@@ -182,7 +173,7 @@ import '../styles/global.css';
             }
             
             // Test if toggle function is available
-            if (typeof (window as any).toggleDarkMode === 'function') {
+            if (typeof window.toggleDarkMode === 'function') {
                 console.log('✅ toggleDarkMode function is available globally');
             } else {
                 console.error('❌ toggleDarkMode function is NOT available globally');
@@ -208,7 +199,7 @@ import '../styles/global.css';
                 const demos = await response.json();
                 const container = document.getElementById('demos-container');
                 if (container && demos.length > 0) {
-                    const demoCards = demos.map((demo: any) => `
+                    const demoCards = demos.map((demo) => `
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="demo-card">
                                 <div class="demo-thumbnail">
@@ -244,7 +235,7 @@ import '../styles/global.css';
                 const news = await response.json();
                 const container = document.getElementById('news-container');
                 if (container && news.length > 0) {
-                    const newsCards = news.slice(0, 3).map((item: any) => `
+                    const newsCards = news.slice(0, 3).map((item) => `
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -269,9 +260,9 @@ import '../styles/global.css';
             
             // Initialize Prism.js syntax highlighting with delay
             setTimeout(() => {
-                if (typeof (window as any).Prism !== 'undefined') {
+                if (typeof window.Prism !== 'undefined') {
                     console.log('Initializing Prism.js...');
-                    (window as any).Prism.highlightAll();
+                    window.Prism.highlightAll();
                 } else {
                     console.warn('Prism.js not available');
                 }
@@ -281,18 +272,22 @@ import '../styles/global.css';
         // Re-highlight code when dark mode is toggled
         function rehighlightCode() {
             setTimeout(() => {
-                if (typeof (window as any).Prism !== 'undefined') {
-                    (window as any).Prism.highlightAll();
+                if (typeof window.rehighlightCode === 'function') {
+                    window.rehighlightCode();
+                    console.log('Code re-highlighted for new theme');
                 }
             }, 50);
         }
 
         // Make functions available globally
-        (window as any).toggleDarkMode = toggleDarkMode;
+        window.toggleDarkMode = toggleDarkMode;
 
         // Load dynamic content when DOM is ready
         document.addEventListener('DOMContentLoaded', loadDynamicContent);
     </script>
+    
+    <!-- Prism.js initialization -->
+    <script src="/prism-init.js" is:inline></script>
     
     <!-- Custom JS -->
     <script src="/scripts.js" is:inline></script>

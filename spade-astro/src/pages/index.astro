@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import FeatureCard from '../components/FeatureCard.astro';
 import PluginCard from '../components/PluginCard.astro';
 import Footer from '../components/Footer.astro';
+import PythonCodeBlock from '../components/PythonCodeBlock.astro';
 
 // Define features data
 const features = [
@@ -133,10 +134,10 @@ const plugins = [
             </div>
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <div class="code-example">
-                        <div class="code-header">agent_example.py</div>
-                        <div class="code-body">
-                            <pre><code class="language-python">{`import spade
+                    <PythonCodeBlock 
+                        filename="agent_example.py"
+                        showCopyButton={true}
+                        code={`import spade
 from spade.agent import Agent
 from spade.behaviour import CyclicBehaviour
 from spade.message import Message
@@ -160,9 +161,9 @@ async def main():
     await agent.start()
 
 if __name__ == "__main__":
-    spade.run(main())`}</code></pre>
-                        </div>
-                    </div>
+    spade.run(main())`}
+                    />
+
                 </div>
                 <div class="col-lg-6">
                     <h3 class="mb-4">Simple & Intuitive API</h3>
@@ -293,16 +294,19 @@ if __name__ == "__main__":
                             <p>SPADE requires Python 3.8 or higher and works on Windows, macOS, and Linux.</p>
                             <div class="mt-3">
                                 <h5 class="h6">Quick Start</h5>
-                                <div class="code-example">
-                                    <pre><code class="language-python">{`import spade
+                                <PythonCodeBlock 
+                                    filename="hello_agent.py"
+                                    showHeader={false}
+                                    showCopyButton={true}
+                                    code={`import spade
 
 async def main():
     agent = spade.Agent("agent@localhost", "password")
     await agent.start()
 
 if __name__ == "__main__":
-    spade.run(main())`}</code></pre>
-                                </div>
+    spade.run(main())`}
+                                />
                             </div>
                         </div>
                     </div>
@@ -403,10 +407,11 @@ if __name__ == "__main__":
                                     <pre><code class="language-bash">pip install spade</code></pre>
                                 </div>
                             </div>
-                            <div class="code-example mt-3">
-                                <div class="code-header">hello_agent.py</div>
-                                <div class="code-body">
-                                    <pre><code class="language-python">{`import spade
+                            <div class="mt-3">
+                                <PythonCodeBlock 
+                                    filename="hello_agent.py"
+                                    showCopyButton={true}
+                                    code={`import spade
 from spade.agent import Agent
 from spade.behaviour import OneShotBehaviour
 
@@ -423,8 +428,8 @@ async def main():
     await agent.start()
 
 if __name__ == "__main__":
-    spade.run(main())`}</code></pre>
-                                </div>
+    spade.run(main())`}
+                                />
                             </div>
                             <a href="https://spade-mas.readthedocs.io/en/latest/installation.html" class="btn btn-primary">Installation Guide</a>
                         </div>
