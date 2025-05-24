@@ -1,0 +1,300 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'SPADE - Smart Python Agent Development Environment. A multi-agent systems platform written in Python and based on XMPP.' } = Astro.props;
+
+// Import global styles
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <meta name="keywords" content="SPADE, Python, Multi-agent, XMPP, Agent-based, MAS">
+    <meta name="author" content="SPADE Team">
+    <title>{title}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    
+    <!-- Custom Prism.js styling for light/dark mode -->
+    <style>
+        /* Light mode - override Prism defaults */
+        pre[class*="language-"] {
+            background-color: #f8f9fa !important;
+            border: 1px solid #e9ecef;
+        }
+        
+        code[class*="language-"] {
+            color: #212529 !important;
+        }
+        
+        /* Dark mode overrides */
+        body.dark-mode pre[class*="language-"] {
+            background-color: #1a202c !important;
+            border: 1px solid #333 !important;
+        }
+        
+        body.dark-mode code[class*="language-"] {
+            color: #e2e8f0 !important;
+        }
+        
+        /* Python syntax highlighting colors for light mode */
+        .token.keyword {
+            color: #0066cc !important;
+        }
+        
+        .token.string {
+            color: #008800 !important;
+        }
+        
+        .token.function {
+            color: #cc6600 !important;
+        }
+        
+        .token.comment {
+            color: #999999 !important;
+        }
+        
+        /* Python syntax highlighting colors for dark mode */
+        body.dark-mode .token.keyword {
+            color: #66ccff !important;
+        }
+        
+        body.dark-mode .token.string {
+            color: #88dd88 !important;
+        }
+        
+        body.dark-mode .token.function {
+            color: #ffaa66 !important;
+        }
+        
+        body.dark-mode .token.comment {
+            color: #aaaaaa !important;
+        }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/landing-assets/favicon-spade-new.svg">
+    <link rel="icon" type="image/png" href="/landing-assets/spade_friend.png">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="/landing-assets/spade_index.png">
+    <meta property="og:url" content="https://github.com/javipalanca/spade">
+    
+    <!-- Custom CSS will be injected by Astro from the import above -->
+</head>
+<body>
+    <slot />
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Prism.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script>
+        // Global dark mode toggle function - available immediately
+        (window as any).toggleDarkMode = function() {
+            console.log('toggleDarkMode called');
+            const body = document.body;
+            const icon = document.getElementById('darkModeIcon');
+            
+            // Toggle the class
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            
+            console.log('Dark mode state:', isDarkMode, 'Body classes:', body.className);
+            
+            // Save preference
+            localStorage.setItem('darkMode', isDarkMode.toString());
+            
+            // Update icon immediately
+            if (icon) {
+                if (isDarkMode) {
+                    icon.className = 'bi bi-sun-fill';
+                } else {
+                    icon.className = 'bi bi-moon-fill';
+                }
+                console.log('Icon updated to:', icon.className);
+            } else {
+                console.warn('Dark mode icon not found!');
+            }
+            
+            // Trigger a style recalculation
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Force reflow
+            document.body.style.display = '';
+            
+            // Re-highlight code with new theme
+            if (typeof rehighlightCode === 'function') {
+                rehighlightCode();
+            }
+        };
+
+        // Also make it available as a regular function for compatibility
+        function toggleDarkMode() {
+            (window as any).toggleDarkMode();
+        }
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - initializing dark mode');
+            
+            // Initialize dark mode state
+            const savedDarkMode = localStorage.getItem('darkMode');
+            const icon = document.getElementById('darkModeIcon');
+            const body = document.body;
+            
+            console.log('Saved dark mode preference:', savedDarkMode);
+            console.log('Icon element found:', !!icon);
+            
+            // Apply saved preference or default to light mode
+            if (savedDarkMode === 'true') {
+                body.classList.add('dark-mode');
+                if (icon) {
+                    icon.className = 'bi bi-sun-fill';
+                }
+                console.log('Dark mode enabled on load');
+            } else {
+                body.classList.remove('dark-mode');
+                if (icon) {
+                    icon.className = 'bi bi-moon-fill';
+                }
+                console.log('Light mode enabled on load');
+            }
+            
+            // Test if toggle function is available
+            if (typeof (window as any).toggleDarkMode === 'function') {
+                console.log('✅ toggleDarkMode function is available globally');
+            } else {
+                console.error('❌ toggleDarkMode function is NOT available globally');
+            }
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (navbar) {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                }
+            });
+        });
+
+        // Load demos and news dynamically
+        async function loadDemos() {
+            try {
+                const response = await fetch('/landing-assets/demos.json');
+                const demos = await response.json();
+                const container = document.getElementById('demos-container');
+                if (container && demos.length > 0) {
+                    const demoCards = demos.map((demo: any) => `
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="demo-card">
+                                <div class="demo-thumbnail">
+                                    <i class="bi bi-${demo.icon || 'code-square'}"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h5 class="fw-bold">${demo.title}</h5>
+                                    <p class="text-muted">${demo.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            Difficulty: ${demo.difficulty}
+                                        </small>
+                                        <a href="${demo.url}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                            View Demo
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    container.innerHTML = demoCards;
+                }
+            } catch (error) {
+                console.log('Demos not available:', error);
+            }
+        }
+
+        async function loadNews() {
+            try {
+                const response = await fetch('/landing-assets/news.json');
+                const news = await response.json();
+                const container = document.getElementById('news-container');
+                if (container && news.length > 0) {
+                    const newsCards = news.slice(0, 3).map((item: any) => `
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">${item.title}</h6>
+                                    <p class="card-text small">${item.description}</p>
+                                    <small class="text-muted">${new Date(item.date).toLocaleDateString()}</small>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    container.innerHTML = newsCards;
+                }
+            } catch (error) {
+                console.log('News not available:', error);
+            }
+        }
+
+        // Load dynamic content
+        function loadDynamicContent() {
+            loadDemos();
+            loadNews();
+            
+            // Initialize Prism.js syntax highlighting with delay
+            setTimeout(() => {
+                if (typeof (window as any).Prism !== 'undefined') {
+                    console.log('Initializing Prism.js...');
+                    (window as any).Prism.highlightAll();
+                } else {
+                    console.warn('Prism.js not available');
+                }
+            }, 100);
+        }
+
+        // Re-highlight code when dark mode is toggled
+        function rehighlightCode() {
+            setTimeout(() => {
+                if (typeof (window as any).Prism !== 'undefined') {
+                    (window as any).Prism.highlightAll();
+                }
+            }, 50);
+        }
+
+        // Make functions available globally
+        (window as any).toggleDarkMode = toggleDarkMode;
+
+        // Load dynamic content when DOM is ready
+        document.addEventListener('DOMContentLoaded', loadDynamicContent);
+    </script>
+    
+    <!-- Custom JS -->
+    <script src="/scripts.js" is:inline></script>
+</body>
+</html>

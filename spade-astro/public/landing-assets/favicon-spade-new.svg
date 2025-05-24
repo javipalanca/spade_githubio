@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c3e50;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pythonBlueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#306998;stop-opacity:1" />  <!-- Python blue -->
+      <stop offset="100%" style="stop-color:#4584b6;stop-opacity:1" /> <!-- Python blue lighter -->
+    </linearGradient>
+    <linearGradient id="pythonYellowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD43B;stop-opacity:1" /> <!-- Python yellow -->
+      <stop offset="100%" style="stop-color:#FFE873;stop-opacity:1" /> <!-- Python yellow lighter -->
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Simplified Python-colored S shape -->
+  <path d="M32,12 C26,12 20,16 20,22 C20,28 32,30 32,38 C32,44 26,48 20,48" 
+        fill="none" stroke="url(#pythonBlueGradient)" stroke-width="5" stroke-linecap="round"/>
+  
+  <path d="M32,16 C38,16 44,20 44,26 C44,32 32,34 32,42 C32,48 38,52 44,52" 
+        fill="none" stroke="url(#pythonYellowGradient)" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Agent nodes -->
+  <circle cx="32" cy="16" r="3" fill="#306998" stroke="white" stroke-width="1"/>
+  <circle cx="32" cy="32" r="3" fill="#306998" stroke="white" stroke-width="1"/>
+  <circle cx="32" cy="48" r="3" fill="#306998" stroke="white" stroke-width="1"/>
+</svg>
