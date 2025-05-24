@@ -75,6 +75,7 @@ spade-astro/
 ### Ready for Production
 
 The migrated SPADE landing page is now production-ready with:
+
 - Static site generation for optimal performance
 - Modern web standards compliance
 - Enhanced user experience
@@ -95,6 +96,35 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 🐍 Python Management Scripts
+
+This project includes powerful Python scripts for easy project management:
+
+### Quick Start
+
+```bash
+# Launch the main project manager
+python3 spade_manager.py
+```
+
+### Available Scripts
+
+| Script             | Purpose                                | Usage                      |
+| ------------------ | -------------------------------------- | -------------------------- |
+| `spade_manager.py` | **Main project manager**               | `python3 spade_manager.py` |
+| `manage_news.py`   | Manage news items for the landing page | `python3 manage_news.py`   |
+| `manage_demos.py`  | Manage interactive demo scenarios      | `python3 manage_demos.py`  |
+
+### Project Manager Features
+
+- 📰 **news** - Manage news content
+- 🎮 **demos** - Manage demo scenarios
+- 📦 **backup** - Backup data files
+- 📊 **status** - Check project health
+- 📦 **install** - Install dependencies
+
+See [`PYTHON_SCRIPTS.md`](./PYTHON_SCRIPTS.md) for detailed documentation.
 
 ## 🔧 Development Notes
 
