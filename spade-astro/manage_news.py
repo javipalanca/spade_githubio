@@ -268,10 +268,139 @@ def print_help():
     print("  remove   - Remove a news item")
     print("  edit     - Edit an existing news item")
     print("  validate - Validate the news file structure")
+    print("  images   - List available images")
+    print("  upload   - Upload a new image")
     print("  help     - Show this help message")
     print("  exit     - Exit the program")
     print()
     print("Note: After making changes, restart the Astro dev server to see updates.")
+
+def upload_image():
+    """Upload a new image to the landing-assets directory"""
+    # Get the assets directory path
+    assets_dir = os.path.dirname(NEWS_FILE)
+    
+    print("\n=== Upload New Image ===")
+    print("This will copy an image to the landing-assets directory for use in news items.")
+    print("You can provide either:")
+    print("  1. A local file path")
+    print("  2. A URL to download an image from the web")
+    
+    # Ask for the source
+    source = input("Enter the file path or URL: ").strip()
+    
+    # Check if it's a URL (simple check for http:// or https://)
+    is_url = source.startswith(("http://", "https://"))
+    
+    if is_url:
+        # Download from URL
+        try:
+            import urllib.request
+            import tempfile
+            
+            print(f"Downloading image from {source}...")
+            
+            # Create a temporary file
+            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                temp_path = temp_file.name
+                
+            # Download the file
+            urllib.request.urlretrieve(source, temp_path)
+            
+            # Extract filename from URL
+            from urllib.parse import urlparse
+            url_path = urlparse(source).path
+            filename = os.path.basename(url_path)
+            
+            # If no filename could be extracted, use a timestamp
+            if not filename or "." not in filename:
+                from datetime import datetime
+                timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                extension = ".jpg"  # Default extension
+                filename = f"image_{timestamp}{extension}"
+            
+            # Verify it's an image
+            import imghdr
+            img_type = imghdr.what(temp_path)
+            if not img_type and not filename.lower().endswith(('.svg', '.webp')):
+                os.unlink(temp_path)  # Remove temp file
+                print("❌ Error: Downloaded file does not appear to be a valid image.")
+                return
+                
+            # Create destination path
+            dest_path = os.path.join(assets_dir, filename)
+            
+            # Check if file already exists
+            if os.path.exists(dest_path):
+                overwrite = input(f"⚠️ Warning: {filename} already exists. Overwrite? (y/n): ").lower()
+                if overwrite != 'y':
+                    os.unlink(temp_path)  # Remove temp file
+                    print("Upload cancelled.")
+                    return
+            
+            # Copy the file
+            import shutil
+            shutil.copy2(temp_path, dest_path)
+            os.unlink(temp_path)  # Remove temp file
+            
+            print(f"✅ Image downloaded and saved as: {filename}")
+            print(f"You can use it in news items as: landing-assets/{filename}")
+            
+        except Exception as e:
+            print(f"❌ Error downloading image: {e}")
+            return
+    else:
+        # Local file
+        if not os.path.exists(source):
+            print(f"❌ Error: File {source} does not exist.")
+            return
+        
+        # Validate that it's an image file
+        import imghdr
+        if not source.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp')) and imghdr.what(source) is None:
+            print("❌ Error: File does not appear to be a valid image.")
+            print("Supported formats: PNG, JPEG, SVG, GIF, WebP")
+            return
+        
+        # Get the filename from the path
+        import shutil
+        filename = os.path.basename(source)
+        
+        # Create destination path
+        dest_path = os.path.join(assets_dir, filename)
+        
+        # Check if file already exists
+        if os.path.exists(dest_path):
+            overwrite = input(f"⚠️ Warning: {filename} already exists. Overwrite? (y/n): ").lower()
+            if overwrite != 'y':
+                print("Upload cancelled.")
+                return
+        
+        # Copy the file
+        try:
+            shutil.copy2(source, dest_path)
+            print(f"✅ Image {filename} uploaded successfully!")
+            print(f"You can use it in news items as: landing-assets/{filename}")
+        except Exception as e:
+            print(f"❌ Error uploading image: {e}")
+
+def list_images():
+    """List all available images in the landing-assets directory"""
+    # Get the assets directory path
+    assets_dir = os.path.dirname(NEWS_FILE)
+    
+    print("\n=== Available Images ===")
+    if os.path.exists(assets_dir):
+        image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif'))]
+        if image_files:
+            for i, img in enumerate(image_files, 1):
+                print(f"  {i}. {img}")
+            print(f"\nTotal: {len(image_files)} images")
+            print("To use an image in a news item, specify: landing-assets/filename.png")
+        else:
+            print("No images found in landing-assets directory.")
+    else:
+        print(f"❌ Error: Directory {assets_dir} does not exist.")
 
 def main():
     """Main function"""
@@ -289,7 +418,7 @@ def main():
     load_news()
     
     while True:
-        command = input("\nEnter command (list, add, remove, edit, validate, help, exit): ").strip().lower()
+        command = input("\nEnter command (list, add, remove, edit, validate, images, upload, help, exit): ").strip().lower()
         
         if command == "list":
             list_news()
@@ -301,6 +430,10 @@ def main():
             edit_news()
         elif command == "validate":
             validate_news_file()
+        elif command == "images":
+            list_images()
+        elif command == "upload":
+            upload_image()
         elif command == "help":
             print_help()
         elif command == "exit":

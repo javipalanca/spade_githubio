@@ -50,6 +50,8 @@ python3 manage_news.py
 - `remove` - Remove a news item
 - `edit` - Edit an existing news item
 - `validate` - Validate the news file structure
+- `images` - List available images in landing-assets
+- `upload` - Upload a new image for news items
 - `help` - Show help message
 - `exit` - Exit the manager
 
