@@ -1109,6 +1109,51 @@ body.dark-mode #agentCanvas {
   border-color: var(--dark-border);
 }
 
+/* Demo canvas responsive styles */
+.demo-canvas-container {
+  height: 500px;
+  min-height: 400px;
+  aspect-ratio: 16/10;
+  transition: height 0.3s ease;
+}
+
+@media (max-width: 576px) {
+  .demo-canvas-container {
+    height: 280px;
+    min-height: 250px;
+    aspect-ratio: 4/3;
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-canvas-container {
+    height: 350px;
+    min-height: 300px;
+    aspect-ratio: 16/10;
+  }
+}
+
+@media (min-width: 992px) {
+  .demo-canvas-container {
+    height: 550px;
+    min-height: 450px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .demo-canvas-container {
+    height: 600px;
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .demo-canvas-container {
+    height: 650px;
+    min-height: 550px;
+  }
+}
+
 .demo-controls {
   background: white;
   border-radius: 10px;

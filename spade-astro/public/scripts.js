@@ -696,7 +696,19 @@ const AgentDemo = {
     });
 
     // Set up event listeners
-    window.addEventListener('resize', () => this.resizeCanvas());
+    window.addEventListener('resize', () => {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = setTimeout(() => this.resizeCanvas(), 150);
+    });
+
+    // Add ResizeObserver for container size changes
+    if (window.ResizeObserver) {
+      this.resizeObserver = new ResizeObserver(() => {
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => this.resizeCanvas(), 150);
+      });
+      this.resizeObserver.observe(this.canvas.parentElement);
+    }
 
     const startButton = document.getElementById('start-demo');
     const resetButton = document.getElementById('reset-demo');
@@ -739,6 +751,12 @@ const AgentDemo = {
     this.updateDemoStatus();
     this.drawFrame();
 
+    // Force resize on initialization and after a short delay
+    this.resizeCanvas();
+    setTimeout(() => {
+      this.resizeCanvas();
+    }, 100);
+
     console.log('Agent Demo initialized successfully');
   },
 
@@ -780,10 +798,20 @@ const AgentDemo = {
   // Resize canvas to maintain proper dimensions
   resizeCanvas() {
     const container = this.canvas.parentElement;
-    this.canvas.width = container.clientWidth;
-    this.canvas.height = container.clientHeight;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
 
+    // Set canvas dimensions to match container
+    this.canvas.width = containerWidth;
+    this.canvas.height = containerHeight;
+
+    // Ensure minimum dimensions for usability
+    if (this.canvas.width < 300) this.canvas.width = 300;
+    if (this.canvas.height < 200) this.canvas.height = 200;
+
+    // Update agents positions if they exist
     if (this.agents.length) {
+      this.setupScenario(); // Recalculate agent positions for new dimensions
       this.drawFrame();
     }
   },
@@ -928,6 +956,17 @@ const AgentDemo = {
     this.running = false;
     this.updateDemoStatus();
     this.drawFrame();
+  },
+
+  // Cleanup method
+  cleanup() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+    }
+    this.pause();
   },
 
   // Animation loop
@@ -1502,7 +1541,17 @@ const AgentDemo = {
     const statusContainer = document.getElementById('demo-status');
     const legendContainer = document.getElementById('demo-legend');
 
-    if (!statusElement || !statusContainer) return;
+    console.log('updateDemoStatus called', {
+      statusElement: !!statusElement,
+      statusContainer: !!statusContainer,
+      legendContainer: !!legendContainer,
+      scenario: this.scenario,
+    });
+
+    if (!statusElement || !statusContainer) {
+      console.warn('Demo status elements not found');
+      return;
+    }
 
     const descriptions = {
       simple:
@@ -1515,17 +1564,32 @@ const AgentDemo = {
 
     statusElement.textContent =
       descriptions[this.scenario] || 'Demo scenario description.';
+
+    // Status should always be visible
     statusContainer.style.display = 'block';
+
+    console.log(
+      'Status container display set to:',
+      statusContainer.style.display
+    );
 
     // Show legend only for behaviors demo
     if (legendContainer) {
       legendContainer.style.display =
         this.scenario === 'behaviors' ? 'block' : 'none';
+      console.log(
+        'Legend container display set to:',
+        legendContainer.style.display
+      );
+    } else {
+      console.warn('Legend container not found');
     }
 
     if (this.running) {
       statusElement.textContent += ' Demo is running...';
     }
+
+    console.log('Demo status updated. Text:', statusElement.textContent);
   },
 
   // Utility to lighten a color
@@ -1557,6 +1621,12 @@ window.addEventListener('load', function () {
     if (typeof Prism !== 'undefined') {
       initializeCodeExamples();
       console.log('Code examples initialized on window load fallback');
+    }
+
+    // Ensure canvas is properly sized after page load
+    if (typeof AgentDemo !== 'undefined' && AgentDemo.canvas) {
+      AgentDemo.resizeCanvas();
+      console.log('Canvas resized on window load');
     }
   }, 500);
 });
