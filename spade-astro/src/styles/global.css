@@ -1048,6 +1048,15 @@ body.dark-mode .dark-mode-toggle:hover {
   background-color: rgba(46, 204, 113, 0.1);
 }
 
+/* Small dark mode toggle variant */
+.dark-mode-toggle-small {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  min-width: auto;
+  width: auto;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
