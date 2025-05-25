@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Event-Driven Demo</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f5f5f5;
+      }
+
+      .demo-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .controls {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        background: #3498db;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #2980b9;
+      }
+
+      button:disabled {
+        background: #bdc3c7;
+        cursor: not-allowed;
+      }
+
+      select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      #agent-network {
+        width: 100%;
+        height: 500px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .status {
+        margin-top: 10px;
+        padding: 10px;
+        background: #ecf0f1;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+      }
+
+      .scenario-info {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: #e8f4fd;
+        border-radius: 4px;
+        border-left: 4px solid #3498db;
+      }
+
+      .scenario-info h4 {
+        margin: 0 0 5px 0;
+        color: #2c3e50;
+      }
+
+      .scenario-info p {
+        margin: 0;
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-container">
+      <h1>SPADE Event-Driven Demo Test</h1>
+
+      <div class="scenario-info">
+        <h4>Testing Enhanced Multi-Message & Event-Driven Behaviors</h4>
+        <p>
+          This test verifies the new broadcast messaging capabilities and
+          event-driven behavior system including message forwarding,
+          auto-responses, aggregation, and load balancing.
+        </p>
+      </div>
+
+      <div class="controls">
+        <select id="scenario-select">
+          <option value="simple">Basic Communication</option>
+          <option value="behaviors">Agent Behaviors</option>
+          <option value="presence">Presence Notification</option>
+          <option value="pubsub">Publish-Subscribe</option>
+          <option value="event_driven">Event-Driven Behaviors</option>
+        </select>
+        <button id="start-btn">Start Demo</button>
+        <button id="pause-btn">Pause Demo</button>
+        <button id="reset-btn">Reset Demo</button>
+      </div>
+
+      <div id="agent-network"></div>
+
+      <div class="status" id="demo-status">
+        Status: Demo initialized. Select a scenario and click Start Demo.
+      </div>
+    </div>
+
+    <script src="/js/demos.js"></script>
+    <script>
+      // Initialize the demo when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Initializing SPADE Event-Driven Demo Test...");
+
+        // Check if AgentDemo is available
+        if (typeof AgentDemo !== "undefined") {
+          AgentDemo.init();
+          console.log("AgentDemo initialized successfully");
+
+          // Test broadcast messaging after initialization
+          setTimeout(() => {
+            console.log("Testing enhanced features...");
+            testBroadcastCapabilities();
+            testEventDrivenBehaviors();
+          }, 2000);
+        } else {
+          console.error(
+            "AgentDemo not found! Make sure demos.js is loaded properly."
+          );
+          document.getElementById("demo-status").textContent =
+            "Error: AgentDemo not found. Check console for details.";
+        }
+      });
+
+      function testBroadcastCapabilities() {
+        console.log("=== Testing Broadcast Messaging ===");
+
+        // Test if AgentDemo has the new methods
+        const methods = [
+          "sendMessage",
+          "sendBroadcastMessage",
+          "sendSingleMessage",
+          "getConnectedNodes",
+          "broadcastPresence",
+          "publishToSubscribers",
+          "handleMessageArrival",
+          "processBehaviorOnMessageArrival",
+        ];
+
+        methods.forEach((method) => {
+          if (typeof AgentDemo[method] === "function") {
+            console.log(`✓ ${method} - Available`);
+          } else {
+            console.error(`✗ ${method} - Missing`);
+          }
+        });
+      }
+
+      function testEventDrivenBehaviors() {
+        console.log("=== Testing Event-Driven Behaviors ===");
+
+        // Check if demo data includes event-driven scenario
+        if (AgentDemo.demoData && AgentDemo.demoData.demos) {
+          const eventDrivenDemo = AgentDemo.demoData.demos.find(
+            (demo) => demo.id === "event_driven"
+          );
+          if (eventDrivenDemo) {
+            console.log("✓ Event-Driven scenario found");
+            console.log(
+              "✓ Behaviors included:",
+              eventDrivenDemo.behaviors.map((b) => b.type)
+            );
+
+            // Check for new behavior types
+            const newBehaviorTypes = [
+              "messageForwarding",
+              "autoResponse",
+              "messageAggregation",
+              "loadBalancing",
+            ];
+            newBehaviorTypes.forEach((type) => {
+              const found = eventDrivenDemo.behaviors.some(
+                (b) => b.type === type
+              );
+              console.log(
+                `${found ? "✓" : "✗"} ${type} behavior ${found ? "found" : "missing"}`
+              );
+            });
+          } else {
+            console.error("✗ Event-Driven scenario not found");
+          }
+        }
+      }
+
+      // Update status periodically
+      setInterval(() => {
+        if (AgentDemo.running) {
+          const messageCount = AgentDemo.countActiveMessages
+            ? AgentDemo.countActiveMessages()
+            : 0;
+          const elapsed = Math.floor((Date.now() - AgentDemo.startTime) / 1000);
+          document.getElementById("demo-status").textContent =
+            `Status: Running (${elapsed}s) | Active Messages: ${messageCount} | Scenario: ${AgentDemo.scenario}`;
+        }
+      }, 500);
+    </script>
+  </body>
+</html>

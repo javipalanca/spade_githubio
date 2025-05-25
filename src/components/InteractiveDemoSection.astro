@@ -1,5 +1,6 @@
 ---
 // Interactive Demo Section component
+import PythonCodeBlock from './PythonCodeBlock.astro';
 ---
 
 <section id="interactive-demo" class="py-5">
@@ -13,51 +14,53 @@
             <div class="col-lg-10 mx-auto">
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-0">
+                        <!-- Demo canvas container -->
                         <div id="agent-demo-container" class="position-relative demo-canvas-container">
-                            <!-- Canvas for agent animation -->
-                            <canvas id="agent-canvas" width="800" height="500" class="w-100 h-100"></canvas>
+                            <!-- Canvas for agent animation (will be replaced by vis.js) -->
+                            <canvas id="agent-canvas" width="800" height="400" class="w-100" style="display: none;"></canvas>
+                            <div id="agent-network" style="width: 100%; height: 400px; border: 1px solid #ddd; border-radius: 5px 5px 0 0;"></div>
                             
-                            <!-- Controls -->
-                            <div class="demo-controls position-absolute bottom-0 start-0 end-0 p-3 bg-light bg-opacity-75 dark-mode-aware">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <button id="start-demo" class="btn btn-primary btn-sm">
-                                            <i class="bi bi-play-fill"></i> Start Demo
-                                        </button>
-                                        <button id="reset-demo" class="btn btn-outline-secondary btn-sm ms-2">
-                                            <i class="bi bi-arrow-counterclockwise"></i> Reset
-                                        </button>
-                                    </div>
-                                    <div class="col-auto">
+                            <!-- Controls - positioned at bottom but not overlapping -->
+                            <div class="demo-controls p-3 bg-light bg-opacity-90 dark-mode-aware border-top">
+                                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center mb-2">
+                                    <div class="mb-2 mb-sm-0 me-sm-3">
                                         <select id="demo-scenario" class="form-select form-select-sm">
-                                            <option value="simple">Basic Communication</option>
-                                            <option value="behaviors">Agent Behaviors</option>
-                                            <option value="network">Agent Network</option>
+                                            <!-- Options will be loaded dynamically from JSON -->
                                         </select>
                                     </div>
+                                    <div class="button-group">
+                                        <button id="start-demo" class="btn btn-primary btn-sm me-1 mb-1 mb-sm-0">
+                                            <i class="bi bi-play-fill"></i> <span class="d-none d-sm-inline">Start</span>
+                                        </button>
+                                        <button id="reset-demo" class="btn btn-outline-secondary btn-sm me-1 mb-1 mb-sm-0">
+                                            <i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-sm-inline">Reset</span>
+                                        </button>                        <button id="toggle-code" class="btn btn-outline-info btn-sm" title="Scroll to code examples">
+                            <i class="bi bi-code-slash"></i> <span class="d-none d-sm-inline">View Code</span>
+                        </button>
+                                    </div>
                                 </div>
-                                <div class="row mt-2" id="demo-status">
+                                <div class="row mt-2">
                                     <div class="col">
                                         <small class="text-muted">
-                                            <span id="demo-status-text">Demo status will appear here...</span>
+                                            Status: <span id="demo-status-text" class="text-warning">Paused</span>
                                         </small>
                                     </div>
                                 </div>
-                                <div class="row mt-2" id="demo-legend">
+                                <div class="row mt-1">
                                     <div class="col">
-                                        <small class="text-muted">
-                                            <span class="badge bg-secondary me-2">Gray: Idle</span>
-                                            <span class="badge bg-warning me-2">Orange: Working</span>
-                                            <span class="text-muted">Hover over agents for more info</span>
+                                        <small class="text-muted" id="demo-description">
+                                            A simple demonstration of two agents exchanging messages.
                                         </small>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+
                     </div>
                 </div>
                 
-                <div class="row text-center">
+                <div class="row text-center mb-4">
                     <div class="col-md-4">
                         <h6>Agent Communication</h6>
                         <p class="small text-muted">Watch agents send and receive messages using XMPP protocol</p>
@@ -71,7 +74,754 @@
                         <p class="small text-muted">Monitor agent status and presence in real-time</p>
                     </div>
                 </div>
+                
+                <!-- Python Code Examples Section -->
+                <div class="card border-0 shadow-sm mb-4" id="code-section">
+                    <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between">
+                        <div>
+                            <i class="bi bi-code-slash me-2"></i>
+                            <span>Python Implementation</span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-light" id="collapse-code">
+                            <i class="bi bi-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-0" id="code-container">
+                        <!-- Tabs for different scenarios - will be populated dynamically -->
+                        <ul class="nav nav-tabs" id="codeExampleTabs" role="tablist">
+                            <!-- Tabs will be generated from demo data -->
+                        </ul>
+                        
+                        <!-- Tab content - will be populated dynamically -->
+                        <div class="tab-content" id="codeExampleTabsContent">
+                            <!-- Content will be generated from demo data -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .code-description h6 {
+        font-weight: 600;
+    }
+    
+    /* Custom styles for code tabs */
+    #codeExampleTabs .nav-link {
+        color: #6c757d;
+        font-weight: 500;
+        border: none;
+        padding: 0.75rem 1rem;
+        transition: all 0.2s ease;
+    }
+    
+    #codeExampleTabs .nav-link:hover {
+        color: #495057;
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+    
+    #codeExampleTabs .nav-link.active {
+        color: #0d6efd;
+        font-weight: 600;
+        border-bottom: 2px solid #0d6efd;
+    }
+    
+    /* Better scrolling for code blocks */
+    .code-body {
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: auto;
+        background-color: #f8f9fa;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 0.375rem;
+        position: relative;
+    }
+    
+    .code-body pre {
+        margin: 0;
+        padding: 1rem;
+        background: transparent !important;
+        border: none;
+        border-radius: 0;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    
+    .code-body code {
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+    
+    /* Custom scrollbar for code blocks */
+    .code-body::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .code-body::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+    
+    .code-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+    
+    .code-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Dark mode styles for code body */
+    :global(.dark-mode) .code-body {
+        background-color: #2d3748;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    :global(.dark-mode) .code-body pre {
+        color: #e2e8f0;
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Demo canvas and network container */
+    .demo-canvas-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    #agent-network {
+        background: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-radius: 5px;
+    }
+    
+    /* Dark mode for demo container */
+    :global(.dark-mode) .demo-canvas-container {
+        background: linear-gradient(135deg, #343a40 0%, #495057 100%);
+    }
+    
+    :global(.dark-mode) #agent-network {
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(255, 255, 255, 0.02);
+    }
+    
+    /* Demo controls */
+    .demo-controls {
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    
+    /* Running indicator */
+    #demo-status-text.text-success::before {
+        content: "●";
+        color: #28a745;
+        margin-right: 5px;
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    
+    /* Button styles */
+    .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    
+    .button-group .btn {
+        min-width: 80px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    #demo-scenario {
+        min-width: 180px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* Enhanced visual feedback for toggle button */
+    #toggle-code {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    #toggle-code::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    #toggle-code:hover::before {
+        left: 100%;
+    }
+    
+    #toggle-code:active {
+        transform: translateY(1px);
+    }
+    
+
+    
+    /* Better mobile view */
+    @media (max-width: 767.98px) {
+        .demo-controls .row {
+            flex-direction: column;
+        }
+        
+        .demo-controls .col-auto {
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+        
+        #demo-scenario {
+            width: 100%;
+        }
+        
+        .demo-controls button {
+            margin-bottom: 0.5rem;
+        }
+    }
+    
+    /* Dark mode support */
+    :global(.dark-mode) .code-description h6 {
+        color: #61dafb !important;
+    }
+    
+    :global(.dark-mode) #codeExampleTabs .nav-link {
+        color: #adb5bd;
+    }
+    
+    :global(.dark-mode) #codeExampleTabs .nav-link:hover {
+        color: #e9ecef;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    :global(.dark-mode) #codeExampleTabs .nav-link.active {
+        color: #61dafb;
+        border-bottom-color: #61dafb;
+    }
+    
+    :global(.dark-mode) .demo-controls {
+        background: rgba(33, 37, 41, 0.9) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Controls for code section */
+    #code-section {
+        transition: all 0.3s ease;
+    }
+    
+    #code-section.collapsed #code-container {
+        display: none;
+    }
+    
+    #code-section.collapsed #collapse-code i {
+        transform: rotate(180deg);
+    }
+    
+    #collapse-code {
+        transition: all 0.2s ease;
+    }
+    
+    #collapse-code i {
+        transition: transform 0.3s ease;
+    }
+    
+    /* Button highlight */
+    #toggle-code.active {
+        background-color: #0dcaf0 !important;
+        color: white !important;
+        border-color: #0dcaf0 !important;
+        box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+    }
+    
+    :global(.dark-mode) #toggle-code.active {
+        background-color: #0d6efd !important;
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    
+    /* Demo container and canvas */
+    .demo-canvas-container {
+        border-radius: 0.375rem;
+        overflow: hidden;
+    }
+    
+    #agent-network {
+        border-radius: 0.375rem 0.375rem 0 0 !important;
+    }
+    
+    /* Demo controls - no longer absolute positioned */
+    .demo-controls {
+        border-radius: 0 0 0.375rem 0.375rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Dark mode styles */
+    :global(.dark-mode) .demo-controls {
+        background: rgba(33, 37, 41, 0.9) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Responsive adjustments for demo controls */
+    @media (max-width: 576px) {
+        .demo-controls {
+            padding: 10px !important;
+        }
+        
+        #demo-scenario {
+            width: 100%;
+            max-width: none;
+            margin-bottom: 0.5rem;
+        }
+        
+        .button-group {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .button-group .btn {
+            flex: 1;
+            min-width: 30%;
+            margin-right: 0.25rem;
+        }
+        
+        .demo-canvas-container {
+            min-height: 350px !important; /* Reduce height for mobile */
+        }
+    }
+</style>
+
+<script is:inline>
+// Load Python code examples from demos.json and populate the tabs
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // Fetch demo data from JSON
+        const response = await fetch('/json/demos.json');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch demos: ${response.status}`);
+        }
+        
+        const demoData = await response.json();
+        if (!demoData || !demoData.demos || !Array.isArray(demoData.demos)) {
+            throw new Error('Invalid demo data format');
+        }
+        
+        // Store global demo data for later use
+        window.demoData = demoData;
+        
+        // Python code cache
+        const pythonCodeCache = new Map();
+        
+        // Function to load Python code from file
+        async function loadPythonCode(pythonFile) {
+            if (pythonCodeCache.has(pythonFile)) {
+                return pythonCodeCache.get(pythonFile);
+            }
+            
+            try {
+                const response = await fetch(`/py/${pythonFile}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch ${pythonFile}: ${response.status}`);
+                }
+                const code = await response.text();
+                pythonCodeCache.set(pythonFile, code);
+                return code;
+            } catch (error) {
+                console.error(`Error loading Python file ${pythonFile}:`, error);
+                return `# Error loading ${pythonFile}\n# ${error.message}`;
+            }
+        }
+        
+        // Function to update tab content with Python code
+        async function updateTabWithCode(demo) {
+            const tabPane = document.getElementById(`${demo.id}-code`);
+            if (!tabPane) return;
+            
+            const pythonFile = demo.pythonFile;
+            if (!pythonFile) return;
+            
+            try {
+                const code = await loadPythonCode(pythonFile);
+                
+                // Update the tab content with actual code
+                tabPane.innerHTML = `
+                    <div class="p-3">
+                        <div class="code-description mb-3">
+                            <h6 class="text-primary">${demo.name}</h6>
+                            <p class="small text-muted">${demo.description}</p>
+                        </div>
+                        <div class="code-example">
+                            <div class="code-header d-flex justify-content-between align-items-center">
+                                <span class="code-filename">${pythonFile}</span>
+                                <button class="btn btn-sm btn-outline-primary copy-btn" type="button" 
+                                        data-code="${code.replace(/"/g, '&quot;')}" title="Copy code">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                            <div class="code-body">
+                                <pre><code class="language-python">${code}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Apply syntax highlighting
+                if (typeof window.Prism !== 'undefined') {
+                    const codeBlock = tabPane.querySelector('code.language-python');
+                    if (codeBlock) {
+                        window.Prism.highlightElement(codeBlock);
+                    }
+                }
+                
+                // Update copy button functionality
+                const copyBtn = tabPane.querySelector('.copy-btn');
+                if (copyBtn) {
+                    copyBtn.addEventListener('click', function() {
+                        const code = this.getAttribute('data-code');
+                        if (!code) return;
+                        
+                        navigator.clipboard.writeText(code).then(() => {
+                            // Show copied feedback
+                            const originalHTML = this.innerHTML;
+                            this.innerHTML = '<i class="bi bi-check"></i> Copied!';
+                            this.classList.add('btn-success');
+                            this.classList.remove('btn-outline-primary');
+                            
+                            // Reset after 2 seconds
+                            setTimeout(() => {
+                                this.innerHTML = originalHTML;
+                                this.classList.remove('btn-success');
+                                this.classList.add('btn-outline-primary');
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Could not copy text: ', err);
+                        });
+                    });
+                }
+                
+            } catch (error) {
+                console.error(`Error updating tab with code for ${demo.id}:`, error);
+                tabPane.innerHTML = `
+                    <div class="p-3">
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Error loading Python code: ${error.message}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Store the updateTabWithCode function globally for use by demos.js
+        window.updateTabWithCode = updateTabWithCode;
+        
+        // Generate tabs and content for each demo
+        const tabList = document.getElementById('codeExampleTabs');
+        const tabContent = document.getElementById('codeExampleTabsContent');
+        
+        if (!tabList || !tabContent) {
+            console.error('Tab containers not found');
+            return;
+        }
+        
+        // Clear existing content
+        tabList.innerHTML = '';
+        tabContent.innerHTML = '';
+        
+        // For each demo with Python code, create a tab and content
+        const demosWithCode = demoData.demos.filter(demo => demo.pythonFile);
+        
+        for (let index = 0; index < demosWithCode.length; index++) {
+            const demo = demosWithCode[index];
+            
+            // Create tab item
+            const tabItem = document.createElement('li');
+            tabItem.className = 'nav-item';
+            tabItem.setAttribute('role', 'presentation');
+            
+            const tabButton = document.createElement('button');
+            tabButton.className = 'nav-link' + (index === 0 ? ' active' : '');
+            tabButton.id = `${demo.id}-tab`;
+            tabButton.setAttribute('data-bs-toggle', 'tab');
+            tabButton.setAttribute('data-bs-target', `#${demo.id}-code`);
+            tabButton.setAttribute('type', 'button');
+            tabButton.setAttribute('role', 'tab');
+            tabButton.setAttribute('aria-controls', `${demo.id}-code`);
+            tabButton.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+            tabButton.textContent = demo.name;
+            
+            tabItem.appendChild(tabButton);
+            tabList.appendChild(tabItem);
+            
+            // Create tab content with loading placeholder
+            const contentPane = document.createElement('div');
+            contentPane.className = 'tab-pane fade' + (index === 0 ? ' show active' : '');
+            contentPane.id = `${demo.id}-code`;
+            contentPane.setAttribute('role', 'tabpanel');
+            contentPane.setAttribute('aria-labelledby', `${demo.id}-tab`);
+            contentPane.setAttribute('data-python-file', demo.pythonFile);
+            
+            // Add loading placeholder - Python code will be fetched when tab is activated
+            contentPane.innerHTML = `
+                    <div class="p-3">
+                        <div class="code-description mb-3">
+                            <h6 class="text-primary">${demo.name}</h6>
+                            <p class="small text-muted">${demo.description}</p>
+                        </div>
+                        <div class="code-example">
+                            <div class="code-header d-flex justify-content-between align-items-center">
+                                <span class="code-filename">${demo.pythonFile}</span>
+                                <button class="btn btn-sm btn-outline-primary copy-btn" type="button" 
+                                        data-code="" title="Copy code">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                            <div class="code-body">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading code...</span>
+                                    </div>
+                                    <p class="mt-2 text-muted">Loading Python code...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            
+            tabContent.appendChild(contentPane);
+        }
+        
+        // Load the first tab's content immediately
+        if (demosWithCode.length > 0) {
+            await updateTabWithCode(demosWithCode[0]);
+        }
+        
+        // Set up lazy loading for other tabs
+        const codeTabs = document.querySelectorAll('#codeExampleTabs button[data-bs-toggle="tab"]');
+        codeTabs.forEach(tab => {
+            tab.addEventListener('shown.bs.tab', async function(event) {
+                const targetId = event.target.getAttribute('data-bs-target');
+                if (!targetId) return;
+                
+                const targetPane = document.querySelector(targetId);
+                if (!targetPane) return;
+                
+                // Check if content is already loaded (not showing loading spinner)
+                const hasSpinner = targetPane.querySelector('.spinner-border');
+                if (!hasSpinner) return; // Already loaded
+                
+                // Find the demo for this tab
+                const tabId = event.target.id.replace('-tab', '');
+                const demo = demosWithCode.find(d => d.id === tabId);
+                if (demo) {
+                    await updateTabWithCode(demo);
+                }
+            });
+        });
+        
+        // Initialize syntax highlighting
+        if (typeof window.Prism !== 'undefined') {
+            setTimeout(() => {
+                window.Prism.highlightAll();
+            }, 150);
+        } else {
+            console.warn('Prism.js not loaded - syntax highlighting may not work');
+        }
+        
+        // Setup copy button functionality
+        setupCopyButtons();
+        
+        // Sync scenario selector with code tabs
+        syncTabsWithScenario();
+        
+        // Setup code toggle functionality
+        setupCodeToggle();
+        
+    } catch (error) {
+        console.error('Error setting up code examples:', error);
+    }
+});
+
+// Setup copy buttons for code examples
+function setupCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const code = this.getAttribute('data-code');
+            if (!code) return;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // Show copied feedback
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="bi bi-check"></i> Copied!';
+                this.classList.add('btn-success');
+                this.classList.remove('btn-outline-primary');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.classList.remove('btn-success');
+                    this.classList.add('btn-outline-primary');
+                }, 2000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        });
+    });
+}
+
+// Sync scenario selector with code tabs
+function syncTabsWithScenario() {
+    const scenarioSelect = document.getElementById('demo-scenario');
+    
+    // Function to highlight code using Prism
+    const highlightCode = () => {
+        if (typeof window.Prism !== 'undefined') {
+            setTimeout(() => {
+                try {
+                    window.Prism.highlightAll();
+                    console.log('Applied syntax highlighting via Prism.highlightAll()');
+                } catch (error) {
+                    console.warn('Error applying syntax highlighting:', error);
+                }
+            }, 100);
+        } else {
+            console.warn('Prism.js not available for syntax highlighting');
+        }
+    };
+    
+    if (scenarioSelect) {
+        // When scenario changes, update code tab
+        scenarioSelect.addEventListener('change', function() {
+            const scenarioId = this.value;
+            const codeTab = document.querySelector(`#${scenarioId}-tab`);
+            if (codeTab && typeof bootstrap !== 'undefined') {
+                // Activate the corresponding tab
+                const tabTrigger = new bootstrap.Tab(codeTab);
+                tabTrigger.show();
+                
+                // Re-highlight code
+                highlightCode();
+            }
+        });
+        
+        // When code tab changes, update scenario
+        const codeTabs = document.querySelectorAll('#codeExampleTabs button');
+        codeTabs.forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function(event) {
+                const scenarioId = event.target.id.replace('-tab', '');
+                if (scenarioSelect.value !== scenarioId) {
+                    scenarioSelect.value = scenarioId;
+                    // Trigger change event to update the demo
+                    const changeEvent = new Event('change');
+                    scenarioSelect.dispatchEvent(changeEvent);
+                }
+                
+                // Re-highlight code in the new tab
+                highlightCode();
+            });
+        });
+    }
+    
+    // Initial highlighting
+    highlightCode();
+}
+
+// Setup code toggle functionality - now scrolls to main code section
+function setupCodeToggle() {
+    const codeSection = document.getElementById('code-section');
+    const toggleCodeBtn = document.getElementById('toggle-code');
+    const collapseCodeBtn = document.getElementById('collapse-code');
+    
+    if (!toggleCodeBtn || !codeSection) {
+        console.warn('Toggle code button or code section not found');
+        return;
+    }
+    
+    // New simple scroll-to-code functionality
+    function scrollToCode() {
+        // Smooth scroll to the code section
+        codeSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+        
+        // If code section is collapsed, expand it
+        if (codeSection.classList.contains('collapsed')) {
+            codeSection.classList.remove('collapsed');
+            localStorage.setItem('spade-code-visible', 'true');
+        }
+        
+        // Add a brief highlight effect
+        codeSection.style.transition = 'box-shadow 0.3s ease';
+        codeSection.style.boxShadow = '0 0 20px rgba(13, 110, 253, 0.3)';
+        
+        setTimeout(() => {
+            codeSection.style.boxShadow = '';
+        }, 2000);
+    }
+    
+    // Add event listener to toggle button
+    toggleCodeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollToCode();
+    });
+    
+    // Collapse button in code header
+    if (collapseCodeBtn) {
+        collapseCodeBtn.addEventListener('click', function() {
+            codeSection.classList.toggle('collapsed');
+            const isVisible = !codeSection.classList.contains('collapsed');
+            localStorage.setItem('spade-code-visible', isVisible ? 'true' : 'false');
+        });
+    }
+    
+    // Initialize collapsed state from localStorage
+    const isCodeVisible = localStorage.getItem('spade-code-visible') !== 'false';
+    if (!isCodeVisible) {
+        codeSection.classList.add('collapsed');
+    }
+}
+
+// On page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Other initialization code that was already here
+    // ...
+    
+    // Setup code toggle functionality
+    setupCodeToggle();
+});
+</script>

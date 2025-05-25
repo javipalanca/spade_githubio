@@ -1,42 +1,729 @@
 // SPADE Interactive Demo
 // This script manages the interactive agent demonstrations
 // It's been separated from the main scripts.js for better maintainability
-// Last updated: May 25, 2025 - Refactored from scripts.js to improve code organization
+// Last updated: May 25, 2025 - Refactored to use vis.js and dynamic JSON configuration
+
+// We use the vis global variable that's loaded from node_modules or CDN
+// If you prefer using import/export, uncomment the following line:
+// import { Network } from 'vis-network';
 
 const AgentDemo = {
-  canvas: null,
-  ctx: null,
-  agents: [],
-  messages: [],
-  particles: [],
-  animationId: null,
+  network: null,
+  container: null,
+  demoData: null,
   running: false,
   scenario: 'simple',
-  scenarioStartTime: 0,
-
-  // Agent types and their properties
-  agentTypes: {
-    sender: {
-      color: '#3498db', // Blue
-      radius: 25,
-      label: 'Sender Agent',
-    },
-    receiver: {
-      color: '#2ecc71', // Green
-      radius: 25,
-      label: 'Receiver Agent',
-    },
-    coordinator: {
-      color: '#e74c3c', // Red
-      radius: 25,
-      label: 'Coordinator',
-    },
-    worker: {
-      color: '#f39c12', // Orange
-      radius: 20,
-      label: 'Worker Agent',
-    },
+  activeInterval: null,
+  messages: [],
+  startTime: 0,
+  behaviors: [],
+  messageElements: {},
+  
+  init() {
+    console.log('Initializing Agent Demo with vis.js...');
+    this.container = document.getElementById('agent-demo-container');
+    
+    if (!this.container) {
+      console.warn('Agent demo container not found');
+      return;
+    }
+    
+    // Replace the canvas with a div for vis.js
+    const canvasEl = document.getElementById('agent-canvas');
+    if (canvasEl) {
+      canvasEl.style.display = 'none';
+    }
+    
+    const visContainer = document.createElement('div');
+    visContainer.id = 'agent-network';
+    visContainer.style.width = '100%';
+    visContainer.style.height = '100%';
+    visContainer.style.position = 'relative';
+    this.container.appendChild(visContainer);
+    
+    // Load demos from JSON
+    this.loadScenariosFromJSON();
+    
+    // Setup controls
+    this.setupControls();
+    
+    console.log('Agent Demo initialized with vis.js');
   },
+  
+  loadScenariosFromJSON() {
+    console.log('Loading demo scenarios from JSON...');
+    fetch('/landing-assets/demos.json')
+      .then((response) => {
+        console.log('Demos response status:', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Demo scenarios loaded:', data);
+        this.demoData = data;
+        
+        // Populate scenario selector
+        const scenarioSelect = document.getElementById('demo-scenario');
+        if (scenarioSelect) {
+          // Clear existing options
+          scenarioSelect.innerHTML = '';
+          
+          // Add options from JSON
+          data.demos.forEach((demo) => {
+            const option = document.createElement('option');
+            option.value = demo.id;
+            option.textContent = demo.name;
+            scenarioSelect.appendChild(option);
+          });
+          
+          // Set current scenario
+          this.scenario = scenarioSelect.value || 'simple';
+          this.setupScenario(this.scenario);
+        } else {
+          // If no selector, initialize with default scenario
+          this.setupScenario('simple');
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading demo scenarios:', error);
+      });
+  },
+  
+  setupControls() {
+    const startButton = document.getElementById('start-demo');
+    const resetButton = document.getElementById('reset-demo');
+    const scenarioSelect = document.getElementById('demo-scenario');
+    
+    if (startButton) {
+      startButton.addEventListener('click', () => {
+        if (this.running) {
+          this.pause();
+          startButton.innerHTML = '<i class="bi bi-play-fill"></i> Start Demo';
+        } else {
+          this.start();
+          startButton.innerHTML = '<i class="bi bi-pause-fill"></i> Pause';
+        }
+      });
+    }
+    
+    if (resetButton) {
+      resetButton.addEventListener('click', () => {
+        this.reset();
+        if (startButton) {
+          startButton.innerHTML = '<i class="bi bi-play-fill"></i> Start Demo';
+        }
+      });
+    }
+    
+    if (scenarioSelect) {
+      scenarioSelect.addEventListener('change', (e) => {
+        this.scenario = e.target.value;
+        this.reset();
+        this.setupScenario(this.scenario);
+        this.updateDemoStatus();
+      });
+    }
+    
+    // Handle responsive resizing
+    window.addEventListener('resize', () => {
+      if (this.network) {
+        this.network.redraw();
+        this.network.fit();
+      }
+    });
+  },
+  
+  setupScenario(scenarioId) {
+    if (!this.demoData) return;
+    
+    // Limpiar mensajes existentes
+    this.clearMessages();
+    
+    // Encontrar el escenario seleccionado
+    const scenario = this.demoData.demos.find(demo => demo.id === scenarioId);
+    if (!scenario) {
+      console.error(`Scenario ${scenarioId} not found`);
+      return;
+    }
+    
+    // Actualizar descripción si existe
+    const descEl = document.getElementById('demo-description');
+    if (descEl) {
+      descEl.textContent = scenario.description;
+    }
+    
+    // Preparar datos para vis.js
+    const nodes = scenario.nodes.map(node => {
+      const agentType = this.demoData.agentTypes[node.type];
+      return {
+        id: node.id,
+        label: node.label || agentType.label.charAt(0),
+        title: agentType.label,
+        x: node.position?.x,
+        y: node.position?.y,
+        color: {
+          background: agentType.color,
+          border: this.lightenColor(agentType.color, -20)
+        },
+        size: agentType.size,
+        font: { color: '#ffffff' },
+        metadata: {
+          type: node.type,
+          state: 'idle',
+          behaviorType: node.behaviorType || 'default',
+          ...node
+        }
+      };
+    });
+    
+    const edges = scenario.edges.map(edge => ({
+      from: edge.from,
+      to: edge.to,
+      color: { color: 'rgba(150,150,150,0.2)', highlight: 'rgba(150,150,150,0.5)' },
+      width: 1,
+      smooth: { type: 'continuous' }
+    }));
+    
+    // Opciones de visualización
+    const options = {
+      nodes: {
+        shape: 'circle',
+        borderWidth: 2,
+        shadow: true
+      },
+      edges: {
+        width: 1,
+        shadow: true
+      },
+      physics: {
+        enabled: true,
+        stabilization: true,
+        barnesHut: {
+          gravitationalConstant: -2000,
+          springLength: 150
+        }
+      },
+      interaction: {
+        hover: true,
+        tooltipDelay: 200
+      }
+    };
+    
+    // Crear la red
+    const container = document.getElementById('agent-network');
+    if (!container) return;
+    
+    // Si ya existe una red, destruirla primero
+    if (this.network) {
+      this.network.destroy();
+    }
+    
+    // Crear nueva instancia de Network
+    try {
+      this.network = new vis.Network(
+        container,
+        { nodes, edges },
+        options
+      );
+      
+      // Si hay posiciones definidas, deshabilitar física después de estabilización
+      if (scenario.nodes.some(node => node.position)) {
+        this.network.once('stabilizationIterationsDone', () => {
+          this.network.setOptions({ physics: { enabled: false } });
+        });
+      }
+      
+      // Agregar tooltips mejorados
+      this.network.on('hoverNode', params => {
+        const nodeId = params.node;
+        const node = nodes.find(n => n.id === nodeId);
+        if (node) {
+          this.showNodeTooltip(node, params.pointer.DOM);
+        }
+      });
+      
+      this.network.on('blurNode', () => {
+        this.hideTooltip();
+      });
+      
+      console.log(`Scenario "${scenario.name}" loaded successfully`);
+      
+    } catch (err) {
+      console.error('Error creating network:', err);
+    }
+    
+    // Guardar los comportamientos para usarlos en la animación
+    this.behaviors = scenario.behaviors || [];
+    this.messages = [];
+  },
+  
+  start() {
+    if (this.running) return;
+    
+    this.running = true;
+    this.updateDemoStatus();
+    
+    // Establecer intervalo para ejecutar comportamientos
+    this.activeInterval = setInterval(() => this.updateBehaviors(), 100);
+    
+    // Inicializar tiempo de inicio
+    this.startTime = Date.now();
+  },
+  
+  pause() {
+    this.running = false;
+    if (this.activeInterval) {
+      clearInterval(this.activeInterval);
+      this.activeInterval = null;
+    }
+    this.updateDemoStatus();
+  },
+  
+  reset() {
+    this.pause();
+    this.clearMessages();
+    
+    // Reiniciar la visualización del escenario
+    this.setupScenario(this.scenario);
+  },
+  
+  clearMessages() {
+    // Eliminar todos los elementos de mensajes del DOM
+    Object.values(this.messageElements).forEach(el => {
+      if (el && el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    });
+    
+    this.messageElements = {};
+    this.messages = [];
+  },
+  
+  updateBehaviors() {
+    if (!this.running || !this.network || !this.behaviors || !this.demoData) return;
+    
+    const elapsed = Date.now() - this.startTime;
+    
+    // Procesar cada comportamiento definido en el JSON
+    this.behaviors.forEach(behavior => {
+      switch (behavior.type) {
+        case 'messagePassing':
+          // Enviar mensajes periódicamente
+          if (elapsed % behavior.interval < 100 && this.countActiveMessages() < 3) {
+            // Seleccionar un tipo de mensaje aleatorio
+            const messageType = behavior.messageTypes[
+              Math.floor(Math.random() * behavior.messageTypes.length)
+            ];
+            
+            this.sendMessage(behavior.source, behavior.target, messageType);
+          }
+          break;
+          
+        case 'workCycle':
+          // Actualizar estados de los nodos periódicamente
+          const nodeId = behavior.nodeId;
+          const nodesDataset = this.network.body.data.nodes;
+          const node = nodesDataset.get(nodeId);
+          
+          if (node) {
+            const currentTime = elapsed % (behavior.idleDuration + behavior.workDuration);
+            const newState = currentTime < behavior.idleDuration ? 'idle' : 'working';
+            
+            if (node.metadata.state !== newState) {
+              node.metadata.state = newState;
+              
+              // Actualizar visualización del nodo
+              nodesDataset.update({
+                id: nodeId,
+                color: {
+                  background: newState === 'working' ? '#e74c3c' : this.demoData.agentTypes[node.metadata.type].color,
+                  border: this.lightenColor(newState === 'working' ? '#e74c3c' : this.demoData.agentTypes[node.metadata.type].color, -20)
+                }
+              });
+              
+              // Enviar mensaje cuando cambia de estado
+              if (newState === 'working' && behavior.reportTo) {
+                this.sendMessage(nodeId, behavior.reportTo, 'Starting work');
+              } else if (newState === 'idle' && behavior.reportTo) {
+                this.sendMessage(nodeId, behavior.reportTo, 'Work complete');
+              }
+            }
+          }
+          break;
+          
+        case 'networkCommunication':
+          // Crear mensajes aleatorios entre nodos
+          if (elapsed % behavior.interval < 100 && this.countActiveMessages() < behavior.maxMessages) {
+            const nodes = this.network.body.data.nodes.get();
+            if (nodes.length < 2) return;
+            
+            // Seleccionar nodos aleatorios
+            const fromIdx = Math.floor(Math.random() * nodes.length);
+            let toIdx;
+            do {
+              toIdx = Math.floor(Math.random() * nodes.length);
+            } while (toIdx === fromIdx);
+            
+            const fromNode = nodes[fromIdx];
+            const toNode = nodes[toIdx];
+            
+            const messageTypes = ['Data', 'Request', 'Response', 'Query', 'Update'];
+            const messageType = messageTypes[Math.floor(Math.random() * messageTypes.length)];
+            
+            this.sendMessage(fromNode.id, toNode.id, messageType);
+          }
+          break;
+      }
+    });
+    
+    // Actualizar mensajes en tránsito
+    this.updateMessages();
+  },
+  
+  countActiveMessages() {
+    return this.messages.length;
+  },
+  
+  sendMessage(fromId, toId, text) {
+    // Obtener posiciones de los nodos
+    const positions = this.network.getPositions([fromId, toId]);
+    const fromPos = positions[fromId];
+    const toPos = positions[toId];
+    
+    if (!fromPos || !toPos) return;
+    
+    // Obtener color del nodo emisor
+    const fromNode = this.network.body.data.nodes.get(fromId);
+    const color = fromNode?.color?.background || '#3498db';
+    
+    // Crear ID único para el mensaje
+    const msgId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Crear el elemento visual del mensaje
+    const msgElement = this.createMessageElement(msgId, color);
+    
+    // Crear el mensaje
+    this.messages.push({
+      id: msgId,
+      from: fromId,
+      to: toId,
+      text: text,
+      color: color,
+      startTime: Date.now(),
+      duration: 1500,
+      progress: 0,
+      fromPos,
+      toPos
+    });
+  },
+  
+  createMessageElement(id, color) {
+    const msgElement = document.createElement('div');
+    msgElement.className = 'message-particle';
+    msgElement.style.backgroundColor = color;
+    msgElement.style.width = '8px';
+    msgElement.style.height = '8px';
+    msgElement.style.borderRadius = '50%';
+    msgElement.style.position = 'absolute';
+    msgElement.style.zIndex = '5';
+    msgElement.style.transform = 'translate(-50%, -50%)';
+    msgElement.style.boxShadow = `0 0 10px ${color}`;
+    
+    document.getElementById('agent-network').appendChild(msgElement);
+    
+    // Almacenar referencia
+    this.messageElements[id] = msgElement;
+    
+    return msgElement;
+  },
+  
+  updateMessages() {
+    this.messages = this.messages.filter((msg, index) => {
+      const elapsed = Date.now() - msg.startTime;
+      msg.progress = Math.min(elapsed / msg.duration, 1);
+      
+      if (msg.progress >= 1) {
+        // Mensaje llegó a su destino
+        const msgElement = this.messageElements[msg.id];
+        if (msgElement) {
+          // Efecto de llegada
+          this.createArrivalEffect(msg.toPos.x, msg.toPos.y, msg.color);
+          
+          // Eliminar elemento
+          msgElement.remove();
+          delete this.messageElements[msg.id];
+        }
+        return false; // Eliminar mensaje
+      } else {
+        // Actualizar posición del mensaje
+        const x = msg.fromPos.x + (msg.toPos.x - msg.fromPos.x) * msg.progress;
+        const y = msg.fromPos.y + (msg.toPos.y - msg.fromPos.y) * msg.progress;
+        
+        const msgElement = this.messageElements[msg.id];
+        if (msgElement) {
+          msgElement.style.left = `${x}px`;
+          msgElement.style.top = `${y}px`;
+          
+          // Detectar hover para mostrar tooltip
+          if (this.isMouseNear(x, y, 10)) {
+            this.showMessageTooltip(msg, x, y);
+          }
+        }
+        return true; // Mantener mensaje
+      }
+    });
+  },
+  
+  isMouseNear(x, y, radius) {
+    const container = document.getElementById('agent-network');
+    if (!container || !container.lastMousePos) return false;
+    
+    const mouseX = container.lastMousePos.x;
+    const mouseY = container.lastMousePos.y;
+    
+    const distSq = Math.pow(x - mouseX, 2) + Math.pow(y - mouseY, 2);
+    return distSq <= Math.pow(radius, 2);
+  },
+  
+  createArrivalEffect(x, y, color) {
+    // Crear efecto visual cuando llega un mensaje
+    const effect = document.createElement('div');
+    effect.className = 'message-arrival-effect';
+    effect.style.position = 'absolute';
+    effect.style.left = `${x}px`;
+    effect.style.top = `${y}px`;
+    effect.style.width = '16px';
+    effect.style.height = '16px';
+    effect.style.borderRadius = '50%';
+    effect.style.backgroundColor = 'transparent';
+    effect.style.border = `2px solid ${color}`;
+    effect.style.transform = 'translate(-50%, -50%)';
+    effect.style.zIndex = '4';
+    
+    // Animación CSS
+    effect.animate(
+      [
+        { opacity: 1, transform: 'translate(-50%, -50%) scale(0.5)' },
+        { opacity: 0, transform: 'translate(-50%, -50%) scale(2)' }
+      ],
+      {
+        duration: 600,
+        easing: 'ease-out'
+      }
+    );
+    
+    document.getElementById('agent-network').appendChild(effect);
+    
+    // Eliminar después de la animación
+    setTimeout(() => {
+      if (effect.parentNode) {
+        effect.parentNode.removeChild(effect);
+      }
+    }, 600);
+  },
+  
+  updateDemoStatus() {
+    const statusEl = document.getElementById('demo-status');
+    if (statusEl) {
+      statusEl.textContent = this.running ? 'Running' : 'Paused';
+      statusEl.className = this.running ? 'text-success' : 'text-warning';
+    }
+  },
+  
+  showNodeTooltip(node, position) {
+    let tooltip = document.querySelector('.agent-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.className = 'agent-tooltip';
+      document.body.appendChild(tooltip);
+    }
+    
+    tooltip.style.left = `${position.x + 10}px`;
+    tooltip.style.top = `${position.y - 10}px`;
+    
+    let content = `<div class="arrow"></div><div class="content">
+      <h5>${node.title || node.label}</h5>
+      <p>ID: ${node.id}</p>`;
+      
+    if (node.metadata?.state) {
+      content += `<p>State: ${node.metadata.state}</p>`;
+    }
+    
+    if (node.metadata?.behaviorType) {
+      content += `<p>Behavior: ${node.metadata.behaviorType}</p>`;
+    }
+    
+    content += '</div>';
+    tooltip.innerHTML = content;
+    tooltip.style.display = 'block';
+  },
+  
+  showMessageTooltip(message, x, y) {
+    let tooltip = document.querySelector('.message-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.className = 'message-tooltip';
+      document.body.appendChild(tooltip);
+    }
+    
+    const rect = document.getElementById('agent-network').getBoundingClientRect();
+    tooltip.style.left = `${rect.left + x + 10}px`;
+    tooltip.style.top = `${rect.top + y - 10}px`;
+    tooltip.innerHTML = `<div class="arrow"></div><div class="content">${message.text}</div>`;
+    tooltip.style.display = 'block';
+  },
+  
+  hideTooltip() {
+    const agentTooltip = document.querySelector('.agent-tooltip');
+    if (agentTooltip) {
+      agentTooltip.style.display = 'none';
+    }
+    
+    const messageTooltip = document.querySelector('.message-tooltip');
+    if (messageTooltip) {
+      messageTooltip.style.display = 'none';
+    }
+  },
+  
+  lightenColor(color, percent) {
+    const num = parseInt(color.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = (num >> 16) + amt;
+    const G = ((num >> 8) & 0x00ff) + amt;
+    const B = (num & 0x0000ff) + amt;
+
+    return (
+      '#' +
+      (
+        0x1000000 +
+        (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+        (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+        (B < 255 ? (B < 1 ? 0 : B) : 255)
+      )
+        .toString(16)
+        .slice(1)
+    );
+  },
+  
+  hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+};
+
+// Trackear posición del mouse para tooltips
+document.addEventListener('mousemove', function(e) {
+  const container = document.getElementById('agent-network');
+  if (container) {
+    const rect = container.getBoundingClientRect();
+    container.lastMousePos = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  }
+});
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', function () {
+  // Agregar estilos para los tooltips
+  if (!document.getElementById('agent-demo-styles')) {
+    const style = document.createElement('style');
+    style.id = 'agent-demo-styles';
+    style.textContent = `
+      /* Styles for the agent demo */
+      #agent-network {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background-color: transparent;
+      }
+      
+      .agent-tooltip, .message-tooltip {
+        position: absolute;
+        z-index: 1000;
+        pointer-events: none;
+      }
+      
+      .agent-tooltip .content, .message-tooltip .content {
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        max-width: 200px;
+      }
+      
+      .agent-tooltip h5 {
+        margin: 0 0 5px 0;
+        font-size: 14px;
+      }
+      
+      .agent-tooltip p {
+        margin: 3px 0;
+        font-size: 12px;
+      }
+      
+      .agent-tooltip .arrow, .message-tooltip .arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid rgba(0, 0, 0, 0.8);
+        top: -5px;
+        left: 10px;
+      }
+      
+      .message-tooltip .content {
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+      
+      .message-arrival-effect {
+        pointer-events: none;
+      }
+      
+      .message-particle {
+        pointer-events: none;
+      }
+      
+      body.dark-mode #agent-network {
+        background-color: transparent;
+      }
+    `;
+    });
+  }
+  
+  // Load vis-network if not available
+  if (typeof vis === 'undefined') {
+    console.log('Loading vis-network from node_modules...');
+    const script = document.createElement('script');
+    script.src = '/node_modules/vis-network/dist/vis-network.min.js';
+    script.onload = function() {
+      console.log('vis-network loaded successfully');
+      AgentDemo.init();
+    };
+    script.onerror = function() {
+      console.error('Failed to load vis-network from node_modules, trying CDN...');
+      const cdnScript = document.createElement('script');
+      cdnScript.src = 'https://unpkg.com/vis-network/standalone/umd/vis-network.min.js';
+      cdnScript.onload = function() {
+        console.log('vis-network loaded successfully from CDN');
+        AgentDemo.init();
+      };
+      cdnScript.onerror = function() {
+        console.error('Failed to load vis-network from CDN');
+      };
+      document.head.appendChild(cdnScript);
+    };
+    document.head.appendChild(script);
+  } else {
+    // vis.js is already available
+    AgentDemo.init();
+  }
+});
 
   // Initialize the demo
   init() {

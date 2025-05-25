@@ -40,8 +40,8 @@ def validate_news_data(data):
     return True, "Valid"
 
 # Updated path for Astro structure
-NEWS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                         "public", "landing-assets", "news.json")
+NEWS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         "public", "json", "news.json")
 
 def load_news():
     """Load the current news items"""
@@ -142,16 +142,16 @@ def add_news():
     category, category_class = categories[category_input]
     
     # Get image (optional)
-    print("\nAvailable images in landing-assets/:")
-    assets_dir = os.path.join(os.path.dirname(NEWS_FILE))
-    if os.path.exists(assets_dir):
-        image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg'))]
+    print("\nAvailable images in img/:")
+    img_dir = os.path.join(os.path.dirname(os.path.dirname(NEWS_FILE)), 'img')
+    if os.path.exists(img_dir):
+        image_files = [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg'))]
         for i, img in enumerate(image_files, 1):
             print(f"  {i}. {img}")
     
     image_input = input("Enter image filename (or leave empty): ").strip()
-    if image_input and not image_input.startswith("landing-assets/"):
-        image_input = f"landing-assets/{image_input}"
+    if image_input and not image_input.startswith("img/"):
+        image_input = f"img/{image_input}"
     
     # Get link (optional)
     link = input("Enter link URL (or leave empty for #): ").strip()
@@ -240,10 +240,10 @@ def edit_news():
                 # Show current image and ask for a new one
                 current_image = item.get('image', '')
                 print(f"\nCurrent image: {current_image}")
-                print("\nAvailable images in landing-assets/:")
-                assets_dir = os.path.dirname(NEWS_FILE)
-                if os.path.exists(assets_dir):
-                    image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
+                print("\nAvailable images in img/:")
+                img_dir = os.path.join(os.path.dirname(os.path.dirname(NEWS_FILE)), 'img')
+                if os.path.exists(img_dir):
+                    image_files = [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
                     for i, img in enumerate(image_files, 1):
                         print(f"  {i}. {img}")
                 
@@ -257,15 +257,15 @@ def edit_news():
                         upload_image()
                         
                         # Ask again for image selection after upload
-                        print("\nAvailable images in landing-assets/:")
-                        if os.path.exists(assets_dir):
-                            image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
+                        print("\nAvailable images in img/:")
+                        if os.path.exists(img_dir):
+                            image_files = [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
                             for i, img in enumerate(image_files, 1):
                                 print(f"  {i}. {img}")
                         image_input = input("Enter image filename: ").strip()
                     
-                    if image_input and not image_input.startswith("landing-assets/"):
-                        image_input = f"landing-assets/{image_input}"
+                    if image_input and not image_input.startswith("img/"):
+                        image_input = f"img/{image_input}"
                     
                     if image_input:
                         item['image'] = image_input
@@ -309,12 +309,12 @@ def print_help():
     print("Note: After making changes, restart the Astro dev server to see updates.")
 
 def upload_image():
-    """Upload a new image to the landing-assets directory"""
-    # Get the assets directory path
-    assets_dir = os.path.dirname(NEWS_FILE)
+    """Upload a new image to the img directory"""
+    # Get the img directory path
+    img_dir = os.path.join(os.path.dirname(os.path.dirname(NEWS_FILE)), 'img')
     
     print("\n=== Upload New Image ===")
-    print("This will copy an image to the landing-assets directory for use in news items.")
+    print("This will copy an image to the img directory for use in news items.")
     print("You can provide either:")
     print("  1. A local file path")
     print("  2. A URL to download an image from the web")
@@ -361,7 +361,7 @@ def upload_image():
                 return
                 
             # Create destination path
-            dest_path = os.path.join(assets_dir, filename)
+            dest_path = os.path.join(img_dir, filename)
             
             # Check if file already exists
             if os.path.exists(dest_path):
@@ -377,7 +377,7 @@ def upload_image():
             os.unlink(temp_path)  # Remove temp file
             
             print(f"✅ Image downloaded and saved as: {filename}")
-            print(f"You can use it in news items as: landing-assets/{filename}")
+            print(f"You can use it in news items as: img/{filename}")
             
         except Exception as e:
             print(f"❌ Error downloading image: {e}")
@@ -400,7 +400,7 @@ def upload_image():
         filename = os.path.basename(source)
         
         # Create destination path
-        dest_path = os.path.join(assets_dir, filename)
+        dest_path = os.path.join(img_dir, filename)
         
         # Check if file already exists
         if os.path.exists(dest_path):
@@ -413,27 +413,27 @@ def upload_image():
         try:
             shutil.copy2(source, dest_path)
             print(f"✅ Image {filename} uploaded successfully!")
-            print(f"You can use it in news items as: landing-assets/{filename}")
+            print(f"You can use it in news items as: img/{filename}")
         except Exception as e:
             print(f"❌ Error uploading image: {e}")
 
 def list_images():
-    """List all available images in the landing-assets directory"""
-    # Get the assets directory path
-    assets_dir = os.path.dirname(NEWS_FILE)
+    """List all available images in the img directory"""
+    # Get the img directory path
+    img_dir = os.path.join(os.path.dirname(os.path.dirname(NEWS_FILE)), 'img')
     
     print("\n=== Available Images ===")
-    if os.path.exists(assets_dir):
-        image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif'))]
+    if os.path.exists(img_dir):
+        image_files = [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif'))]
         if image_files:
             for i, img in enumerate(image_files, 1):
                 print(f"  {i}. {img}")
             print(f"\nTotal: {len(image_files)} images")
-            print("To use an image in a news item, specify: landing-assets/filename.png")
+            print("To use an image in a news item, specify: img/filename.png")
         else:
-            print("No images found in landing-assets directory.")
+            print("No images found in img directory.")
     else:
-        print(f"❌ Error: Directory {assets_dir} does not exist.")
+        print(f"❌ Error: Directory {img_dir} does not exist.")
 
 def main():
     """Main function"""

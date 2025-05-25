@@ -1,44 +1,44 @@
 // SPADE Landing Page Scripts
 
-document.addEventListener('DOMContentLoaded', function () {
-  console.log('DOM Content Loaded - Initializing SPADE landing page');
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM Content Loaded - Initializing SPADE landing page");
 
   // 1. SMOOTH SCROLLING
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener("click", function (e) {
       e.preventDefault();
 
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      const targetId = this.getAttribute("href");
+      if (targetId === "#") return;
 
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         window.scrollTo({
           top: targetElement.offsetTop - 70,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }
     });
   });
 
   // 2. NEWS LOADING
-  const newsContainer = document.getElementById('news-container');
+  const newsContainer = document.getElementById("news-container");
   if (newsContainer) {
-    console.log('Loading news from JSON...');
-    fetch('landing-assets/news.json')
+    console.log("Loading news from JSON...");
+    fetch("json/news.json")
       .then((response) => {
-        console.log('News response status:', response.status);
+        console.log("News response status:", response.status);
         return response.json();
       })
       .then((data) => {
-        console.log('News data loaded:', data);
+        console.log("News data loaded:", data);
         // Clear loading spinner
-        newsContainer.innerHTML = '';
+        newsContainer.innerHTML = "";
 
         // Populate news items
         data.news.forEach((item) => {
-          const newsCard = document.createElement('div');
-          newsCard.className = 'col-md-4';
+          const newsCard = document.createElement("div");
+          newsCard.className = "col-md-4";
           newsCard.innerHTML = `
                         <div class="card h-100 border-0 shadow-sm">
                             <img src="${item.image}" class="card-img-top" alt="${item.title}">
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(`Added ${data.news.length} news items`);
       })
       .catch((error) => {
-        console.error('Error loading news:', error);
+        console.error("Error loading news:", error);
         newsContainer.innerHTML = `
                     <div class="col-12 text-center">
                         <p class="text-danger">Error loading news. Please try again later.</p>
@@ -68,40 +68,40 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 3. NAVBAR SCROLL EFFECTS
-  const navbar = document.querySelector('.navbar');
+  const navbar = document.querySelector(".navbar");
 
   function handleScroll() {
     if (window.scrollY > 50) {
-      navbar.classList.add('scrolled', 'bg-white', 'shadow-sm');
+      navbar.classList.add("scrolled", "bg-white", "shadow-sm");
     } else {
-      navbar.classList.remove('scrolled', 'bg-white', 'shadow-sm');
+      navbar.classList.remove("scrolled", "bg-white", "shadow-sm");
     }
   }
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
   handleScroll(); // Initial check
 
   // 4. FEATURE CARDS ANIMATION
   const observerOptions = {
     threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px',
+    rootMargin: "0px 0px -50px 0px",
   };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        entry.target.classList.add("animate__animated", "animate__fadeInUp");
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  document.querySelectorAll('.feature-card').forEach((card) => {
+  document.querySelectorAll(".feature-card").forEach((card) => {
     observer.observe(card);
   });
 
   // 5. COUNTDOWN (if element exists)
-  const countdownElement = document.getElementById('countdown');
+  const countdownElement = document.getElementById("countdown");
   if (countdownElement) {
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 14); // 14 days from now
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (difference <= 0) {
         clearInterval(interval);
-        countdownElement.innerHTML = 'Event started!';
+        countdownElement.innerHTML = "Event started!";
       }
     }
 
@@ -130,23 +130,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 6. DARK MODE FUNCTIONALITY
-  const darkModeToggle = document.getElementById('darkModeToggle');
+  const darkModeToggle = document.getElementById("darkModeToggle");
   const body = document.body;
 
   // Check for saved theme preference
-  const savedTheme = localStorage.getItem('theme'); // Apply saved theme (default to light mode if no preference is saved)
-  if (savedTheme === 'dark') {
-    body.classList.add('dark-mode');
+  const savedTheme = localStorage.getItem("theme"); // Apply saved theme (default to light mode if no preference is saved)
+  if (savedTheme === "dark") {
+    body.classList.add("dark-mode");
     setTimeout(() => {
       updateDarkModeIcon(true);
       updateLogos(true);
     }, 50); // Slight delay to ensure DOM is ready
   } else {
     // Ensure light mode is default
-    body.classList.remove('dark-mode');
+    body.classList.remove("dark-mode");
     // If no theme is saved, save light as default
     if (!savedTheme) {
-      localStorage.setItem('theme', 'light');
+      localStorage.setItem("theme", "light");
     }
     setTimeout(() => {
       updateDarkModeIcon(false);
@@ -156,12 +156,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Toggle dark/light mode
   if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', function () {
-      body.classList.toggle('dark-mode');
-      const isDarkMode = body.classList.contains('dark-mode');
+    darkModeToggle.addEventListener("click", function () {
+      body.classList.toggle("dark-mode");
+      const isDarkMode = body.classList.contains("dark-mode");
 
       // Save preference to localStorage
-      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+      localStorage.setItem("theme", isDarkMode ? "dark" : "light");
 
       // Update button icon
       updateDarkModeIcon(isDarkMode);
@@ -173,14 +173,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Update dark mode toggle icon
   function updateDarkModeIcon(isDarkMode) {
-    const icon = darkModeToggle.querySelector('i');
+    const icon = darkModeToggle.querySelector("i");
     if (icon) {
       if (isDarkMode) {
-        icon.classList.remove('bi-moon-fill');
-        icon.classList.add('bi-sun-fill');
+        icon.classList.remove("bi-moon-fill");
+        icon.classList.add("bi-sun-fill");
       } else {
-        icon.classList.remove('bi-sun-fill');
-        icon.classList.add('bi-moon-fill');
+        icon.classList.remove("bi-sun-fill");
+        icon.classList.add("bi-moon-fill");
       }
     }
   }
@@ -189,13 +189,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateLogos(isDarkMode) {
     // Select only logo images in navbar and footer, NOT the hero image
     const logoImages = document.querySelectorAll(
-      '.navbar-brand img, .footer img'
+      ".navbar-brand img, .footer img"
     );
 
     logoImages.forEach((img) => {
       img.src = isDarkMode
-        ? 'landing-assets/spade-darkmode-fixed.svg'
-        : 'landing-assets/spade-agent-network-fixed.svg';
+        ? "img/spade-darkmode-fixed.svg"
+        : "img/spade-agent-network-fixed.svg";
     });
   }
 
@@ -209,14 +209,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Try to initialize Prism syntax highlighting with retries
   function tryInitializePrism(attempts = 0) {
-    if (typeof Prism !== 'undefined') {
+    if (typeof Prism !== "undefined") {
       initializeCodeExamples();
-      console.log('Prism.js syntax highlighting initialized');
+      console.log("Prism.js syntax highlighting initialized");
     } else if (attempts < 5) {
       console.log(`Waiting for Prism.js... attempt ${attempts + 1}`);
       setTimeout(() => tryInitializePrism(attempts + 1), 200 * (attempts + 1));
     } else {
-      console.warn('Prism.js failed to load after multiple attempts');
+      console.warn("Prism.js failed to load after multiple attempts");
     }
   }
 
@@ -225,55 +225,55 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Code example switcher and copy functionality
 function initializeCodeExamplesAndSwitcher() {
-  console.log('Setting up code example switcher...');
+  console.log("Setting up code example switcher...");
 
-  const codeSelectors = document.querySelectorAll('.code-example-selector');
-  const codeBlocks = document.querySelectorAll('.code-block');
-  const copyButton = document.querySelector('.copy-code-btn');
+  const codeSelectors = document.querySelectorAll(".code-example-selector");
+  const codeBlocks = document.querySelectorAll(".code-block");
+  const copyButton = document.querySelector(".copy-code-btn");
 
   if (codeSelectors.length > 0 && codeBlocks.length > 0) {
     codeSelectors.forEach((selector) => {
-      selector.addEventListener('click', function (e) {
+      selector.addEventListener("click", function (e) {
         e.preventDefault();
 
         // Get the example ID
-        const exampleId = this.getAttribute('data-example');
+        const exampleId = this.getAttribute("data-example");
 
         // Update dropdown button text
-        const dropdownButton = document.getElementById('codeExampleDropdown');
+        const dropdownButton = document.getElementById("codeExampleDropdown");
         if (dropdownButton) {
           dropdownButton.innerHTML = `<i class="bi bi-code-slash me-1"></i> ${this.textContent}`;
         }
 
         // Hide all code blocks
         codeBlocks.forEach((block) => {
-          block.classList.add('d-none');
+          block.classList.add("d-none");
         });
 
         // Show the selected code block
         const selectedBlock = document.getElementById(`code-${exampleId}`);
         if (selectedBlock) {
-          selectedBlock.classList.remove('d-none');
+          selectedBlock.classList.remove("d-none");
 
           // Update code content and apply syntax highlighting
-          const codeTag = selectedBlock.querySelector('code');
+          const codeTag = selectedBlock.querySelector("code");
           if (codeTag && codeExamples[exampleId]) {
             codeTag.textContent = codeExamples[exampleId];
             // Re-apply Prism highlighting
-            if (typeof Prism !== 'undefined') {
+            if (typeof Prism !== "undefined") {
               Prism.highlightElement(codeTag);
             }
           }
         }
 
         // Sync with demo scenario if possible
-        const demoScenario = document.getElementById('demo-scenario');
+        const demoScenario = document.getElementById("demo-scenario");
         if (demoScenario) {
           // Map example to scenario
           const scenarioMap = {
-            simple: 'simple',
-            behavior: 'behaviors',
-            network: 'network',
+            simple: "simple",
+            behavior: "behaviors",
+            network: "network",
           };
 
           if (
@@ -282,7 +282,7 @@ function initializeCodeExamplesAndSwitcher() {
           ) {
             demoScenario.value = scenarioMap[exampleId];
             // Trigger change event to update demo
-            const event = new Event('change');
+            const event = new Event("change");
             demoScenario.dispatchEvent(event);
           }
         }
@@ -291,14 +291,14 @@ function initializeCodeExamplesAndSwitcher() {
 
     // Implement copy code functionality
     if (copyButton) {
-      copyButton.addEventListener('click', function () {
+      copyButton.addEventListener("click", function () {
         // Find visible code block
         const visibleBlock = Array.from(codeBlocks).find(
-          (block) => !block.classList.contains('d-none')
+          (block) => !block.classList.contains("d-none")
         );
 
         if (visibleBlock) {
-          const codeText = visibleBlock.querySelector('code').innerText;
+          const codeText = visibleBlock.querySelector("code").innerText;
 
           // Copy to clipboard
           navigator.clipboard.writeText(codeText).then(function () {
@@ -306,14 +306,14 @@ function initializeCodeExamplesAndSwitcher() {
             const originalText = copyButton.innerHTML;
             copyButton.innerHTML =
               '<i class="bi bi-check-lg me-1"></i> Copied!';
-            copyButton.classList.remove('btn-outline-primary');
-            copyButton.classList.add('btn-success');
+            copyButton.classList.remove("btn-outline-primary");
+            copyButton.classList.add("btn-success");
 
             // Reset after 2 seconds
             setTimeout(function () {
               copyButton.innerHTML = originalText;
-              copyButton.classList.remove('btn-success');
-              copyButton.classList.add('btn-outline-primary');
+              copyButton.classList.remove("btn-success");
+              copyButton.classList.add("btn-outline-primary");
             }, 2000);
           });
         }
@@ -322,34 +322,34 @@ function initializeCodeExamplesAndSwitcher() {
   }
 
   // Sync demo scenario with code example (initial)
-  const demoScenario = document.getElementById('demo-scenario');
+  const demoScenario = document.getElementById("demo-scenario");
   if (demoScenario) {
-    demoScenario.addEventListener('change', function () {
+    demoScenario.addEventListener("change", function () {
       // Map scenario to example
       const exampleMap = {
-        simple: 'simple',
-        behaviors: 'behavior',
-        network: 'network',
+        simple: "simple",
+        behaviors: "behavior",
+        network: "network",
       };
 
       const exampleId = exampleMap[this.value];
       if (exampleId) {
         // Hide all code blocks
         codeBlocks.forEach((block) => {
-          block.classList.add('d-none');
+          block.classList.add("d-none");
         });
 
         // Show the matching code block
         const selectedBlock = document.getElementById(`code-${exampleId}`);
         if (selectedBlock) {
-          selectedBlock.classList.remove('d-none');
+          selectedBlock.classList.remove("d-none");
         }
 
         // Update dropdown text
         const selector = document.querySelector(
           `.code-example-selector[data-example="${exampleId}"]`
         );
-        const dropdownButton = document.getElementById('codeExampleDropdown');
+        const dropdownButton = document.getElementById("codeExampleDropdown");
         if (selector && dropdownButton) {
           dropdownButton.innerHTML = `<i class="bi bi-code-slash me-1"></i> ${selector.textContent}`;
         }
@@ -588,28 +588,28 @@ if __name__ == "__main__":
 
 // Initialize code examples with syntax highlighting
 function initializeCodeExamples() {
-  console.log('Initializing code examples with syntax highlighting...');
+  console.log("Initializing code examples with syntax highlighting...");
 
   // Apply syntax highlighting to dynamic code examples
   Object.keys(codeExamples).forEach((key) => {
     const codeElement = document.getElementById(`code-${key}`);
     if (codeElement) {
-      const codeTag = codeElement.querySelector('code');
+      const codeTag = codeElement.querySelector("code");
       if (codeTag) {
         codeTag.textContent = codeExamples[key];
         // Trigger Prism highlighting
-        if (typeof Prism !== 'undefined') {
+        if (typeof Prism !== "undefined") {
           Prism.highlightElement(codeTag);
           console.log(`Highlighted code for ${key}`);
         } else {
-          console.warn('Prism is not available yet');
+          console.warn("Prism is not available yet");
         }
       }
     }
   });
 
   // Apply syntax highlighting to all static code blocks
-  if (typeof Prism !== 'undefined') {
+  if (typeof Prism !== "undefined") {
     // Find all code blocks with language classes
     const codeBlocks = document.querySelectorAll(
       'pre code[class*="language-"]'
@@ -620,18 +620,18 @@ function initializeCodeExamples() {
     console.log(`Highlighted ${codeBlocks.length} static code blocks`);
   }
 } // Also initialize on window load as fallback
-window.addEventListener('load', function () {
-  console.log('Window loaded - Fallback initialization');
+window.addEventListener("load", function () {
+  console.log("Window loaded - Fallback initialization");
   setTimeout(() => {
-    if (typeof Prism !== 'undefined') {
+    if (typeof Prism !== "undefined") {
       initializeCodeExamples();
-      console.log('Code examples initialized on window load fallback');
+      console.log("Code examples initialized on window load fallback");
     }
 
     // Ensure canvas is properly sized after page load - AgentDemo is now in demos.js
-    if (typeof AgentDemo !== 'undefined' && AgentDemo.canvas) {
+    if (typeof AgentDemo !== "undefined" && AgentDemo.canvas) {
       AgentDemo.resizeCanvas();
-      console.log('Canvas resized on window load');
+      console.log("Canvas resized on window load");
     }
   }, 500);
 });

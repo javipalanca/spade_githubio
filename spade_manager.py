@@ -90,8 +90,8 @@ def check_status():
     
     # Check if JSON files exist and are valid
     json_files = [
-        "public/landing-assets/news.json",
-        "public/landing-assets/demos.json"
+        "public/json/news.json",
+        "public/json/demos.json"
     ]
     
     for json_file in json_files:

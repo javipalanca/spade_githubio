@@ -45,8 +45,8 @@ def validate_demos_data(data):
     return True, "Valid"
 
 # Updated path for Astro structure
-DEMOS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
-                         "public", "landing-assets", "demos.json")
+DEMOS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         "public", "json", "demos.json")
 
 def load_demos():
     """Load the current demo scenarios"""

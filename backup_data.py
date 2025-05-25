@@ -29,8 +29,8 @@ def create_backup():
     
     # Files to backup
     data_files = [
-        "public/landing-assets/news.json",
-        "public/landing-assets/demos.json"
+        "public/json/news.json",
+        "public/json/demos.json"
     ]
     
     backup_count = 0
@@ -121,7 +121,7 @@ def restore_backup():
         print(f"\n⚠️ This will restore the following files:")
         for backup_file in selected_files:
             file_type = backup_file.name.split("_", 2)[-1]
-            target_path = f"public/landing-assets/{file_type}"
+            target_path = f"public/json/{file_type}"
             print(f"   {target_path}")
         
         confirm = input("\nAre you sure? (y/N): ").strip().lower()
@@ -133,7 +133,7 @@ def restore_backup():
         restored_count = 0
         for backup_file in selected_files:
             file_type = backup_file.name.split("_", 2)[-1]
-            target_path = f"public/landing-assets/{file_type}"
+            target_path = f"public/json/{file_type}"
             
             try:
                 # Ensure target directory exists

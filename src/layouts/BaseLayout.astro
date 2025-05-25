@@ -27,6 +27,9 @@ import '../styles/global.css';
     <!-- Prism.js for syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
     
+    <!-- Vis.js Network for interactive demos -->
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    
     <!-- Custom Prism.js styling for light/dark mode -->
     <style>
         /* Basic container styling - let Prism handle syntax colors */
@@ -76,13 +79,13 @@ import '../styles/global.css';
     </style>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/landing-assets/favicon-spade-new.svg">
-    <link rel="icon" type="image/png" href="/landing-assets/spade_friend.png">
+    <link rel="icon" type="image/svg+xml" href="/img/favicon-spade-new.svg">
+    <link rel="icon" type="image/png" href="/img/spade_friend.png">
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="/landing-assets/spade_index.png">
+    <meta property="og:image" content="/img/spade_index.png">
     <meta property="og:url" content="https://github.com/javipalanca/spade">
     
     <!-- Custom CSS will be injected by Astro from the import above -->
@@ -195,7 +198,7 @@ import '../styles/global.css';
         // Load demos and news dynamically
         async function loadDemos() {
             try {
-                const response = await fetch('/landing-assets/demos.json');
+                const response = await fetch('/json/demos.json');
                 const demos = await response.json();
                 const container = document.getElementById('demos-container');
                 if (container && demos.length > 0) {
@@ -231,7 +234,7 @@ import '../styles/global.css';
 
         async function loadNews() {
             try {
-                const response = await fetch('/landing-assets/news.json');
+                const response = await fetch('/json/news.json');
                 const news = await response.json();
                 const container = document.getElementById('news-container');
                 if (container && news.length > 0) {
@@ -287,11 +290,13 @@ import '../styles/global.css';
     </script>
     
     <!-- Prism.js initialization -->
-    <script src="/prism-init.js" is:inline></script>
+    <script src="/js/prism-init.js" is:inline></script>
     
     <!-- Custom JS - separated for better maintainability -->
-    <script src="/scripts.js" is:inline></script>
+    <script src="/js/scripts.js" is:inline></script>
     <!-- Interactive Agent Demo - separated from main scripts.js on May 25, 2025 -->
-    <script src="/demos.js" is:inline></script>
+    <script src="/js/demos.js" is:inline></script>
+    <!-- Final verification script -->
+    <script src="/js/final-test.js" is:inline></script>
 </body>
 </html>

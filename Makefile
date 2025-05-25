@@ -65,7 +65,7 @@ help:
 # Desarrollo: Inicia el servidor de desarrollo
 dev:
 	@echo "$(GREEN)🚀 Iniciando servidor de desarrollo...$(NC)"
-	@cd $(PROJECT_DIR) && npm run dev -- --host
+	@cd $(PROJECT_DIR) && npm run dev
 
 # Instalación: Instala las dependencias
 install:
@@ -83,7 +83,7 @@ build:
 # Preview: Previsualiza el build de producción
 preview:
 	@echo "$(GREEN)👀 Iniciando preview del build...$(NC)"
-	@cd $(PROJECT_DIR) && npm run preview -- --host
+	@cd $(PROJECT_DIR) && npm run preview
 
 # Check: Ejecuta verificaciones de tipo
 check:

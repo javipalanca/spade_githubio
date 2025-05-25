@@ -1,0 +1,616 @@
+{
+  "demos": [
+    {
+      "id": "simple",
+      "name": "Basic Communication",
+      "description": "A simple demonstration of two agents exchanging messages.",
+      "agentTypes": [
+        "sender",
+        "receiver"
+      ],
+      "features": [
+        "message-passing",
+        "xmpp"
+      ],
+      "nodes": [
+        {
+          "id": "agent1",
+          "type": "sender",
+          "position": {
+            "x": 100,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "SendMessage",
+              "code": "await self.send(Message(to='agent2@localhost').set_metadata('content', 'Hello from Agent1'))"
+            }
+          ]
+        },
+        {
+          "id": "agent2",
+          "type": "receiver",
+          "position": {
+            "x": 400,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "ReceiveMessage",
+              "code": "msg = await self.receive(timeout=10)\nif msg:\n    print(f'Received: {msg.metadata[\"content\"]}')"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "agent1",
+          "to": "agent2",
+          "type": "message"
+        }
+      ],
+      "pythonFile": "simple.py"
+    },
+    {
+      "id": "behaviors",
+      "name": "Agent Behaviors",
+      "description": "Demonstration of different behavior types in SPADE agents.",
+      "agentTypes": [
+        "coordinator",
+        "worker"
+      ],
+      "features": [
+        "behaviors",
+        "cyclic",
+        "one-shot"
+      ],
+      "nodes": [
+        {
+          "id": "coordinator",
+          "type": "coordinator",
+          "position": {
+            "x": 250,
+            "y": 100
+          },
+          "behaviors": [
+            {
+              "type": "one-shot",
+              "name": "Coordinate",
+              "code": "for worker in ['worker1', 'worker2']:\n    await self.send(Message(to=f'{worker}@localhost').set_metadata('task', 'process'))"
+            }
+          ]
+        },
+        {
+          "id": "worker1",
+          "type": "worker",
+          "position": {
+            "x": 150,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "ProcessTask",
+              "code": "msg = await self.receive(timeout=5)\nif msg and msg.metadata.get('task') == 'process':\n    print('Worker1 processing task')"
+            }
+          ]
+        },
+        {
+          "id": "worker2",
+          "type": "worker",
+          "position": {
+            "x": 350,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "ProcessTask",
+              "code": "msg = await self.receive(timeout=5)\nif msg and msg.metadata.get('task') == 'process':\n    print('Worker2 processing task')"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "coordinator",
+          "to": "worker1",
+          "type": "task"
+        },
+        {
+          "from": "coordinator",
+          "to": "worker2",
+          "type": "task"
+        }
+      ],
+      "pythonFile": "behaviors.py"
+    },
+    {
+      "id": "network",
+      "name": "Agent Network",
+      "description": "A network of multiple interconnected agents demonstrating complex interactions.",
+      "agentTypes": [
+        "coordinator",
+        "sender",
+        "receiver",
+        "worker"
+      ],
+      "features": [
+        "network",
+        "multi-agent",
+        "complexity"
+      ],
+      "nodes": [
+        {
+          "id": "coordinator",
+          "type": "coordinator",
+          "position": {
+            "x": 300,
+            "y": 100
+          },
+          "behaviors": [
+            {
+              "type": "one-shot",
+              "name": "InitializeNetwork",
+              "code": "await self.send(Message(to='sender@localhost').set_metadata('command', 'start'))"
+            }
+          ]
+        },
+        {
+          "id": "sender",
+          "type": "sender",
+          "position": {
+            "x": 150,
+            "y": 250
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "BroadcastMessages",
+              "code": "for receiver in ['receiver1', 'receiver2']:\n    await self.send(Message(to=f'{receiver}@localhost').set_metadata('data', f'Message to {receiver}'))"
+            }
+          ]
+        },
+        {
+          "id": "receiver1",
+          "type": "receiver",
+          "position": {
+            "x": 450,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "ProcessMessages",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    await self.send(Message(to='worker1@localhost').set_metadata('work', msg.metadata.get('data')))"
+            }
+          ]
+        },
+        {
+          "id": "receiver2",
+          "type": "receiver",
+          "position": {
+            "x": 450,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "ProcessMessages",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    await self.send(Message(to='worker2@localhost').set_metadata('work', msg.metadata.get('data')))"
+            }
+          ]
+        },
+        {
+          "id": "worker1",
+          "type": "worker",
+          "position": {
+            "x": 600,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "DoWork",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Worker1 processing: {msg.metadata.get(\"work\")}')"
+            }
+          ]
+        },
+        {
+          "id": "worker2",
+          "type": "worker",
+          "position": {
+            "x": 600,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "DoWork",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Worker2 processing: {msg.metadata.get(\"work\")}')"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "coordinator",
+          "to": "sender",
+          "type": "command"
+        },
+        {
+          "from": "sender",
+          "to": "receiver1",
+          "type": "message"
+        },
+        {
+          "from": "sender",
+          "to": "receiver2",
+          "type": "message"
+        },
+        {
+          "from": "receiver1",
+          "to": "worker1",
+          "type": "task"
+        },
+        {
+          "from": "receiver2",
+          "to": "worker2",
+          "type": "task"
+        }
+      ],
+      "pythonFile": "network.py"
+    },
+    {
+      "id": "presence",
+      "name": "Presence Notification",
+      "description": "Agents that monitor and react to presence changes in the network.",
+      "agentTypes": [
+        "buddy",
+        "server"
+      ],
+      "features": [
+        "presence",
+        "notification",
+        "monitoring"
+      ],
+      "nodes": [
+        {
+          "id": "server",
+          "type": "server",
+          "position": {
+            "x": 300,
+            "y": 150
+          },
+          "behaviors": [
+            {
+              "type": "presenceNotification",
+              "name": "MonitorPresence",
+              "code": "if presence_change:\n    for buddy in self.buddies:\n        await self.send(Message(to=buddy).set_metadata('presence', f'{agent} is {status}'))"
+            }
+          ]
+        },
+        {
+          "id": "buddy1",
+          "type": "buddy",
+          "position": {
+            "x": 150,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "HandlePresence",
+              "code": "msg = await self.receive(timeout=5)\nif msg and 'presence' in msg.metadata:\n    print(f'Buddy1 notified: {msg.metadata[\"presence\"]}')"
+            }
+          ]
+        },
+        {
+          "id": "buddy2",
+          "type": "buddy",
+          "position": {
+            "x": 450,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "HandlePresence",
+              "code": "msg = await self.receive(timeout=5)\nif msg and 'presence' in msg.metadata:\n    print(f'Buddy2 notified: {msg.metadata[\"presence\"]}')"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "server",
+          "to": "buddy1",
+          "type": "presence"
+        },
+        {
+          "from": "server",
+          "to": "buddy2",
+          "type": "presence"
+        },
+        {
+          "from": "buddy1",
+          "to": "server",
+          "type": "status"
+        },
+        {
+          "from": "buddy2",
+          "to": "server",
+          "type": "status"
+        }
+      ],
+      "pythonFile": "presence.py"
+    },
+    {
+      "id": "pubsub",
+      "name": "Publish-Subscribe",
+      "description": "Publisher-subscriber pattern with message brokers and topic-based routing.",
+      "agentTypes": [
+        "publisher",
+        "subscriber",
+        "broker"
+      ],
+      "features": [
+        "pubsub",
+        "topics",
+        "routing"
+      ],
+      "nodes": [
+        {
+          "id": "broker",
+          "type": "broker",
+          "position": {
+            "x": 300,
+            "y": 150
+          },
+          "behaviors": [
+            {
+              "type": "cyclic",
+              "name": "RouteMessages",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    topic = msg.metadata.get('topic')\n    for subscriber in self.subscribers.get(topic, []):\n        await self.send(Message(to=subscriber).set_metadata('data', msg.metadata.get('data')))"
+            }
+          ]
+        },
+        {
+          "id": "publisher1",
+          "type": "publisher",
+          "position": {
+            "x": 100,
+            "y": 250
+          },
+          "behaviors": [
+            {
+              "type": "publication",
+              "name": "PublishNews",
+              "code": "await self.send(Message(to='broker@localhost').set_metadata('topic', 'news').set_metadata('data', 'Breaking news update'))"
+            }
+          ]
+        },
+        {
+          "id": "publisher2",
+          "type": "publisher",
+          "position": {
+            "x": 100,
+            "y": 350
+          },
+          "behaviors": [
+            {
+              "type": "publication",
+              "name": "PublishWeather",
+              "code": "await self.send(Message(to='broker@localhost').set_metadata('topic', 'weather').set_metadata('data', 'Sunny, 25°C'))"
+            }
+          ]
+        },
+        {
+          "id": "subscriber1",
+          "type": "subscriber",
+          "position": {
+            "x": 500,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "subscription",
+              "name": "ReceiveNews",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Subscriber1 received: {msg.metadata.get(\"data\")}')"
+            }
+          ]
+        },
+        {
+          "id": "subscriber2",
+          "type": "subscriber",
+          "position": {
+            "x": 500,
+            "y": 300
+          },
+          "behaviors": [
+            {
+              "type": "subscription",
+              "name": "ReceiveWeather",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Subscriber2 received: {msg.metadata.get(\"data\")}')"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "publisher1",
+          "to": "broker",
+          "type": "publish"
+        },
+        {
+          "from": "publisher2",
+          "to": "broker",
+          "type": "publish"
+        },
+        {
+          "from": "broker",
+          "to": "subscriber1",
+          "type": "deliver"
+        },
+        {
+          "from": "broker",
+          "to": "subscriber2",
+          "type": "deliver"
+        }
+      ],
+      "pythonFile": "pubsub.py"
+    },
+    {
+      "id": "event-driven",
+      "name": "Event-Driven Behaviors",
+      "description": "Complex event-driven interactions with forwarders, responders, and aggregators.",
+      "agentTypes": [
+        "forwarder",
+        "responder",
+        "aggregator"
+      ],
+      "features": [
+        "events",
+        "aggregation",
+        "load-balancing"
+      ],
+      "nodes": [
+        {
+          "id": "forwarder",
+          "type": "forwarder",
+          "position": {
+            "x": 200,
+            "y": 150
+          },
+          "behaviors": [
+            {
+              "type": "messageForwarding",
+              "name": "ForwardRequests",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    target = self.load_balance(['responder1', 'responder2'])\n    await self.send(Message(to=f'{target}@localhost').set_metadata('request', msg.metadata.get('data')))"
+            }
+          ]
+        },
+        {
+          "id": "responder1",
+          "type": "responder",
+          "position": {
+            "x": 400,
+            "y": 100
+          },
+          "behaviors": [
+            {
+              "type": "autoResponse",
+              "name": "ProcessAndRespond",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    response = f'Processed by Responder1: {msg.metadata.get(\"request\")}'\n    await self.send(Message(to='aggregator@localhost').set_metadata('response', response))"
+            }
+          ]
+        },
+        {
+          "id": "responder2",
+          "type": "responder",
+          "position": {
+            "x": 400,
+            "y": 200
+          },
+          "behaviors": [
+            {
+              "type": "autoResponse",
+              "name": "ProcessAndRespond",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    response = f'Processed by Responder2: {msg.metadata.get(\"request\")}'\n    await self.send(Message(to='aggregator@localhost').set_metadata('response', response))"
+            }
+          ]
+        },
+        {
+          "id": "aggregator",
+          "type": "aggregator",
+          "position": {
+            "x": 600,
+            "y": 150
+          },
+          "behaviors": [
+            {
+              "type": "messageAggregation",
+              "name": "CollectResponses",
+              "code": "msg = await self.receive(timeout=5)\nif msg:\n    self.responses.append(msg.metadata.get('response'))\n    if len(self.responses) >= 2:\n        print(f'Aggregated: {self.responses}')\n        self.responses.clear()"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "forwarder",
+          "to": "responder1",
+          "type": "request"
+        },
+        {
+          "from": "forwarder",
+          "to": "responder2",
+          "type": "request"
+        },
+        {
+          "from": "responder1",
+          "to": "aggregator",
+          "type": "response"
+        },
+        {
+          "from": "responder2",
+          "to": "aggregator",
+          "type": "response"
+        }
+      ],
+      "pythonFile": "event-driven.py"
+    }
+  ],
+  "agentTypes": {
+    "sender": {
+      "color": "#4CAF50",
+      "icon": "send"
+    },
+    "receiver": {
+      "color": "#2196F3",
+      "icon": "inbox"
+    },
+    "coordinator": {
+      "color": "#FF9800",
+      "icon": "hub"
+    },
+    "worker": {
+      "color": "#9C27B0",
+      "icon": "work"
+    },
+    "buddy": {
+      "color": "#00BCD4",
+      "icon": "person"
+    },
+    "server": {
+      "color": "#F44336",
+      "icon": "server"
+    },
+    "publisher": {
+      "color": "#8BC34A",
+      "icon": "publish"
+    },
+    "subscriber": {
+      "color": "#3F51B5",
+      "icon": "subscribe"
+    },
+    "broker": {
+      "color": "#FF5722",
+      "icon": "router"
+    },
+    "forwarder": {
+      "color": "#607D8B",
+      "icon": "forward"
+    },
+    "responder": {
+      "color": "#795548",
+      "icon": "reply"
+    },
+    "aggregator": {
+      "color": "#E91E63",
+      "icon": "merge"
+    }
+  }
+}
