@@ -57,10 +57,5 @@
   "remoteUser": "node",
 
   // Set workspace folder to the root directory so we can access both original and Astro project
-  "workspaceFolder": "/workspaces/spade_githubio",
-
-  // Mount the workspace directory
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/workspaces/spade_githubio,type=bind,consistency=cached"
-  ]
+  "workspaceFolder": "/workspaces/spade_githubio"
 }

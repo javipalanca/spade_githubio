@@ -428,8 +428,11 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
 // Load Python code examples from demos.json and populate the tabs
 document.addEventListener('DOMContentLoaded', async function() {
     try {
+        // Get base URL for Astro
+        const baseUrl = document.querySelector('meta[name="astro-base-url"]')?.getAttribute('content') || '/';
+        
         // Fetch demo data from JSON
-        const response = await fetch('/json/demos.json');
+        const response = await fetch(`${baseUrl}json/demos.json`);
         if (!response.ok) {
             throw new Error(`Failed to fetch demos: ${response.status}`);
         }

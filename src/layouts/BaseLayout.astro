@@ -19,6 +19,7 @@ const baseUrl = import.meta.env.BASE_URL;
     <meta name="description" content={description}>
     <meta name="keywords" content="SPADE, Python, Multi-agent, XMPP, Agent-based, MAS">
     <meta name="author" content="SPADE Team">
+    <meta name="astro-base-url" content={baseUrl}>
     <title>{title}</title>
     
     <!-- Bootstrap CSS -->
@@ -80,13 +81,13 @@ const baseUrl = import.meta.env.BASE_URL;
     </style>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/img/favicon-spade-new.svg">
-    <link rel="icon" type="image/png" href="/img/spade_friend.png">
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}img/favicon-spade-new.svg`}>
+    <link rel="icon" type="image/png" href={`${baseUrl}img/spade_friend.png`}>
     
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content={title}>
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="/img/spade_index.png">
+    <meta property="og:image" content={`${baseUrl}img/spade_index.png`}>
     <meta property="og:url" content="https://github.com/javipalanca/spade">
     
     <!-- Custom CSS will be injected by Astro from the import above -->
@@ -199,7 +200,8 @@ const baseUrl = import.meta.env.BASE_URL;
         // Load demos and news dynamically
         async function loadDemos() {
             try {
-                const response = await fetch('/json/demos.json');
+                const baseUrl = '${baseUrl}'; // Using Astro's baseUrl variable in JavaScript
+                const response = await fetch(`${baseUrl}json/demos.json`);
                 const demos = await response.json();
                 const container = document.getElementById('demos-container');
                 if (container && demos.length > 0) {
@@ -235,7 +237,8 @@ const baseUrl = import.meta.env.BASE_URL;
 
         async function loadNews() {
             try {
-                const response = await fetch('/json/news.json');
+                const baseUrl = '${baseUrl}'; // Using Astro's baseUrl variable in JavaScript
+                const response = await fetch(`${baseUrl}json/news.json`);
                 const news = await response.json();
                 const container = document.getElementById('news-container');
                 if (container && news.length > 0) {

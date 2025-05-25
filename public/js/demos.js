@@ -427,20 +427,24 @@ function startAnimation() {
 
     // Get the current demo ID
     const isNetworkDemo = currentDemo && currentDemo.id === "network";
-    
+
     // Get the next message edge in the sequence
     const edge = messageEdges[messageCounter % messageEdges.length];
     messageCounter++;
 
     // Check if this is a broadcast in the network demo (sender to receivers)
-    if (isNetworkDemo && edge.from === "sender" && edge.to.startsWith("receiver")) {
+    if (
+      isNetworkDemo &&
+      edge.from === "sender" &&
+      edge.to.startsWith("receiver")
+    ) {
       // Find all edges from sender to receivers and create them simultaneously
-      const broadcastEdges = messageEdges.filter(e => 
-        e.from === "sender" && e.to.startsWith("receiver")
+      const broadcastEdges = messageEdges.filter(
+        (e) => e.from === "sender" && e.to.startsWith("receiver")
       );
-      
+
       // Create all broadcast messages at once
-      broadcastEdges.forEach(bEdge => {
+      broadcastEdges.forEach((bEdge) => {
         createAnimatedMessage(bEdge);
       });
     } else {
