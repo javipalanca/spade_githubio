@@ -6,8 +6,9 @@ export interface Props {
 
 const { title, description = 'SPADE - Smart Python Agent Development Environment. A multi-agent systems platform written in Python and based on XMPP.' } = Astro.props;
 
-// Import global styles
+// Import global styles and get base path
 import '../styles/global.css';
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <!DOCTYPE html>
@@ -290,13 +291,13 @@ import '../styles/global.css';
     </script>
     
     <!-- Prism.js initialization -->
-    <script src="/js/prism-init.js" is:inline></script>
+    <script src={`${baseUrl}js/prism-init.js`} is:inline></script>
     
     <!-- Custom JS - separated for better maintainability -->
-    <script src="/js/scripts.js" is:inline></script>
+    <script src={`${baseUrl}js/scripts.js`} is:inline></script>
     <!-- Interactive Agent Demo - separated from main scripts.js on May 25, 2025 -->
-    <script src="/js/demos.js" is:inline></script>
+    <script src={`${baseUrl}js/demos.js`} is:inline></script>
     <!-- Final verification script -->
-    <script src="/js/final-test.js" is:inline></script>
+    <script src={`${baseUrl}js/final-test.js`} is:inline></script>
 </body>
 </html>

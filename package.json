@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --host",
-    "start": "astro dev --host",
-    "build": "astro build",
-    "preview": "astro preview --host",
+    "dev": "cross-env NODE_ENV=development astro dev --host",
+    "start": "cross-env NODE_ENV=development astro dev --host",
+    "build": "cross-env NODE_ENV=production astro build",
+    "preview": "cross-env NODE_ENV=production astro preview --host",
     "astro": "astro",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -21,5 +21,8 @@
     "astro": "^5.8.0",
     "typescript": "^5.8.3",
     "vis-network": "^9.1.10"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

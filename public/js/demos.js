@@ -425,12 +425,28 @@ function startAnimation() {
       return;
     }
 
+    // Get the current demo ID
+    const isNetworkDemo = currentDemo && currentDemo.id === "network";
+    
     // Get the next message edge in the sequence
     const edge = messageEdges[messageCounter % messageEdges.length];
     messageCounter++;
 
-    // Create animated message between nodes
-    createAnimatedMessage(edge);
+    // Check if this is a broadcast in the network demo (sender to receivers)
+    if (isNetworkDemo && edge.from === "sender" && edge.to.startsWith("receiver")) {
+      // Find all edges from sender to receivers and create them simultaneously
+      const broadcastEdges = messageEdges.filter(e => 
+        e.from === "sender" && e.to.startsWith("receiver")
+      );
+      
+      // Create all broadcast messages at once
+      broadcastEdges.forEach(bEdge => {
+        createAnimatedMessage(bEdge);
+      });
+    } else {
+      // Regular message animation for other cases
+      createAnimatedMessage(edge);
+    }
   }, currentAnimationSpeed);
 }
 
