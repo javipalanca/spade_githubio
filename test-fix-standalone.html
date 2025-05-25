@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SPADE Demo Fix Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .console {
+        background: #1e1e1e;
+        color: #00ff00;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔧 SPADE Demo Fix Test</h1>
+    <p>
+      This page tests if the fix for the "Cannot read properties of undefined
+      (reading 'charAt')" error is working.
+    </p>
+
+    <div class="console" id="console"></div>
+
+    <script>
+      // Capture console output
+      const originalLog = console.log;
+      const originalError = console.error;
+      const consoleDiv = document.getElementById("console");
+
+      function appendToConsole(message, type = "log") {
+        const div = document.createElement("div");
+        div.style.color = type === "error" ? "#ff6b6b" : "#00ff00";
+        div.textContent = message;
+        consoleDiv.appendChild(div);
+        consoleDiv.scrollTop = consoleDiv.scrollHeight;
+      }
+
+      console.log = function (...args) {
+        originalLog.apply(console, args);
+        appendToConsole(args.join(" "), "log");
+      };
+
+      console.error = function (...args) {
+        originalError.apply(console, args);
+        appendToConsole(args.join(" "), "error");
+      };
+    </script>
+
+    <script src="/public/js/test-fix.js"></script>
+  </body>
+</html>

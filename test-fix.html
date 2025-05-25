@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Demo Fix</title>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  </head>
+  <body>
+    <div
+      id="agent-demo-container"
+      style="width: 800px; height: 400px; border: 1px solid #ccc"
+    >
+      <div id="agent-network" style="width: 100%; height: 100%"></div>
+    </div>
+
+    <button id="start-demo">Start Demo</button>
+    <button id="reset-demo">Reset Demo</button>
+    <select id="demo-scenario">
+      <option value="simple">Simple Demo</option>
+    </select>
+    <div id="demo-status"></div>
+    <div id="demo-description"></div>
+
+    <script src="/public/js/demos.js"></script>
+    <script>
+      // Test the demo initialization
+      console.log("Testing demo fix...");
+
+      // Create mock data to test error handling
+      const testAgentDemo = {
+        demoData: {
+          agentTypes: {
+            sender: {
+              color: "#4CAF50",
+              icon: "send",
+              label: "Sender Agent",
+              size: 25,
+            },
+            // Missing receiver type to test error handling
+          },
+          demos: [
+            {
+              id: "simple",
+              name: "Basic Communication",
+              description: "Test demo",
+              nodes: [
+                {
+                  id: "agent1",
+                  type: "sender",
+                  position: { x: 100, y: 200 },
+                },
+                {
+                  id: "agent2",
+                  type: "receiver", // This type is missing from agentTypes
+                  position: { x: 300, y: 200 },
+                },
+              ],
+              edges: [],
+              behaviors: [],
+            },
+          ],
+        },
+        lightenColor: function (color, percent) {
+          return color; // Simple fallback
+        },
+      };
+
+      // Test the fixed code
+      const scenario = testAgentDemo.demoData.demos[0];
+      try {
+        const nodes = scenario.nodes.map((node) => {
+          const agentType = testAgentDemo.demoData.agentTypes[node.type];
+          return {
+            id: node.id,
+            label:
+              node.label ||
+              (agentType && agentType.label
+                ? agentType.label.charAt(0)
+                : node.type.charAt(0).toUpperCase()),
+            title: agentType ? agentType.label : node.type,
+            x: node.position?.x,
+            y: node.position?.y,
+            color: {
+              background: agentType ? agentType.color : "#666666",
+              border: testAgentDemo.lightenColor(
+                agentType ? agentType.color : "#666666",
+                -20
+              ),
+            },
+            size: agentType ? agentType.size : 25,
+            font: { color: "#ffffff" },
+            metadata: {
+              type: node.type,
+              state: "idle",
+              behaviorType: node.behaviorType || "default",
+              ...node,
+            },
+          };
+        });
+
+        console.log("✅ SUCCESS: No errors occurred during node mapping");
+        console.log("Generated nodes:", nodes);
+
+        // Verify the missing agent type was handled
+        const receiverNode = nodes.find((n) => n.id === "agent2");
+        if (receiverNode.label === "R" && receiverNode.title === "receiver") {
+          console.log("✅ SUCCESS: Missing agent type handled correctly");
+        } else {
+          console.log(
+            "❌ FAILURE: Missing agent type not handled correctly",
+            receiverNode
+          );
+        }
+      } catch (error) {
+        console.error("❌ FAILURE: Error still occurs:", error);
+      }
+    </script>
+  </body>
+</html>

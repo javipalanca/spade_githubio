@@ -177,13 +177,13 @@ a,
 }
 
 .hero::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: url('https://i.imgur.com/JzNMKtz.png') repeat;
+  background: url("https://i.imgur.com/JzNMKtz.png") repeat;
   opacity: 0.1;
   z-index: 1;
 }
@@ -242,7 +242,7 @@ a,
   border-radius: 10px;
   padding: 20px;
   margin: 40px 0;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   position: relative;
   overflow: visible;
   transition: all 0.3s ease;
@@ -299,7 +299,7 @@ body.dark-mode .code-block .comment {
 
 /* Add a gentle fade at the bottom of scrollable code blocks */
 .code-block::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -519,14 +519,78 @@ body.dark-mode .demo-controls .form-select:focus {
   opacity: 0.7;
 }
 
+/* Message particles for explosion effects */
+.message-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1001;
+  animation: particlePuff 1s ease-out forwards;
+}
+
+@keyframes particlePuff {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+    filter: brightness(1.5) saturate(1.5);
+  }
+  25% {
+    opacity: 0.95;
+    transform: scale(1.3);
+    filter: brightness(1.8) saturate(1.8);
+  }
+  60% {
+    opacity: 0.7;
+    transform: scale(1.1);
+    filter: brightness(1.4) saturate(1.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+/* Dark mode particle effects */
+body.dark-mode .message-particle {
+  animation: particlePuffDark 1s ease-out forwards;
+}
+
+@keyframes particlePuffDark {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+    filter: brightness(1.8) saturate(1.8)
+      drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+  }
+  25% {
+    opacity: 0.95;
+    transform: scale(1.3);
+    filter: brightness(2.2) saturate(2)
+      drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+  }
+  60% {
+    opacity: 0.7;
+    transform: scale(1.1);
+    filter: brightness(1.8) saturate(1.6)
+      drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+    filter: brightness(1) saturate(1)
+      drop-shadow(0 0 0px rgba(255, 255, 255, 0));
+  }
+}
+
 /* Prism.js dark mode support */
-body.dark-mode pre[class*='language-'],
-body.dark-mode code[class*='language-'] {
+body.dark-mode pre[class*="language-"],
+body.dark-mode code[class*="language-"] {
   background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
-body.dark-mode pre[class*='language-'] {
+body.dark-mode pre[class*="language-"] {
   border: 1px solid var(--dark-border) !important;
 }
 
@@ -606,5 +670,5 @@ body.dark-mode .code-block {
 }
 
 .code-block code {
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace !important;
 }

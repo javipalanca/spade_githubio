@@ -23,8 +23,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "SendMessage",
-              "code": "await self.send(Message(to='agent2@localhost').set_metadata('content', 'Hello from Agent1'))"
+              "name": "SendMessage"
             }
           ]
         },
@@ -38,8 +37,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "ReceiveMessage",
-              "code": "msg = await self.receive(timeout=10)\nif msg:\n    print(f'Received: {msg.metadata[\"content\"]}')"
+              "name": "ReceiveMessage"
             }
           ]
         }
@@ -77,8 +75,7 @@
           "behaviors": [
             {
               "type": "one-shot",
-              "name": "Coordinate",
-              "code": "for worker in ['worker1', 'worker2']:\n    await self.send(Message(to=f'{worker}@localhost').set_metadata('task', 'process'))"
+              "name": "Coordinate"
             }
           ]
         },
@@ -92,8 +89,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "ProcessTask",
-              "code": "msg = await self.receive(timeout=5)\nif msg and msg.metadata.get('task') == 'process':\n    print('Worker1 processing task')"
+              "name": "ProcessTask"
             }
           ]
         },
@@ -107,8 +103,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "ProcessTask",
-              "code": "msg = await self.receive(timeout=5)\nif msg and msg.metadata.get('task') == 'process':\n    print('Worker2 processing task')"
+              "name": "ProcessTask"
             }
           ]
         }
@@ -153,8 +148,7 @@
           "behaviors": [
             {
               "type": "one-shot",
-              "name": "InitializeNetwork",
-              "code": "await self.send(Message(to='sender@localhost').set_metadata('command', 'start'))"
+              "name": "InitializeNetwork"
             }
           ]
         },
@@ -168,8 +162,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "BroadcastMessages",
-              "code": "for receiver in ['receiver1', 'receiver2']:\n    await self.send(Message(to=f'{receiver}@localhost').set_metadata('data', f'Message to {receiver}'))"
+              "name": "BroadcastMessages"
             }
           ]
         },
@@ -183,8 +176,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "ProcessMessages",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    await self.send(Message(to='worker1@localhost').set_metadata('work', msg.metadata.get('data')))"
+              "name": "ProcessMessages"
             }
           ]
         },
@@ -198,8 +190,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "ProcessMessages",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    await self.send(Message(to='worker2@localhost').set_metadata('work', msg.metadata.get('data')))"
+              "name": "ProcessMessages"
             }
           ]
         },
@@ -213,8 +204,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "DoWork",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Worker1 processing: {msg.metadata.get(\"work\")}')"
+              "name": "DoWork"
             }
           ]
         },
@@ -228,8 +218,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "DoWork",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Worker2 processing: {msg.metadata.get(\"work\")}')"
+              "name": "DoWork"
             }
           ]
         }
@@ -287,8 +276,7 @@
           "behaviors": [
             {
               "type": "presenceNotification",
-              "name": "MonitorPresence",
-              "code": "if presence_change:\n    for buddy in self.buddies:\n        await self.send(Message(to=buddy).set_metadata('presence', f'{agent} is {status}'))"
+              "name": "MonitorPresence"
             }
           ]
         },
@@ -302,8 +290,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "HandlePresence",
-              "code": "msg = await self.receive(timeout=5)\nif msg and 'presence' in msg.metadata:\n    print(f'Buddy1 notified: {msg.metadata[\"presence\"]}')"
+              "name": "HandlePresence"
             }
           ]
         },
@@ -317,8 +304,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "HandlePresence",
-              "code": "msg = await self.receive(timeout=5)\nif msg and 'presence' in msg.metadata:\n    print(f'Buddy2 notified: {msg.metadata[\"presence\"]}')"
+              "name": "HandlePresence"
             }
           ]
         }
@@ -372,8 +358,7 @@
           "behaviors": [
             {
               "type": "cyclic",
-              "name": "RouteMessages",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    topic = msg.metadata.get('topic')\n    for subscriber in self.subscribers.get(topic, []):\n        await self.send(Message(to=subscriber).set_metadata('data', msg.metadata.get('data')))"
+              "name": "RouteMessages"
             }
           ]
         },
@@ -387,8 +372,7 @@
           "behaviors": [
             {
               "type": "publication",
-              "name": "PublishNews",
-              "code": "await self.send(Message(to='broker@localhost').set_metadata('topic', 'news').set_metadata('data', 'Breaking news update'))"
+              "name": "PublishNews"
             }
           ]
         },
@@ -402,8 +386,7 @@
           "behaviors": [
             {
               "type": "publication",
-              "name": "PublishWeather",
-              "code": "await self.send(Message(to='broker@localhost').set_metadata('topic', 'weather').set_metadata('data', 'Sunny, 25°C'))"
+              "name": "PublishWeather"
             }
           ]
         },
@@ -417,8 +400,7 @@
           "behaviors": [
             {
               "type": "subscription",
-              "name": "ReceiveNews",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Subscriber1 received: {msg.metadata.get(\"data\")}')"
+              "name": "ReceiveNews"
             }
           ]
         },
@@ -432,8 +414,7 @@
           "behaviors": [
             {
               "type": "subscription",
-              "name": "ReceiveWeather",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    print(f'Subscriber2 received: {msg.metadata.get(\"data\")}')"
+              "name": "ReceiveWeather"
             }
           ]
         }
@@ -487,8 +468,7 @@
           "behaviors": [
             {
               "type": "messageForwarding",
-              "name": "ForwardRequests",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    target = self.load_balance(['responder1', 'responder2'])\n    await self.send(Message(to=f'{target}@localhost').set_metadata('request', msg.metadata.get('data')))"
+              "name": "ForwardRequests"
             }
           ]
         },
@@ -502,8 +482,7 @@
           "behaviors": [
             {
               "type": "autoResponse",
-              "name": "ProcessAndRespond",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    response = f'Processed by Responder1: {msg.metadata.get(\"request\")}'\n    await self.send(Message(to='aggregator@localhost').set_metadata('response', response))"
+              "name": "ProcessAndRespond"
             }
           ]
         },
@@ -517,8 +496,7 @@
           "behaviors": [
             {
               "type": "autoResponse",
-              "name": "ProcessAndRespond",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    response = f'Processed by Responder2: {msg.metadata.get(\"request\")}'\n    await self.send(Message(to='aggregator@localhost').set_metadata('response', response))"
+              "name": "ProcessAndRespond"
             }
           ]
         },
@@ -532,8 +510,7 @@
           "behaviors": [
             {
               "type": "messageAggregation",
-              "name": "CollectResponses",
-              "code": "msg = await self.receive(timeout=5)\nif msg:\n    self.responses.append(msg.metadata.get('response'))\n    if len(self.responses) >= 2:\n        print(f'Aggregated: {self.responses}')\n        self.responses.clear()"
+              "name": "CollectResponses"
             }
           ]
         }
@@ -566,51 +543,75 @@
   "agentTypes": {
     "sender": {
       "color": "#4CAF50",
-      "icon": "send"
+      "icon": "send",
+      "label": "Sender Agent",
+      "size": 25
     },
     "receiver": {
       "color": "#2196F3",
-      "icon": "inbox"
+      "icon": "inbox",
+      "label": "Receiver Agent",
+      "size": 25
     },
     "coordinator": {
       "color": "#FF9800",
-      "icon": "hub"
+      "icon": "hub",
+      "label": "Coordinator",
+      "size": 30
     },
     "worker": {
       "color": "#9C27B0",
-      "icon": "work"
+      "icon": "work",
+      "label": "Worker Agent",
+      "size": 20
     },
     "buddy": {
       "color": "#00BCD4",
-      "icon": "person"
+      "icon": "person",
+      "label": "Buddy Agent",
+      "size": 25
     },
     "server": {
       "color": "#F44336",
-      "icon": "server"
+      "icon": "server",
+      "label": "Server",
+      "size": 35
     },
     "publisher": {
       "color": "#8BC34A",
-      "icon": "publish"
+      "icon": "publish",
+      "label": "Publisher",
+      "size": 25
     },
     "subscriber": {
       "color": "#3F51B5",
-      "icon": "subscribe"
+      "icon": "subscribe",
+      "label": "Subscriber",
+      "size": 25
     },
     "broker": {
       "color": "#FF5722",
-      "icon": "router"
+      "icon": "router",
+      "label": "Message Broker",
+      "size": 35
     },
     "forwarder": {
       "color": "#607D8B",
-      "icon": "forward"
+      "icon": "forward",
+      "label": "Forwarder",
+      "size": 25
     },
     "responder": {
       "color": "#795548",
-      "icon": "reply"
+      "icon": "reply",
+      "label": "Responder",
+      "size": 25
     },
     "aggregator": {
       "color": "#E91E63",
-      "icon": "merge"
+      "icon": "merge",
+      "label": "Aggregator",
+      "size": 25
     }
   }
 }
