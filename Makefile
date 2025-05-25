@@ -2,7 +2,7 @@
 # Makefile para automatizar tareas comunes del proyecto SPADE Astro
 
 # Variables
-PROJECT_DIR = /workspaces/spade_githubio/spade-astro
+PROJECT_DIR = /workspaces/spade_githubio
 DIST_DIR = $(PROJECT_DIR)/dist
 NODE_MODULES = $(PROJECT_DIR)/node_modules
 
