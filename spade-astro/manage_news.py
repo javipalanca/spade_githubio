@@ -237,6 +237,39 @@ def edit_news():
                 if link:
                     item['link'] = link
                 
+                # Show current image and ask for a new one
+                current_image = item.get('image', '')
+                print(f"\nCurrent image: {current_image}")
+                print("\nAvailable images in landing-assets/:")
+                assets_dir = os.path.dirname(NEWS_FILE)
+                if os.path.exists(assets_dir):
+                    image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
+                    for i, img in enumerate(image_files, 1):
+                        print(f"  {i}. {img}")
+                
+                # Ask if user wants to change the image
+                change_image = input("\nChange image? (y/n) [n]: ").strip().lower()
+                if change_image in ('y', 'yes'):
+                    image_input = input("Enter image filename or upload a new image with 'upload' command: ").strip()
+                    
+                    if image_input.lower() == 'upload':
+                        # Call upload function
+                        upload_image()
+                        
+                        # Ask again for image selection after upload
+                        print("\nAvailable images in landing-assets/:")
+                        if os.path.exists(assets_dir):
+                            image_files = [f for f in os.listdir(assets_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.gif', '.webp'))]
+                            for i, img in enumerate(image_files, 1):
+                                print(f"  {i}. {img}")
+                        image_input = input("Enter image filename: ").strip()
+                    
+                    if image_input and not image_input.startswith("landing-assets/"):
+                        image_input = f"landing-assets/{image_input}"
+                    
+                    if image_input:
+                        item['image'] = image_input
+                
                 save_news(data)
                 print(f"News item '{item['title']}' updated successfully.")
                 return
