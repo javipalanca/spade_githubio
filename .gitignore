@@ -3,7 +3,6 @@ node_modules/
 dist/
 .build/
 .cache/
-astro.config.mjs
 .env
 .env.*
 npm-debug.log*
