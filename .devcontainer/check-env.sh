@@ -17,9 +17,9 @@ echo -e "\n> Estructura del directorio de trabajo:"
 ls -la /workspaces/spade_githubio
 
 echo -e "\n> Verificando proyecto Astro:"
-if [ -d "/workspaces/spade_githubio/spade-astro" ]; then
+if [ -d "/workspaces/spade_githubio/" ]; then
   echo "✅ Directorio de proyecto Astro encontrado"
-  cd /workspaces/spade_githubio/spade-astro
+  cd /workspaces/spade_githubio/
   
   echo -e "\n> Verificando dependencias de Astro:"
   if [ -d "node_modules" ]; then

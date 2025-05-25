@@ -1,0 +1,25 @@
+---
+// Plugin component for the plugins section
+export interface Plugin {
+  name: string;
+  description: string;
+  icon: string;
+  githubUrl: string;
+  docsUrl: string;
+}
+
+interface Props {
+  plugin: Plugin;
+}
+
+const { plugin } = Astro.props;
+---
+
+<div class="card h-100 border-0 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">{plugin.name}</h5>
+        <p class="card-text">{plugin.description}</p>
+        <a href={plugin.githubUrl} class="btn btn-sm btn-outline-primary">GitHub</a>
+        <a href={plugin.docsUrl} class="btn btn-sm btn-outline-secondary">Docs</a>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+---
+// Feature card component
+export interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+interface Props {
+  feature: Feature;
+}
+
+const { feature } = Astro.props;
+---
+
+<div class="feature-card p-4 bg-white h-100">
+    <div class="feature-icon">{feature.icon}</div>
+    <h4>{feature.title}</h4>
+    <p>{feature.description}</p>
+    <ul class="list-unstyled mt-3">
+        {feature.features.map(item => (
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>{item}</li>
+        ))}
+    </ul>
+</div>

@@ -1,0 +1,64 @@
+---
+// FAQ Section component
+---
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Frequently Asked Questions</h2>
+            <p class="lead text-muted">Get answers to common questions about SPADE</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What is SPADE and what makes it unique?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>SPADE (Smart Python Agent Development Environment) is a multi-agent systems platform built in Python that leverages XMPP (eXtensible Messaging and Presence Protocol) for communication. What makes SPADE unique is its combination of an intuitive behavior-based agent model with powerful instant messaging capabilities that allow agents to interact with both other agents and humans.</p>
+                                <p>Unlike other agent frameworks, SPADE provides presence awareness, asynchronous operation through asyncio, and a web-based interface out of the box. It's designed to be both powerful for complex systems and approachable for developers new to agent-based programming.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Do I need to run my own XMPP server to use SPADE?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>No, SPADE includes a custom XMPP server (pyjabber) that you can use out of the box for development and testing. This means you can get started with SPADE without setting up any additional infrastructure.</p>
+                                <p>However, for production environments or specific requirements, SPADE is compatible with any standard XMPP server like Prosody, ejabberd, or Openfire. This flexibility allows you to choose the best option for your specific deployment needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                What types of behaviors can SPADE agents have?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p>SPADE provides several types of predefined behaviors to help you implement different agent tasks:</p>
+                                <ul>
+                                    <li><strong>CyclicBehaviour</strong>: Executes repeatedly without end</li>
+                                    <li><strong>PeriodicBehaviour</strong>: Executes at regular time intervals</li>
+                                    <li><strong>OneShotBehaviour</strong>: Executes only once</li>
+                                    <li><strong>TimeoutBehaviour</strong>: Executes after a specified time delay</li>
+                                    <li><strong>FSMBehaviour</strong>: Implements a Finite State Machine for complex behavior patterns</li>
+                                </ul>
+                                <p>These behavior types can be combined and nested to create sophisticated agent logic, and each behavior can have its own message template to handle specific types of incoming communications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+{
+  "demos": [
+    {
+      "id": "simple",
+      "name": "Basic Communication",
+      "description": "A simple demonstration of two agents exchanging messages.",
+      "agentTypes": ["sender", "receiver"],
+      "features": ["message-passing", "xmpp"]
+    },
+    {
+      "id": "behaviors",
+      "name": "Agent Behaviors",
+      "description": "Demonstration of different behavior types in SPADE agents.",
+      "agentTypes": ["coordinator", "worker"],
+      "features": ["behaviors", "cyclic", "one-shot"]
+    },
+    {
+      "id": "network",
+      "name": "Agent Network",
+      "description": "A network of multiple interconnected agents demonstrating complex interactions.",
+      "agentTypes": ["coordinator", "sender", "receiver", "worker"],
+      "features": ["network", "multi-agent", "complexity"]
+    }
+  ]
+}

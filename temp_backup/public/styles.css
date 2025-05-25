@@ -1,0 +1,610 @@
+/* SPADE Landing Page Styles */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --dark-color: #2c3e50;
+  --light-color: #ecf0f1;
+
+  /* Dark mode variables */
+  --dark-bg: #121212;
+  --dark-card-bg: #1e1e1e;
+  --dark-text: #e0e0e0;
+  --dark-text-muted: #a0a0a0;
+  --dark-border: #333;
+}
+
+/* Navigation sticky */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Add padding to body to compensate for fixed navbar */
+body {
+  padding-top: 76px; /* Adjust based on navbar height */
+}
+
+/* Navbar shadow when scrolled */
+.navbar.scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .navbar.scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode support */
+body.dark-mode {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode .feature-card,
+body.dark-mode .code-example,
+body.dark-mode .accordion-item,
+body.dark-mode .accordion-button {
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .lead.text-muted,
+body.dark-mode small.text-muted {
+  color: var(--dark-text-muted) !important;
+}
+
+body.dark-mode .card,
+body.dark-mode .feature-card,
+body.dark-mode .accordion-item {
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .navbar {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode .navbar-light .navbar-toggler {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+}
+
+body.dark-mode .navbar-light .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+body.dark-mode .table {
+  color: var(--dark-text);
+}
+
+body.dark-mode .table-dark {
+  background-color: #000;
+}
+
+body.dark-mode code {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+body.dark-mode .bg-light {
+  background-color: #1a1a1a !important;
+}
+
+body.dark-mode .bg-white {
+  background-color: var(--dark-card-bg) !important;
+}
+
+body.dark-mode .shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.75) !important;
+}
+
+body.dark-mode .navbar-light .navbar-nav .nav-link {
+  color: var(--dark-text);
+}
+
+body.dark-mode a:not(.btn) {
+  color: #5ba9eb;
+}
+
+body.dark-mode a:not(.btn):hover {
+  color: #8bc4f3;
+}
+
+body.dark-mode .accordion-button::after {
+  filter: invert(1);
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+  background-color: #2d2d2d;
+  color: var(--dark-text);
+}
+
+body.dark-mode .btn-outline-primary {
+  color: #5ba9eb;
+  border-color: #5ba9eb;
+}
+
+body.dark-mode .btn-outline-secondary {
+  color: #a0a0a0;
+  border-color: #a0a0a0;
+}
+
+body.dark-mode .btn-outline-light {
+  color: var(--dark-text);
+  border-color: #555;
+}
+
+/* Smooth transitions for dark mode */
+body,
+.navbar,
+.card,
+.feature-card,
+.code-example,
+.accordion-item,
+.accordion-button,
+.bg-light,
+.bg-white,
+a,
+.btn {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: white;
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url('https://i.imgur.com/JzNMKtz.png') repeat;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Feature Cards */
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.feature-card {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  height: 100%;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Sections */
+.plugins-section {
+  background-color: var(--light-color);
+}
+
+.badge-section {
+  background-color: #f8f9fa;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+/* Code Examples */
+.code-example {
+  background-color: var(--dark-color);
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 40px 0;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  overflow: visible;
+  transition: all 0.3s ease;
+}
+
+.code-example .card-header {
+  border-bottom: none;
+}
+
+.code-block {
+  font-size: 0.85rem;
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 0;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .code-block {
+  background-color: #1a1a1a !important;
+  color: #e0e0e0;
+}
+
+.copy-code-btn:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+/* Code syntax highlighting */
+.code-block .keyword {
+  color: #007bff;
+}
+
+.code-block .string {
+  color: #28a745;
+}
+
+.code-block .comment {
+  color: #6c757d;
+  font-style: italic;
+}
+
+body.dark-mode .code-block .keyword {
+  color: #88b0ff;
+}
+
+body.dark-mode .code-block .string {
+  color: #7ae28c;
+}
+
+body.dark-mode .code-block .comment {
+  color: #a0a0a0;
+}
+
+/* Add a gentle fade at the bottom of scrollable code blocks */
+.code-block::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.code-block:hover::after {
+  opacity: 1;
+}
+
+body.dark-mode .code-block::after {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
+}
+
+.code-example pre {
+  margin: 0;
+  color: #e6e6e6;
+}
+
+.code-title {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure code title is visible in dark mode */
+body.dark-mode .code-title {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--dark-color);
+  color: white;
+}
+
+.footer a {
+  color: var(--light-color);
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/* Logo animations */
+.navbar-brand img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand:hover img {
+  transform: rotate(10deg);
+}
+
+/* Interactive Demo Styles */
+#agent-demo-container {
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Responsive canvas container */
+.demo-canvas-container {
+  height: 500px;
+  min-height: 400px;
+  aspect-ratio: 16/10;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .demo-canvas-container {
+    height: 280px;
+    min-height: 250px;
+    aspect-ratio: 4/3;
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-canvas-container {
+    height: 350px;
+    min-height: 300px;
+    aspect-ratio: 16/10;
+  }
+}
+
+@media (min-width: 992px) {
+  .demo-canvas-container {
+    height: 550px;
+    min-height: 450px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .demo-canvas-container {
+    height: 600px;
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .demo-canvas-container {
+    height: 650px;
+    min-height: 550px;
+  }
+}
+
+body.dark-mode #agent-demo-container {
+  background: linear-gradient(to bottom, #1a1a1a, #121212);
+}
+
+.dark-mode-aware.bg-light {
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-aware.bg-light {
+  background-color: rgba(33, 33, 33, 0.75) !important;
+}
+
+#agent-canvas {
+  display: block;
+  border-radius: 8px;
+}
+
+.demo-message {
+  position: absolute;
+  padding: 5px 10px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+body.dark-mode .demo-message {
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Agent tooltip styles */
+.agent-tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  max-width: 200px;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  line-height: 1.4;
+}
+
+body.dark-mode .agent-tooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #333;
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Demo controls styling */
+.demo-controls {
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .demo-controls {
+  background-color: rgba(30, 30, 30, 0.8) !important;
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .demo-controls .form-select {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+body.dark-mode .demo-controls .form-select:focus {
+  background-color: var(--dark-card-bg);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Animation for message particles */
+.message-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+/* Prism.js dark mode support */
+body.dark-mode pre[class*='language-'],
+body.dark-mode code[class*='language-'] {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+}
+
+body.dark-mode pre[class*='language-'] {
+  border: 1px solid var(--dark-border) !important;
+}
+
+body.dark-mode .token.comment,
+body.dark-mode .token.prolog,
+body.dark-mode .token.doctype,
+body.dark-mode .token.cdata {
+  color: #7c7c7c !important;
+}
+
+body.dark-mode .token.punctuation {
+  color: #c4c4c4 !important;
+}
+
+body.dark-mode .token.property,
+body.dark-mode .token.tag,
+body.dark-mode .token.boolean,
+body.dark-mode .token.number,
+body.dark-mode .token.constant,
+body.dark-mode .token.symbol,
+body.dark-mode .token.deleted {
+  color: #f39c12 !important;
+}
+
+body.dark-mode .token.selector,
+body.dark-mode .token.attr-name,
+body.dark-mode .token.string,
+body.dark-mode .token.char,
+body.dark-mode .token.builtin,
+body.dark-mode .token.inserted {
+  color: #2ecc71 !important;
+}
+
+body.dark-mode .token.operator,
+body.dark-mode .token.entity,
+body.dark-mode .token.url,
+body.dark-mode .language-css .token.string,
+body.dark-mode .style .token.string {
+  color: #3498db !important;
+}
+
+body.dark-mode .token.atrule,
+body.dark-mode .token.attr-value,
+body.dark-mode .token.keyword {
+  color: #9b59b6 !important;
+}
+
+body.dark-mode .token.function,
+body.dark-mode .token.class-name {
+  color: #e74c3c !important;
+}
+
+body.dark-mode .token.regex,
+body.dark-mode .token.important,
+body.dark-mode .token.variable {
+  color: #f1c40f !important;
+}
+
+/* Code block improvements */
+.code-block {
+  position: relative;
+  border-radius: 8px !important;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+}
+
+body.dark-mode .code-block {
+  border-color: var(--dark-border);
+  background-color: var(--dark-card-bg) !important;
+}
+
+.code-block pre {
+  margin: 0 !important;
+  border-radius: 8px !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.code-block code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+}
