@@ -17,6 +17,7 @@ The landing page has been successfully migrated to Astro.js with the following i
 ```text
 spade-astro/
 ├── public/                    # Static assets (copied from original)
+│   ├── demos.js              # Interactive demo functionality
 │   ├── scripts.js            # Original JavaScript functionality
 │   ├── styles.css            # Original styles (as backup)
 │   └── landing-assets/       # Images, icons, and data files
@@ -60,6 +61,10 @@ spade-astro/
 - ✅ **Component Architecture**: Modular, maintainable Astro components
 - ✅ **Performance Optimized**: Static site generation for fast loading
 - ✅ **SEO Ready**: Proper meta tags and structured data
+- ✅ **Code Refactoring**: Demo functionality extracted to separate `demos.js` file for better
+  maintainability
+- ✅ **Clean Architecture**: Agent demo code is now isolated from general UI scripts
+- ✅ **Improved Maintainability**: Separation of concerns between UI scripts and demo functionality
 
 ### Features Preserved and Enhanced
 
