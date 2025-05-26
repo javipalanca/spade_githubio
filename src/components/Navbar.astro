@@ -1,5 +1,6 @@
 ---
 // Navbar component
+import DarkModeToggle from './DarkModeToggle.astro';
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
@@ -39,9 +40,9 @@ const baseUrl = import.meta.env.BASE_URL;
                     <a class="nav-link" href="#interactive-demo">Demo</a>
                 </li>
                 <li class="nav-item">
-                    <button id="darkModeToggle" class="dark-mode-toggle dark-mode-toggle-small" onclick="toggleDarkMode()">
-                        <i class="bi bi-moon-fill" id="darkModeIcon"></i>
-                    </button>
+                    <div class="ms-2">
+                        <DarkModeToggle small={true} />
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary text-white ms-lg-3 px-3" href="https://github.com/javipalanca/spade">GitHub</a>

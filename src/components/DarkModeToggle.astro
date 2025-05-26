@@ -11,8 +11,9 @@ const { small = false } = Astro.props;
   id="darkModeToggle"
   class={`dark-mode-toggle ${small ? 'dark-mode-toggle-small' : ''}`}
   aria-label="Toggle dark mode"
+  onclick="window.toggleDarkMode()"
 >
-  <i class="bi bi-moon-stars"></i>
+  <i class="bi bi-moon-stars" id="darkModeIcon"></i>
 </button>
 
 <style>
@@ -62,39 +63,3 @@ const { small = false } = Astro.props;
     width: auto;
   }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const toggleButton = document.getElementById('darkModeToggle');
-    const body = document.body;
-    
-    // If toggle button is not found, exit early
-    if (!toggleButton) return;
-    
-    // Set initial state based on saved preference or system preference
-    const darkModePreference = localStorage.getItem('darkMode');
-    if (darkModePreference === 'true' || 
-        (darkModePreference === null && 
-         window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-mode');
-      toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
-    } else {
-      body.classList.remove('dark-mode');
-      toggleButton.innerHTML = '<i class="bi bi-moon-stars"></i>';
-    }
-    
-    // Toggle dark mode on button click
-    toggleButton.addEventListener('click', function() {
-      body.classList.toggle('dark-mode');
-      const isDarkMode = body.classList.contains('dark-mode');
-      localStorage.setItem('darkMode', isDarkMode.toString());
-      
-      // Update button icon
-      if (isDarkMode) {
-        toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
-      } else {
-        toggleButton.innerHTML = '<i class="bi bi-moon-stars"></i>';
-      }
-    });
-  });
-</script>

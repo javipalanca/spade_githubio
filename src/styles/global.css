@@ -28,18 +28,10 @@ body {
 /* Navbar styles moved to Navbar.astro component */
 
 /* Dark mode support */
-body {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease !important;
-}
 
 body.dark-mode {
   background-color: var(--dark-bg) !important;
   color: var(--dark-text) !important;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease !important;
 }
 
 body.dark-mode .card,
@@ -49,9 +41,6 @@ body.dark-mode .accordion-item,
 body.dark-mode .accordion-button {
   background-color: var(--dark-card-bg) !important;
   color: var(--dark-text) !important;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease !important;
 }
 
 body.dark-mode .text-muted,
