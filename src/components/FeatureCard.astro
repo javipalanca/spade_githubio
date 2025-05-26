@@ -24,3 +24,40 @@ const { feature } = Astro.props;
         ))}
     </ul>
 </div>
+
+<style>
+    .feature-card {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+            transform 0.3s,
+            box-shadow 0.3s;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid #e9ecef;
+        position: relative;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+
+    /* Dark mode support */
+    :global(body.dark-mode) .feature-card {
+        background-color: var(--dark-card-bg) !important;
+        color: var(--dark-text) !important;
+        border-color: var(--dark-border) !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    :global(body.dark-mode) .feature-card:hover {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+</style>

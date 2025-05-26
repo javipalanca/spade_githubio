@@ -50,3 +50,44 @@ const baseUrl = import.meta.env.BASE_URL;
         </div>
     </div>
 </nav>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        transition:
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .navbar.scrolled {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dark mode styles */
+    :global(body.dark-mode) .navbar {
+        background-color: var(--dark-card-bg) !important;
+        color: var(--dark-text) !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    :global(body.dark-mode) .navbar.scrolled {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    :global(body.dark-mode) .navbar-light .navbar-toggler {
+        background-color: var(--dark-card-bg) !important;
+        border-color: var(--dark-border) !important;
+    }
+
+    :global(body.dark-mode) .navbar-light .navbar-toggler-icon {
+        filter: invert(1) !important;
+    }
+
+    :global(body.dark-mode) .navbar-light .navbar-nav .nav-link {
+        color: var(--dark-text);
+    }
+</style>

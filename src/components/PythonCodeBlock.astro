@@ -45,6 +45,7 @@ const cleanCode = code.trim();
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin: 1rem 0;
         transition: all 0.3s ease;
+        background-color: #ffffff;
     }
 
     .code-example:hover {
@@ -52,13 +53,13 @@ const cleanCode = code.trim();
     }
 
     .code-header {
-        background: linear-gradient(135deg, #6c757d, #495057);
-        color: white;
+        background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        color: #343a40;
         padding: 0.75rem 1rem;
         font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
         font-size: 0.875rem;
         font-weight: 600;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .code-filename {
@@ -73,21 +74,22 @@ const cleanCode = code.trim();
     }
 
     .copy-btn {
-        border-color: rgba(255, 255, 255, 0.3);
-        color: rgba(255, 255, 255, 0.8);
+        border-color: rgba(0, 0, 0, 0.2);
+        color: rgba(0, 0, 0, 0.7);
         transition: all 0.2s ease;
     }
 
     .copy-btn:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.5);
-        color: white;
+        background-color: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.3);
+        color: #000;
         transform: translateY(-1px);
     }
 
     .code-body {
         overflow-x: auto;
         position: relative;
+        background-color: #ffffff;
     }
 
     .code-body pre {
@@ -97,19 +99,44 @@ const cleanCode = code.trim();
         font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
         font-size: 0.875rem;
         line-height: 1.6;
+        background-color: #ffffff;
+        color: #212529;
     }
 
     .code-body code {
         padding: 0;
         border-radius: 0;
+        background-color: transparent;
+        color: #212529;
     }
 
     /* Dark mode styles */
     :global(body.dark-mode) .code-header {
         background: linear-gradient(135deg, #374151, #1f2937);
+        color: white;
+        border-bottom-color: rgba(255, 255, 255, 0.1);
     }
-
-    /* Remove dark mode overrides to let Prism theme handle colors */
+    
+    :global(body.dark-mode) .copy-btn {
+        border-color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.8);
+    }
+    
+    :global(body.dark-mode) .copy-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
+    }
+    
+    :global(body.dark-mode) .code-body {
+        background-color: #1a202c;
+    }
+    
+    :global(body.dark-mode) .code-body pre,
+    :global(body.dark-mode) .code-body code {
+        background-color: #1a202c;
+        color: #e2e8f0;
+    }
     
     /* Responsive adjustments */
     @media (max-width: 768px) {

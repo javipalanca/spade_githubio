@@ -3,7 +3,7 @@
 import PythonCodeBlock from './PythonCodeBlock.astro';
 ---
 
-<section id="interactive-demo" class="py-5">
+<section id="interactive-demo" class="py-5 interactive-demo">
     <div class="container">
         <div class="text-center mb-5">
             <h2 class="fw-bold">Interactive Agent Demo</h2>
@@ -128,6 +128,27 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         border-bottom: 2px solid #0d6efd;
     }
     
+    /* Interactive demo section styles */
+    .interactive-demo {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 4rem 0;
+    }
+
+    #agentCanvas {
+        border: 2px solid var(--primary-color);
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Demo canvas responsive styles */
+    .demo-canvas-container {
+        height: 500px;
+        min-height: 400px;
+        aspect-ratio: 16/10;
+        transition: height 0.3s ease;
+    }
+    
     /* Better scrolling for code blocks */
     .code-body {
         height: 350px; /* Fixed height instead of max-height for consistent appearance */
@@ -230,6 +251,77 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         border-radius: 5px;
     }
     
+    /* Custom scrollbar for code blocks */
+    .code-body::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .code-body::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+    
+    .code-body::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    .code-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    .code-body::-webkit-scrollbar-corner {
+        background: rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Dark mode styles for code body */
+    :global(.dark-mode) .code-body {
+        background-color: #2d3748;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    :global(.dark-mode) .code-body pre {
+        color: #e2e8f0;
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-corner {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Demo canvas and network container */
+    .demo-canvas-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    #agent-network {
+        background: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-radius: 5px;
+    }
+    
     /* Dark mode for demo container */
     :global(.dark-mode) .demo-canvas-container {
         background: linear-gradient(135deg, #343a40 0%, #495057 100%);
@@ -248,6 +340,7 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
         z-index: 10;
+        padding: 1.5rem;
     }
     
     /* Running indicator */
@@ -378,6 +471,56 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
     /* Scroll indicators */
     .code-example {
         position: relative;
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+    
+    :global(body.dark-mode) .code-example {
+        background-color: var(--dark-card-bg);
+        border-color: var(--dark-border);
+    }
+    
+    .code-header {
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 12px 20px;
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+    }
+    
+    :global(body.dark-mode) .code-header {
+        background-color: #343a40;
+        color: white;
+        border-bottom-color: #4a5568;
+    }
+    
+    .code-body {
+        padding: 20px;
+        background-color: #ffffff;
+    }
+    
+    .code-body pre {
+        margin: 0;
+        background-color: #ffffff;
+        color: #212529;
+    }
+    
+    .code-body code {
+        background-color: transparent;
+        color: #212529;
+    }
+    
+    :global(body.dark-mode) .code-body {
+        background-color: #1a202c;
+    }
+    
+    :global(body.dark-mode) .code-body pre,
+    :global(body.dark-mode) .code-body code {
+        background-color: #1a202c;
+        color: #e2e8f0;
     }
     
     .scroll-indicator {
@@ -472,6 +615,101 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         .demo-canvas-container {
             min-height: 350px !important; /* Reduce height for mobile */
         }
+    }
+
+        .interactive-demo {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 4rem 0;
+    }
+
+    #agentCanvas {
+        border: 2px solid var(--primary-color);
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Demo canvas responsive styles */
+    .demo-canvas-container {
+        height: 500px;
+        min-height: 400px;
+        aspect-ratio: 16/10;
+        transition: height 0.3s ease;
+    }
+
+    @media (max-width: 576px) {
+        .demo-canvas-container {
+            height: 280px;
+            min-height: 250px;
+            aspect-ratio: 4/3;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .demo-canvas-container {
+            height: 350px;
+            min-height: 300px;
+            aspect-ratio: 16/10;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .demo-canvas-container {
+            height: 550px;
+            min-height: 450px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .demo-canvas-container {
+            height: 600px;
+            min-height: 500px;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .demo-canvas-container {
+            height: 650px;
+            min-height: 550px;
+        }
+    }
+
+    .demo-controls {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .agent-circle {
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .agent-circle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Dark mode styles */
+    :global(body.dark-mode) .interactive-demo {
+        background: linear-gradient(
+            135deg,
+            var(--dark-card-bg) 0%,
+            var(--dark-bg) 100%
+        ) !important;
+    }
+
+    :global(body.dark-mode) #agentCanvas {
+        background: var(--dark-card-bg);
+        border-color: var(--dark-border);
+    }
+
+    :global(body.dark-mode) .demo-controls {
+        background: var(--dark-card-bg);
+        color: var(--dark-text);
     }
 </style>
 
@@ -683,14 +921,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <p class="mt-2 text-muted">Loading Python code...</p>
                                 </div>
                             </div>
-                            <div class="scroll-indicator">
+                            <!--div class="scroll-indicator">
                                 <div class="scroll-arrow vertical">
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
                                 <div class="scroll-arrow horizontal">
                                     <i class="bi bi-chevron-right"></i>
-                                </div>
-                            </div>
+                                <div>
+                            </div-->
                         </div>
                     </div>
                 `;
@@ -976,3 +1214,4 @@ document.addEventListener('DOMContentLoaded', function() {
     setupCodeToggle();
 });
 </script>
+

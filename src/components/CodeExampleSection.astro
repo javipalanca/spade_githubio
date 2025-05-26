@@ -50,3 +50,51 @@ if __name__ == "__main__":
         </div>
     </div>
 </section>
+
+<style>
+    .code-example {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    /* Dark mode badge section and code example */
+    :global(body.dark-mode) .code-example {
+        background: var(--dark-card-bg) !important;
+        border-color: var(--dark-border) !important;
+    }
+    
+    .code-header {
+        background: #f0f0f0;
+        color: #333;
+        padding: 12px 20px;
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+    }
+    
+    .code-body {
+        padding: 20px;
+        background-color: #ffffff;
+    }
+    
+    /* Dark mode code body styles */
+    :global(body.dark-mode) .code-header {
+        background: #343a40;
+        color: white;
+        border-bottom-color: #4a5568;
+    }
+    :global(body.dark-mode) .code-body {
+        background-color: #1a202c !important;
+    }
+    
+    :global(body.dark-mode) .code-body pre {
+        background-color: #1a202c !important;
+        color: #e2e8f0 !important;
+    }
+    
+    :global(body.dark-mode) .code-body code {
+        color: #e2e8f0 !important;
+    }
+</style>
+</section>

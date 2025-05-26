@@ -13,17 +13,7 @@
   --dark-border: #333;
 }
 
-/* Navigation sticky */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1030;
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
+/* Navigation sticky styles moved to Navbar.astro component */
 
 /* Add padding to body to compensate for fixed navbar */
 body {
@@ -35,14 +25,7 @@ body {
     color 0.3s ease;
 }
 
-/* Navbar shadow when scrolled */
-.navbar.scrolled {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-body.dark-mode .navbar.scrolled {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
+/* Navbar styles moved to Navbar.astro component */
 
 /* Dark mode support */
 body {
@@ -59,7 +42,6 @@ body.dark-mode {
     color 0.3s ease !important;
 }
 
-body.dark-mode .navbar,
 body.dark-mode .card,
 body.dark-mode .feature-card,
 body.dark-mode .code-example,
@@ -84,18 +66,7 @@ body.dark-mode .accordion-item {
   border-color: var(--dark-border) !important;
 }
 
-body.dark-mode .navbar {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.dark-mode .navbar-light .navbar-toggler {
-  background-color: var(--dark-card-bg) !important;
-  border-color: var(--dark-border) !important;
-}
-
-body.dark-mode .navbar-light .navbar-toggler-icon {
-  filter: invert(1) !important;
-}
+/* Navbar dark mode styles moved to Navbar.astro component */
 
 body.dark-mode .table {
   color: var(--dark-text) !important;
@@ -165,37 +136,15 @@ body.dark-mode .footer a:hover {
   color: var(--secondary-color) !important;
 }
 
-/* Hero section in dark mode */
-body.dark-mode .hero-section {
-  background: linear-gradient(
-    135deg,
-    var(--dark-bg),
-    var(--dark-card-bg)
-  ) !important;
-}
+/* Hero section dark mode styles moved to Hero.astro component */
 
-body.dark-mode .hero-section .btn-primary {
-  background-color: var(--primary-color) !important;
-  border-color: var(--primary-color) !important;
-}
-
-body.dark-mode .hero-section .btn-outline-light {
-  color: var(--dark-text) !important;
-  border-color: var(--dark-text) !important;
-}
-
-body.dark-mode .hero-section .btn-outline-light:hover {
-  background-color: var(--dark-text) !important;
-  color: var(--dark-bg) !important;
-}
+/* Hero section button dark mode styles moved to Hero.astro component */
 
 body.dark-mode .shadow-sm {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.75) !important;
 }
 
-body.dark-mode .navbar-light .navbar-nav .nav-link {
-  color: var(--dark-text);
-}
+/* Navbar link styles moved to Navbar.astro component */
 
 body.dark-mode a:not(.btn) {
   color: #5ba9eb;
@@ -231,7 +180,6 @@ body.dark-mode .btn-outline-light {
 
 /* Smooth transitions for dark mode */
 body,
-.navbar,
 .card,
 .feature-card,
 .code-example,
@@ -248,57 +196,9 @@ a,
     box-shadow 0.3s ease;
 }
 
-/* Hero Section */
-.hero {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  color: white;
-  padding: 6rem 0;
-  position: relative;
-  overflow: hidden;
-}
+/* Hero Section styles moved to Hero.astro component */
 
-.hero::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: url('https://i.imgur.com/JzNMKtz.png') repeat;
-  opacity: 0.1;
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-/* Feature Cards */
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
-
-.feature-card {
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-  height: 100%;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
+/* Feature Cards styles moved to FeatureCard.astro component */
 
 /* Card enhancements */
 .card {
@@ -347,50 +247,20 @@ body.dark-mode .card-text {
 }
 
 /* Sections */
-.plugins-section {
-  background-color: var(--light-color);
-}
+/* Plugins section styles moved to PluginsSection.astro component */
 
 .badge-section {
   background-color: #f8f9fa;
 }
 
 /* Dark mode sections */
-body.dark-mode .plugins-section {
-  background-color: var(--dark-bg) !important;
-}
+/* Plugins section dark mode styles moved to PluginsSection.astro component */
 
 body.dark-mode .badge-section {
   background-color: var(--dark-card-bg) !important;
 }
 
-/* Stats Section */
-.stats-section {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  color: white;
-  padding: 4rem 0;
-}
-
-.stat-item {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.stat-number {
-  font-size: 3rem;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
+/* Stats Section styles moved to StatisticsSection.astro component */
 
 /* Comparison Section */
 .comparison-section {
@@ -403,48 +273,9 @@ body.dark-mode .badge-section {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Use Cases */
-.use-case-card {
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s,
-    box-shadow 0.3s;
-  text-align: center;
-}
+/* Use Cases styles moved to UseCasesSection.astro component */
 
-.use-case-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.use-case-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-/* FAQ Section */
-.accordion-item {
-  border-radius: 10px !important;
-  margin-bottom: 1rem;
-  border: none;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.accordion-button {
-  border-radius: 10px !important;
-  font-weight: 600;
-  border: none;
-}
-
-.accordion-button:not(.collapsed) {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.accordion-body {
-  padding: 1.5rem;
-}
+/* FAQ Section styles moved to FAQSection.astro component */
 
 /* Buttons */
 .btn-primary {
@@ -471,13 +302,6 @@ body.dark-mode .badge-section {
   color: var(--dark-color) !important;
 }
 
-/* Dark mode button fixes */
-body.dark-mode .btn-light {
-  background-color: var(--dark-card-bg) !important;
-  border-color: var(--dark-border) !important;
-  color: var(--dark-text) !important;
-}
-
 body.dark-mode .btn-light:hover {
   background-color: var(--dark-border) !important;
   border-color: var(--dark-border) !important;
@@ -498,15 +322,22 @@ body.dark-mode .btn-light:hover {
 
 /* Code Examples */
 .code-example {
-  background-color: var(--dark-color);
-  color: white;
+  background-color: #ffffff;
+  color: var(--text-color);
   border-radius: 10px;
   padding: 20px;
   margin: 40px 0;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   position: relative;
   overflow: visible;
   transition: all 0.3s ease;
+  border: 1px solid #dee2e6;
+}
+
+body.dark-mode .code-example {
+  background-color: var(--dark-color);
+  color: white;
+  border-color: var(--dark-border);
 }
 
 .code-example .card-header {
@@ -564,24 +395,24 @@ body.dark-mode .code-block .comment {
 }
 
 /* Ensure code examples work in both light and dark mode */
-.code-example pre[class*='language-'] {
+pre[class*="language-"] {
   background-color: #f8f9fa !important;
   border: 1px solid #e9ecef !important;
   color: #212529 !important;
 }
 
-.code-example code[class*='language-'] {
+code[class*="language-"] {
   color: #212529 !important;
 }
 
 /* Dark mode overrides for code examples */
-body.dark-mode .code-example pre[class*='language-'] {
+body.dark-mode pre[class*="language-"] {
   background-color: #1a202c !important;
   border: 1px solid #333 !important;
   color: #e2e8f0 !important;
 }
 
-body.dark-mode .code-example code[class*='language-'] {
+body.dark-mode code[class*="language-"] {
   color: #e2e8f0 !important;
 }
 
@@ -600,13 +431,13 @@ body.dark-mode .code-body code {
 }
 
 /* Prism.js dark mode support */
-body.dark-mode pre[class*='language-'],
-body.dark-mode code[class*='language-'] {
+body.dark-mode pre[class*="language-"],
+body.dark-mode code[class*="language-"] {
   background-color: #2d2d2d !important;
   color: #e0e0e0 !important;
 }
 
-body.dark-mode pre[class*='language-'] {
+body.dark-mode pre[class*="language-"] {
   border: 1px solid var(--dark-border) !important;
 }
 
@@ -666,30 +497,37 @@ body.dark-mode .token.variable {
 }
 
 /* Prism.js syntax highlighting improvements */
-pre[class*='language-'],
-code[class*='language-'] {
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+pre[class*="language-"],
+code[class*="language-"] {
+  font-family: "Consolas", "Monaco", "Courier New", monospace !important;
   font-size: 14px;
   line-height: 1.5;
   border-radius: 8px;
 }
 
-pre[class*='language-'] {
+pre[class*="language-"] {
   padding: 1rem;
   margin: 1rem 0;
   overflow: auto;
-  background-color: #f8f9fa !important;
+  background-color: #ffffff !important;
   border: 1px solid #e9ecef;
+  color: #212529 !important;
 }
 
 /* Dark mode syntax highlighting */
-body.dark-mode pre[class*='language-'] {
+body.dark-mode pre[class*="language-"] {
   background-color: var(--dark-card-bg) !important;
   border-color: var(--dark-border) !important;
+  color: var(--dark-text) !important;
 }
 
-code[class*='language-'] {
-  background-color: transparent;
+code[class*="language-"] {
+  background-color: transparent !important;
+  color: #212529 !important;
+}
+
+body.dark-mode code[class*="language-"] {
+  color: var(--dark-text) !important;
 }
 
 /* Light mode syntax highlighting */
@@ -748,43 +586,15 @@ code[class*='language-'] {
   color: #e36209;
 }
 
-/* Custom styles */
-.hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 100px 0;
-}
+/* Custom hero-section styles moved to Hero.astro component */
 
-.feature-card {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
+/* Feature card styles moved to FeatureCard.astro component */
 
 .badge-section {
   background: linear-gradient(45deg, #f8f9fa, #e9ecef);
 }
 
-.code-example {
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 10px;
-  overflow: hidden;
-}
+/* Code example styles moved to CodeExampleSection.astro component */
 
 /* Dark mode badge section and code example */
 body.dark-mode .badge-section {
@@ -795,128 +605,20 @@ body.dark-mode .badge-section {
   ) !important;
 }
 
-body.dark-mode .code-example {
-  background: var(--dark-card-bg) !important;
-  border-color: var(--dark-border) !important;
+/* Base light mode styles for Prism.js code blocks */
+pre[class*="language-"],
+code[class*="language-"] {
+  background-color: #ffffff !important;
+  color: #212529 !important;
 }
 
-.code-header {
-  background: #343a40;
-  color: white;
-  padding: 12px 20px;
-  border-bottom: 1px solid #dee2e6;
-  font-weight: 600;
-}
+/* Dark mode code example styles moved to CodeExampleSection.astro component */
 
-.code-body {
-  padding: 20px;
-}
+/* Code header and body styles moved to CodeExampleSection.astro component */
 
-.timeline {
-  position: relative;
-  padding: 0;
-  list-style: none;
-}
+/* Timeline styles moved to NewsSection.astro component */
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  background: #007bff;
-  transform: translateX(-50%);
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 50px;
-}
-
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  width: 12px;
-  height: 12px;
-  background: #007bff;
-  border-radius: 50%;
-  transform: translateX(-50%);
-}
-
-.timeline-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 45%;
-}
-
-/* Dark mode timeline */
-body.dark-mode .timeline-content {
-  background: var(--dark-card-bg) !important;
-  color: var(--dark-text) !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
-}
-
-.timeline-item:nth-child(odd) .timeline-content {
-  margin-left: 55%;
-}
-
-.timeline-item:nth-child(even) .timeline-content {
-  margin-right: 55%;
-}
-
-/* Responsive timeline */
-@media (max-width: 768px) {
-  .timeline::before {
-    left: 20px;
-  }
-
-  .timeline-item::before {
-    left: 20px;
-  }
-
-  .timeline-content {
-    width: calc(100% - 60px);
-    margin-left: 60px !important;
-    margin-right: 0 !important;
-  }
-}
-
-/* Plugin showcase */
-.plugin-card {
-  background: white;
-  border: 1px solid #e9ecef;
-  border-radius: 10px;
-  padding: 20px;
-  transition: all 0.3s ease;
-  height: 100%;
-}
-
-.plugin-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-.plugin-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(
-    45deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-}
+/* Plugin showcase styles moved to PluginsSection.astro component */
 
 /* Demo cards */
 .demo-card {
@@ -954,27 +656,7 @@ body.dark-mode .demo-card:hover {
   font-size: 3rem;
 }
 
-/* Statistics section */
-.stats-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.stat-item {
-  text-align: center;
-  padding: 20px;
-}
-
-.stat-number {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #fff;
-}
-
-.stat-label {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
+/* Statistics section styles moved to StatisticsSection.astro component */
 
 /* Buttons */
 .btn-primary {
@@ -1011,51 +693,7 @@ body.dark-mode .demo-card:hover {
   transform: translateY(-2px);
 }
 
-/* Dark mode toggle */
-.dark-mode-toggle {
-  background: none;
-  border: 1px solid #dee2e6;
-  color: #6c757d;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dark-mode-toggle:hover {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-  background-color: rgba(52, 152, 219, 0.1);
-}
-
-.dark-mode-toggle:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
-}
-
-body.dark-mode .dark-mode-toggle {
-  border-color: var(--dark-border);
-  color: var(--dark-text);
-}
-
-body.dark-mode .dark-mode-toggle:hover {
-  color: var(--secondary-color);
-  border-color: var(--secondary-color);
-  background-color: rgba(46, 204, 113, 0.1);
-}
-
-/* Small dark mode toggle variant */
-.dark-mode-toggle-small {
-  padding: 6px 8px;
-  font-size: 0.875rem;
-  border-radius: 4px;
-  min-width: auto;
-  width: auto;
-}
+/* Dark mode toggle styles moved to DarkModeToggle.astro component */
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
@@ -1083,109 +721,7 @@ body.dark-mode ::-webkit-scrollbar-thumb {
   background: var(--dark-text-muted);
 }
 
-/* Interactive Demo Section */
-.interactive-demo {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  padding: 4rem 0;
-}
-
-.interactive-demo.dark-mode {
-  background: linear-gradient(
-    135deg,
-    var(--dark-card-bg) 0%,
-    var(--dark-bg) 100%
-  );
-}
-
-/* Dark mode interactive demo */
-body.dark-mode .interactive-demo {
-  background: linear-gradient(
-    135deg,
-    var(--dark-card-bg) 0%,
-    var(--dark-bg) 100%
-  ) !important;
-}
-
-#agentCanvas {
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-body.dark-mode #agentCanvas {
-  background: var(--dark-card-bg);
-  border-color: var(--dark-border);
-}
-
-/* Demo canvas responsive styles */
-.demo-canvas-container {
-  height: 500px;
-  min-height: 400px;
-  aspect-ratio: 16/10;
-  transition: height 0.3s ease;
-}
-
-@media (max-width: 576px) {
-  .demo-canvas-container {
-    height: 280px;
-    min-height: 250px;
-    aspect-ratio: 4/3;
-  }
-}
-
-@media (max-width: 768px) {
-  .demo-canvas-container {
-    height: 350px;
-    min-height: 300px;
-    aspect-ratio: 16/10;
-  }
-}
-
-@media (min-width: 992px) {
-  .demo-canvas-container {
-    height: 550px;
-    min-height: 450px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .demo-canvas-container {
-    height: 600px;
-    min-height: 500px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .demo-canvas-container {
-    height: 650px;
-    min-height: 550px;
-  }
-}
-
-.demo-controls {
-  background: white;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-body.dark-mode .demo-controls {
-  background: var(--dark-card-bg);
-  color: var(--dark-text);
-}
-
-.agent-circle {
-  border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-.agent-circle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
+/* Interactive Demo Section styles moved to InteractiveDemoSection.astro component */
 
 /* Typography improvements */
 h1,

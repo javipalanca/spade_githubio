@@ -1,0 +1,100 @@
+---
+// Dark Mode Toggle component
+export interface Props {
+  small?: boolean;
+}
+
+const { small = false } = Astro.props;
+---
+
+<button
+  id="darkModeToggle"
+  class={`dark-mode-toggle ${small ? 'dark-mode-toggle-small' : ''}`}
+  aria-label="Toggle dark mode"
+>
+  <i class="bi bi-moon-stars"></i>
+</button>
+
+<style>
+  /* Dark mode toggle */
+  .dark-mode-toggle {
+    background: none;
+    border: 1px solid #dee2e6;
+    color: #6c757d;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dark-mode-toggle:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: rgba(52, 152, 219, 0.1);
+  }
+
+  .dark-mode-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+  }
+
+  :global(body.dark-mode) .dark-mode-toggle {
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+  }
+
+  :global(body.dark-mode) .dark-mode-toggle:hover {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    background-color: rgba(46, 204, 113, 0.1);
+  }
+
+  /* Small dark mode toggle variant */
+  .dark-mode-toggle-small {
+    padding: 6px 8px;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    min-width: auto;
+    width: auto;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('darkModeToggle');
+    const body = document.body;
+    
+    // If toggle button is not found, exit early
+    if (!toggleButton) return;
+    
+    // Set initial state based on saved preference or system preference
+    const darkModePreference = localStorage.getItem('darkMode');
+    if (darkModePreference === 'true' || 
+        (darkModePreference === null && 
+         window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
+    } else {
+      body.classList.remove('dark-mode');
+      toggleButton.innerHTML = '<i class="bi bi-moon-stars"></i>';
+    }
+    
+    // Toggle dark mode on button click
+    toggleButton.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      const isDarkMode = body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode.toString());
+      
+      // Update button icon
+      if (isDarkMode) {
+        toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
+      } else {
+        toggleButton.innerHTML = '<i class="bi bi-moon-stars"></i>';
+      }
+    });
+  });
+</script>

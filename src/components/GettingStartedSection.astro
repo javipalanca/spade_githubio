@@ -73,3 +73,59 @@ if __name__ == "__main__":
         </div>
     </div>
 </section>
+
+<style>
+    .code-example {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+    
+    .code-header {
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 12px 20px;
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+    }
+    
+    .code-body {
+        padding: 20px;
+        background-color: #ffffff;
+    }
+    
+    .code-body pre {
+        margin: 0;
+        background-color: #ffffff;
+        color: #212529;
+    }
+    
+    .code-body code {
+        background-color: transparent;
+        color: #212529;
+    }
+    
+    /* Dark mode styles */
+    :global(body.dark-mode) .code-example {
+        background-color: var(--dark-card-bg);
+        border-color: var(--dark-border);
+    }
+    
+    :global(body.dark-mode) .code-header {
+        background-color: #343a40;
+        color: white;
+        border-bottom-color: #4a5568;
+    }
+    
+    :global(body.dark-mode) .code-body {
+        background-color: #1a202c;
+    }
+    
+    :global(body.dark-mode) .code-body pre,
+    :global(body.dark-mode) .code-body code {
+        background-color: #1a202c;
+        color: #e2e8f0;
+    }
+</style>
