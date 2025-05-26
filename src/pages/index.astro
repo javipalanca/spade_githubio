@@ -13,7 +13,6 @@ import PluginsSection from '../components/PluginsSection.astro';
 import InteractiveDemoSection from '../components/InteractiveDemoSection.astro';
 import GettingStartedSection from '../components/GettingStartedSection.astro';
 import UseCasesSection from '../components/UseCasesSection.astro';
-import InstallationGuideSection from '../components/InstallationGuideSection.astro';
 import FAQSection from '../components/FAQSection.astro';
 import StatisticsSection from '../components/StatisticsSection.astro';
 import NewsSection from '../components/NewsSection.astro';
@@ -51,10 +50,10 @@ const features = [
         features: ['Message visualization', 'Agent status dashboard', 'Customizable UI']
     },
     {
-        icon: '🔍',
-        title: 'FIPA Compliant',
-        description: 'Supports FIPA metadata using XMPP Data Forms for standardized agent communication.',
-        features: ['Multi-platform compatibility', 'Protocol interoperability', 'Metadata exchange']
+        icon: '🧠',
+        title: 'LLM Integration',
+        description: 'Seamless integration with Large Language Models for intelligent agent reasoning and natural language processing.',
+        features: ['AI-powered agents', 'Natural language understanding', 'Contextual reasoning']
     }
 ];
 
@@ -107,7 +106,6 @@ const plugins = [
     <CodeExampleSection />
     <PluginsSection plugins={plugins} />
     <GettingStartedSection />
-    <InstallationGuideSection />
     <UseCasesSection />
     <FAQSection />
     <StatisticsSection />

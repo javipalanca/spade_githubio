@@ -130,7 +130,7 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
     
     /* Better scrolling for code blocks */
     .code-body {
-        max-height: 400px;
+        height: 350px; /* Fixed height instead of max-height for consistent appearance */
         overflow-y: auto;
         overflow-x: auto;
         background-color: #f8f9fa;
@@ -148,8 +148,8 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
         font-size: 0.875rem;
         line-height: 1.5;
-        white-space: pre-wrap;
-        word-wrap: break-word;
+        white-space: pre;  /* Changed from pre-wrap to preserve horizontal scrolling */
+        word-wrap: normal; /* Changed from break-word to maintain code formatting */
     }
     
     .code-body code {
@@ -161,8 +161,8 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
     
     /* Custom scrollbar for code blocks */
     .code-body::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
     
     .code-body::-webkit-scrollbar-track {
@@ -173,10 +173,18 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
     .code-body::-webkit-scrollbar-thumb {
         background: rgba(0, 0, 0, 0.2);
         border-radius: 4px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
     }
     
     .code-body::-webkit-scrollbar-thumb:hover {
         background: rgba(0, 0, 0, 0.3);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    .code-body::-webkit-scrollbar-corner {
+        background: rgba(0, 0, 0, 0.05);
     }
     
     /* Dark mode styles for code body */
@@ -195,10 +203,18 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
     
     :global(.dark-mode) .code-body::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.2);
+        border: 2px solid transparent;
+        background-clip: padding-box;
     }
     
     :global(.dark-mode) .code-body::-webkit-scrollbar-thumb:hover {
         background: rgba(255, 255, 255, 0.3);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    :global(.dark-mode) .code-body::-webkit-scrollbar-corner {
+        background: rgba(255, 255, 255, 0.05);
     }
     
     /* Demo canvas and network container */
@@ -359,6 +375,41 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
         transition: transform 0.3s ease;
     }
     
+    /* Scroll indicators */
+    .code-example {
+        position: relative;
+    }
+    
+    .scroll-indicator {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        display: flex;
+        gap: 8px;
+    }
+    
+    .scroll-arrow {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd;
+        animation: fadeInOut 2s infinite;
+    }
+    
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 0.8; }
+    }
+    
+    :global(.dark-mode) .scroll-arrow {
+        background-color: rgba(97, 218, 251, 0.1);
+        color: #61dafb;
+    }
+    
     /* Button highlight */
     #toggle-code.active {
         background-color: #0dcaf0 !important;
@@ -428,8 +479,11 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
 // Load Python code examples from demos.json and populate the tabs
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Get base URL for Astro
+        // Get base URL from meta tag instead of import.meta
         const baseUrl = document.querySelector('meta[name="astro-base-url"]')?.getAttribute('content') || '/';
+        
+        // Log the base URL to help with debugging
+        console.log('Using base URL for Python files:', baseUrl);
         
         // Fetch demo data from JSON
         const response = await fetch(`${baseUrl}json/demos.json`);
@@ -455,7 +509,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             
             try {
-                const response = await fetch(`/py/${pythonFile}`);
+                // Use the same baseUrl as other resources
+                const response = await fetch(`${baseUrl}py/${pythonFile}`);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch ${pythonFile}: ${response.status}`);
                 }
@@ -496,6 +551,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                             </div>
                             <div class="code-body">
                                 <pre><code class="language-python">${code}</code></pre>
+                            </div>
+                            <div class="scroll-indicator">
+                                <div class="scroll-arrow vertical">
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                                <div class="scroll-arrow horizontal">
+                                    <i class="bi bi-chevron-right"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -620,6 +683,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                                     <p class="mt-2 text-muted">Loading Python code...</p>
                                 </div>
                             </div>
+                            <div class="scroll-indicator">
+                                <div class="scroll-arrow vertical">
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                                <div class="scroll-arrow horizontal">
+                                    <i class="bi bi-chevron-right"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -627,9 +698,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             tabContent.appendChild(contentPane);
         }
         
-        // Load the first tab's content immediately
+        // Add this immediately after the code tabs setup
         if (demosWithCode.length > 0) {
             await updateTabWithCode(demosWithCode[0]);
+        } else {
+            // No demos with code found - show error message
+            const container = document.getElementById('code-container');
+            if (container) {
+                container.innerHTML = `
+                    <div class="p-4">
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>No Python examples found</strong>
+                            <p class="mb-0 mt-2">Check that the demos.json file includes pythonFile entries and that the Python files exist in the public/py directory.</p>
+                        </div>
+                    </div>
+                `;
+            }
         }
         
         // Set up lazy loading for other tabs
@@ -673,10 +758,73 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Setup code toggle functionality
         setupCodeToggle();
         
+        // Setup scroll indicators
+        setupScrollIndicators();
+        
     } catch (error) {
         console.error('Error setting up code examples:', error);
     }
 });
+
+// Function to manage scroll indicators
+function setupScrollIndicators() {
+    // Add event listeners to all code bodies
+    document.querySelectorAll('.code-body').forEach(codeBody => {
+        codeBody.addEventListener('scroll', function() {
+            const parent = this.closest('.code-example');
+            if (!parent) return;
+            
+            const verticalArrow = parent.querySelector('.scroll-arrow.vertical');
+            const horizontalArrow = parent.querySelector('.scroll-arrow.horizontal');
+            
+            if (verticalArrow) {
+                // Show vertical arrow only if there's more content below
+                if (this.scrollHeight > this.clientHeight && 
+                    this.scrollHeight - this.scrollTop > this.clientHeight + 20) {
+                    verticalArrow.style.display = 'flex';
+                } else {
+                    verticalArrow.style.display = 'none';
+                }
+            }
+            
+            if (horizontalArrow) {
+                // Show horizontal arrow only if there's more content to the right
+                if (this.scrollWidth > this.clientWidth && 
+                    this.scrollWidth - this.scrollLeft > this.clientWidth + 20) {
+                    horizontalArrow.style.display = 'flex';
+                } else {
+                    horizontalArrow.style.display = 'none';
+                }
+            }
+        });
+        
+        // Trigger scroll event on load to initialize arrow visibility
+        setTimeout(() => {
+            codeBody.dispatchEvent(new Event('scroll'));
+        }, 500);
+    });
+    
+    // Also set up for dynamically loaded content
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) { // Element node
+                        const codeBodies = node.querySelectorAll ? node.querySelectorAll('.code-body') : [];
+                        codeBodies.forEach(codeBody => {
+                            // Trigger scroll event to initialize arrow visibility
+                            setTimeout(() => {
+                                codeBody.dispatchEvent(new Event('scroll'));
+                            }, 500);
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+}
 
 // Setup copy buttons for code examples
 function setupCopyButtons() {

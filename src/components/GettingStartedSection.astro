@@ -13,27 +13,40 @@ import PythonCodeBlock from './PythonCodeBlock.astro';
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body p-4">
-                        <h4 class="card-title">Installation</h4>
+                        <h4 class="card-title">Quick Installation</h4>
+                        <p>Install SPADE using pip and create your first agent in minutes.</p>
                         <div class="code-example">
-                            <pre><code class="language-bash">pip install spade</code></pre>
+                            <div class="code-header">Terminal</div>
+                            <div class="code-body">
+                                <pre><code class="language-bash">pip install spade</code></pre>
+                            </div>
                         </div>
                         <p>SPADE requires Python 3.9 or higher and works on Windows, macOS, and Linux.</p>
                         <div class="mt-3">
-                            <h5 class="h6">Quick Start</h5>
                             <PythonCodeBlock 
                                 filename="hello_agent.py"
-                                showHeader={false}
                                 showCopyButton={true}
                                 code={`import spade
+from spade.agent import Agent
+from spade.behaviour import OneShotBehaviour
+
+class MyAgent(Agent):
+    class MyBehav(OneShotBehaviour):
+        async def run(self):
+            print("Hello World!")
+
+    async def setup(self):
+        self.add_behaviour(self.MyBehav())
 
 async def main():
-    agent = spade.Agent("agent@localhost", "password")
+    agent = MyAgent("agent@localhost", "password")
     await agent.start()
 
 if __name__ == "__main__":
     spade.run(main())`}
                             />
                         </div>
+                        <a href="https://spade-mas.readthedocs.io/en/latest/installation.html" class="btn btn-primary">Installation Guide</a>
                     </div>
                 </div>
             </div>
@@ -52,6 +65,7 @@ if __name__ == "__main__":
                             <a href="https://github.com/javipalanca/spade/tree/master/examples" class="btn btn-outline-secondary">
                                 <i class="bi bi-folder2-open me-2"></i>Examples
                             </a>
+                            <a href="https://spade-mas.readthedocs.io" class="btn btn-primary">Read the Docs</a>
                         </div>
                     </div>
                 </div>
