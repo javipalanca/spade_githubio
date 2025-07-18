@@ -9,11 +9,16 @@ const baseUrl = import.meta.env.BASE_URL;
             <div class="col-lg-7">
                 <div class="d-flex align-items-center mb-4">
                     <img src={`${baseUrl}img/spade-agent-network-fixed.svg`} alt="SPADE Logo" height="80" class="me-3 d-none d-md-block">
-                    <h1 class="display-4 fw-bold mb-0">Smart Python Agent Development Environment</h1>
+                    <div>
+                        <h1 class="display-4 fw-bold mb-0">Smart Python Agent Development Environment</h1>
+                    </div>
                 </div>
                 <p class="lead mb-4">A powerful multi-agent systems platform written in Python and based on instant messaging (XMPP). Develop intelligent agents that can communicate with both other agents and humans.</p>
                 <div class="d-flex flex-wrap gap-2">
                     <a href="https://spade-mas.readthedocs.io" class="btn btn-light btn-lg px-4">Get Started</a>
+                    <a href="#spade-llm" class="btn btn-ai btn-lg px-4">
+                        Meet SPADE-LLM
+                    </a>
                     <a href="https://pypi.python.org/pypi/spade" class="btn btn-outline-light btn-lg px-4">
                         <i class="bi bi-download me-2"></i>Download
                     </a>
@@ -31,7 +36,8 @@ const baseUrl = import.meta.env.BASE_URL;
         background: linear-gradient(
             135deg,
             var(--primary-color),
-            var(--secondary-color)
+            var(--secondary-color),
+            #8e44ad
         );
         color: white;
         padding: 6rem 0;
@@ -56,12 +62,50 @@ const baseUrl = import.meta.env.BASE_URL;
         z-index: 2;
     }
 
+    .hero-subtitle {
+        font-size: 1.1rem;
+        font-weight: 300;
+        opacity: 0.9;
+        margin-top: 0.5rem;
+    }
+
+    .hero-badges .hero-badge {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ai {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-ai:hover {
+        background: linear-gradient(135deg, #7d3c98, #8e44ad);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+    }
+
     /* Dark mode adjustments */
     :global(body.dark-mode) .hero {
         background: linear-gradient(
             135deg,
             #205080,
-            #1a573a
+            #1a573a,
+            #5d4e75
         );
+    }
+
+    :global(body.dark-mode) .hero-badges .hero-badge {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.2);
     }
 </style>

@@ -520,13 +520,13 @@ class NetworkNode(Agent):
             # Share results with neighbors
             for neighbor in self.agent.neighbors:
                 msg = Message(to=f"{neighbor}@localhost")
-                msg.body = f"Result from {self.agent.name}: {self.agent.current_task} completed"
+                msg.body = f"Result from {self.agent.name}: {self.agent.current_task} Email sent"
                 await self.send(msg)
             self.set_next_state(STATE_DONE)
     
     class DoneState(State):
         async def run(self):
-            print(f"{self.agent.name} completed network cycle")
+            print(f"{self.agent.name} Email sent")
             # Reset for next cycle
             await asyncio.sleep(3)
             self.set_next_state(STATE_INIT)

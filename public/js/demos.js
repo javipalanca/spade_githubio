@@ -338,6 +338,10 @@ function loadNetwork(demo) {
       case "response":
         color = "#795548";
         break;
+      case "prompt":
+        color = "#17A2B8";
+        width = 3;
+        break;
       default:
         color = "#808080";
     }
@@ -360,6 +364,7 @@ function loadNetwork(demo) {
 
   console.log("Adding nodes:", nodeData.length);
   console.log("Adding edges:", edgeData.length);
+  console.log("Node data:", nodeData); // Debug log to see all nodes
 
   // Add nodes and edges to the network
   nodes.add(nodeData);
@@ -992,3 +997,4 @@ function updateMessagePosition(message) {
   message.element.style.left = screenX - 4 + "px";
   message.element.style.top = screenY - 4 + "px";
 }
+
