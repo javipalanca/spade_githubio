@@ -1,5 +1,6 @@
 ---
 // Hero section component
+import AnimatedAgentSystem from './AnimatedAgentSystem.astro';
 const baseUrl = import.meta.env.BASE_URL;
 ---
 
@@ -13,7 +14,7 @@ const baseUrl = import.meta.env.BASE_URL;
                         <h1 class="display-4 fw-bold mb-0">Smart Python Agent Development Environment</h1>
                     </div>
                 </div>
-                <p class="lead mb-4">A powerful multi-agent systems platform written in Python and based on instant messaging (XMPP). Develop intelligent agents that can communicate with both other agents and humans.</p>
+                <p class="lead mb-4">A comprehensive multi-agent systems platform written in Python, powered by XMPP messaging. Build intelligent agents with <strong>IoT artifact connections</strong>, advanced <strong>presence management</strong>, and seamless communication between agents and humans. With <strong>SPADE-LLM</strong>, integrate Large Language Models featuring <strong>guardrails</strong>, <strong>MCP server connections</strong>, and <strong>persistent memory</strong> - creating truly intelligent, interconnected agent ecosystems.</p>
                 <div class="d-flex flex-wrap gap-2">
                     <a href="https://spade-mas.readthedocs.io" class="btn btn-light btn-lg px-4">Get Started</a>
                     <a href="#spade-llm" class="btn btn-ai btn-lg px-4">
@@ -25,7 +26,7 @@ const baseUrl = import.meta.env.BASE_URL;
                 </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block">
-                <img src={`${baseUrl}img/spade_index.png`} class="img-fluid rounded shadow-lg" alt="SPADE Agents">
+                <AnimatedAgentSystem />
             </div>
         </div>
     </div>
