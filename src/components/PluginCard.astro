@@ -6,6 +6,7 @@ export interface Plugin {
   icon: string;
   githubUrl: string;
   docsUrl: string;
+  featured?: boolean;
 }
 
 interface Props {
@@ -15,11 +16,118 @@ interface Props {
 const { plugin } = Astro.props;
 ---
 
-<div class="card h-100 border-0 shadow-sm">
+<div class={`card h-100 border-0 shadow-sm ${plugin.featured ? 'featured-plugin' : ''}`}>
     <div class="card-body">
-        <h5 class="card-title">{plugin.name}</h5>
+        {plugin.featured && (
+            <div class="featured-badge">
+                <i class="bi bi-star-fill me-1"></i>
+                Featured
+            </div>
+        )}
+        <h5 class={`card-title ${plugin.featured ? 'featured-title' : ''}`}>
+            {plugin.name}
+        </h5>
         <p class="card-text">{plugin.description}</p>
-        <a href={plugin.githubUrl} class="btn btn-sm btn-outline-primary">GitHub</a>
-        <a href={plugin.docsUrl} class="btn btn-sm btn-outline-secondary">Docs</a>
+        <div class="plugin-actions">
+            <a href={plugin.githubUrl} class={`btn btn-sm ${plugin.featured ? 'btn-llm' : 'btn-outline-primary'}`}>
+                <i class="bi bi-github me-1"></i>GitHub
+            </a>
+            <a href={plugin.docsUrl} class={`btn btn-sm ${plugin.featured ? 'btn-outline-purple' : 'btn-outline-secondary'}`}>
+                <i class="bi bi-book me-1"></i>Docs
+            </a>
+        </div>
     </div>
 </div>
+
+<style>
+    .featured-plugin {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border: 2px solid #8e44ad !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .featured-plugin::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        z-index: 1;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        z-index: 2;
+    }
+
+    .featured-title {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+    }
+
+    .plugin-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-llm {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-llm:hover {
+        background: linear-gradient(135deg, #7d3c98, #8e44ad);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .btn-outline-purple {
+        border-color: #8e44ad;
+        color: #8e44ad;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-purple:hover {
+        background: #8e44ad;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    /* Dark mode adjustments */
+    :global(body.dark-mode) .featured-plugin {
+        background: linear-gradient(135deg, var(--dark-card-bg), var(--dark-border));
+        border-color: #a569bd !important;
+    }
+
+    :global(body.dark-mode) .featured-plugin::before {
+        background: linear-gradient(135deg, #a569bd, #bb8fce);
+    }
+
+    :global(body.dark-mode) .featured-badge {
+        background: linear-gradient(135deg, #a569bd, #bb8fce);
+    }
+
+    :global(body.dark-mode) .featured-title {
+        background: linear-gradient(135deg, #a569bd, #bb8fce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+</style>

@@ -31,6 +31,11 @@ const baseUrl = import.meta.env.BASE_URL;
                     <a class="nav-link" href="#usecases">Use Cases</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link nav-link-ai" href="#spade-llm">
+                        <i class="bi bi-brain me-1"></i>SPADE-LLM
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#faq">FAQ</a>
                 </li>
                 <li class="nav-item">
@@ -90,5 +95,39 @@ const baseUrl = import.meta.env.BASE_URL;
 
     :global(body.dark-mode) .navbar-light .navbar-nav .nav-link {
         color: var(--dark-text);
+    }
+
+    /* AI Agents navigation link styling */
+    .nav-link-ai {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .nav-link-ai::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        border-radius: 1px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-link-ai:hover::after {
+        opacity: 1;
+    }
+
+    :global(body.dark-mode) .nav-link-ai {
+        background: linear-gradient(135deg, #a569bd, #bb8fce);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 </style>

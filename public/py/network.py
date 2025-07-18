@@ -56,7 +56,7 @@ class WorkerAgent(agent.Agent):
                 print(f"Worker {self.jid} processing: {task}")
                 # Simulate work processing
                 await asyncio.sleep(2)
-                print(f"Worker {self.jid} completed task")
+                print(f"Worker {self.jid} Email sent")
             await asyncio.sleep(1)
 
     async def setup(self):
