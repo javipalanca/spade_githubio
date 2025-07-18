@@ -1,0 +1,1668 @@
+---
+// SpadeLLM Section - Sophisticated AI Agent showcase
+const baseUrl = import.meta.env.BASE_URL;
+---
+
+<section id="spade-llm" class="spade-llm-section">
+    <div class="container">
+        <div class="row">
+            <!-- Section Header -->
+            <div class="col-12 text-center mb-5">
+                <div class="section-badge">
+                    <i class="bi bi-brain me-2"></i>AI Enhancement
+                </div>
+                <h2 class="display-5 fw-bold mb-3">
+                    Meet <span class="gradient-text">SpadeLLM</span>
+                </h2>
+                <p class="lead text-muted mb-4">
+                    Elevate your multi-agent systems with Large Language Model integration. 
+                    Create agents that think, reason, and communicate naturally.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-5">
+            <!-- Left Column - Content -->
+            <div class="col-lg-6">
+                <div class="llm-content">
+                    <h3 class="fw-bold mb-3">
+                        <i class="bi bi-lightning-charge text-warning me-2"></i>
+                        Next-Generation Agent Intelligence
+                    </h3>
+                    <p class="mb-4">
+                        SpadeLLM provides production-ready LLM integration with advanced safety and coordination features. 
+                        Build intelligent agents with guardrails, persistent memory, human oversight, and sophisticated 
+                        tool capabilities for secure, enterprise-grade AI applications.
+                    </p>
+
+                    <div class="feature-grid mb-4">
+                        <div class="feature-item">
+                            <div class="feature-icon">🛡️</div>
+                            <div>
+                                <h5>Guardrails System</h5>
+                                <p>Content filtering and safety controls for secure AI interactions</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🧠</div>
+                            <div>
+                                <h5>Dual Memory Architecture</h5>
+                                <p>Agent learning and conversation continuity with persistent storage</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">👥</div>
+                            <div>
+                                <h5>Human-in-the-Loop</h5>
+                                <p>Web interface for expert consultation with configurable timeout</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔧</div>
+                            <div>
+                                <h5>Advanced Tools System</h5>
+                                <p>Async function calling with custom tool creation and LangChain integration</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌐</div>
+                            <div>
+                                <h5>MCP Server Support</h5>
+                                <p>Model Context Protocol integration for advanced agent coordination</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💬</div>
+                            <div>
+                                <h5>Smart Context Management</h5>
+                                <p>Multi-conversation support with automatic cleanup and intelligent routing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="https://github.com/sosanzma/spade_llm" class="btn btn-llm btn-lg me-3">
+                            <i class="bi bi-github me-2"></i>View on GitHub
+                        </a>
+                        <a href="https://sosanzma.github.io/spade_llm/" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-book me-2"></i>Documentation
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Interactive Demo -->
+            <div class="col-lg-6">
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <div class="demo-title">
+                            <i class="bi bi-diagram-3 me-2"></i>
+                            Multi-Agent Orchestration Demo
+                        </div>
+                        <div class="demo-status">
+                            <span class="status-indicator"></span>
+                            GitHub Monitor Active
+                        </div>
+                    </div>
+                    
+                    <div class="graph-container">
+                        <!-- SVG Graph Canvas -->
+                        <svg class="agent-graph" viewBox="0 0 800 600" width="100%" height="600">
+                            <!-- Clean Background -->
+                            <rect width="100%" height="100%" fill="white" />
+                            
+                            <!-- XMPP Message Connections -->
+                            <g class="message-connections">
+                                <!-- User to Chat -->
+                                <line class="message-line-active" x1="145" y1="80" x2="190" y2="170" stroke="#8e44ad" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- Chat to GitHub -->
+                                <line class="message-line-active" x1="250" y1="170" x2="390" y2="130" stroke="#3498db" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="0.5s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- GitHub to Notion -->
+                                <line class="message-line-active" x1="450" y1="130" x2="570" y2="220" stroke="#2ecc71" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="1s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- Notion to Email -->
+                                <line class="message-line-active" x1="580" y1="240" x2="310" y2="420" stroke="#f39c12" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="1.5s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- Email to Human -->
+                                <line class="message-line-active" x1="310" y1="420" x2="550" y2="520" stroke="#9b59b6" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="2s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- Human to Email (response) -->
+                                <line class="message-line-active" x1="550" y1="520" x2="310" y2="440" stroke="#e74c3c" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="2.5s" repeatCount="indefinite"/>
+                                </line>
+                                
+                                <!-- Email to Result -->
+                                <line class="message-line-active" x1="310" y1="420" x2="650" y2="450" stroke="#28a745" stroke-width="3" stroke-dasharray="10,10">
+                                    <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" begin="3s" repeatCount="indefinite"/>
+                                </line>
+                            </g>
+                            
+                            <!-- Agent Nodes -->
+                            <g class="agent-nodes">
+                                <!-- User Node -->
+                                <g class="agent-group" onclick="showAgentPanel('user')" style="cursor: pointer;">
+                                    <polygon class="user-node" points="120,55 140,80 140,95 100,95 100,80" fill="#3498db" stroke="#2980b9" stroke-width="3"/>
+                                    <text x="120" y="85" text-anchor="middle" fill="white" font-size="20">👤</text>
+                                    <text x="120" y="110" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">User</text>
+                                </g>
+                                
+                                <!-- Chat Agent -->
+                                <g class="agent-group" onclick="showAgentPanel('chat')" style="cursor: pointer;">
+                                    <circle class="agent-node" cx="220" cy="170" r="30" fill="#e74c3c" stroke="#c0392b" stroke-width="3"/>
+                                    <text x="220" y="177" text-anchor="middle" fill="white" font-size="24">🛡️</text>
+                                    <text x="220" y="210" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Chat Agent</text>
+                                </g>
+                                
+                                <!-- GitHub Analyzer -->
+                                <g class="agent-group" onclick="showAgentPanel('github')" style="cursor: pointer;">
+                                    <circle class="agent-node" cx="420" cy="130" r="30" fill="#3498db" stroke="#2980b9" stroke-width="3"/>
+                                    <text x="420" y="137" text-anchor="middle" fill="white" font-size="24">🔍</text>
+                                    <text x="420" y="170" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">GitHub Analyzer</text>
+                                </g>
+                                
+                                <!-- Notion Manager -->
+                                <g class="agent-group" onclick="showAgentPanel('notion')" style="cursor: pointer;">
+                                    <circle class="agent-node" cx="600" cy="220" r="30" fill="#2ecc71" stroke="#27ae60" stroke-width="3"/>
+                                    <text x="600" y="227" text-anchor="middle" fill="white" font-size="24">📚</text>
+                                    <text x="600" y="260" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Notion Manager</text>
+                                </g>
+                                
+                                <!-- Email Manager -->
+                                <g class="agent-group" onclick="showAgentPanel('email')" style="cursor: pointer;">
+                                    <circle class="agent-node" cx="280" cy="420" r="30" fill="#f39c12" stroke="#e67e22" stroke-width="3"/>
+                                    <text x="280" y="427" text-anchor="middle" fill="white" font-size="24">📧</text>
+                                    <text x="280" y="460" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Email Manager</text>
+                                </g>
+                                
+                                <!-- Human Expert (Separated) -->
+                                <g class="agent-group human-expert-group" onclick="showAgentPanel('human')" style="cursor: pointer;">
+                                    <circle class="agent-node" cx="580" cy="520" r="30" fill="#9b59b6" stroke="#8e44ad" stroke-width="3"/>
+                                    <text x="580" y="527" text-anchor="middle" fill="white" font-size="24">👥</text>
+                                    <text x="580" y="560" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Human Expert</text>
+                                </g>
+                                
+                                <!-- Result Node -->
+                                <rect class="result-node" x="655" y="425" width="50" height="50" fill="#28a745" stroke="#1e7e34" stroke-width="3" rx="8"/>
+                                <text x="680" y="457" text-anchor="middle" fill="white" font-size="20">✅</text>
+                                <text x="680" y="490" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Email sent</text>
+                            </g>
+                            
+                            <!-- Message Flow Indicators -->
+                            <g class="message-flow">
+                                <!-- Message 1: User to Chat -->
+                                <circle class="flow-message" r="6" fill="#8e44ad" opacity="0.9">
+                                    <animateMotion dur="2s" repeatCount="indefinite">
+                                        <mpath href="#path1"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path1" d="M 145 80 L 190 170" stroke="none" fill="none"/>
+                                
+                                <!-- Message 2: Chat to GitHub -->
+                                <circle class="flow-message" r="6" fill="#3498db" opacity="0.9">
+                                    <animateMotion dur="2s" begin="0.5s" repeatCount="indefinite">
+                                        <mpath href="#path2"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path2" d="M 250 170 L 390 130" stroke="none" fill="none"/>
+                                
+                                <!-- Message 3: GitHub to Notion -->
+                                <circle class="flow-message" r="6" fill="#2ecc71" opacity="0.9">
+                                    <animateMotion dur="2s" begin="1s" repeatCount="indefinite">
+                                        <mpath href="#path3"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path3" d="M 450 130 L 570 220" stroke="none" fill="none"/>
+                                
+                                <!-- Message 4: Notion to Email -->
+                                <circle class="flow-message" r="6" fill="#f39c12" opacity="0.9">
+                                    <animateMotion dur="2s" begin="1.5s" repeatCount="indefinite">
+                                        <mpath href="#path4"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path4" d="M 580 240 L 310 420" stroke="none" fill="none"/>
+                                
+                                <!-- Message 5: Email to Human -->
+                                <circle class="flow-message" r="6" fill="#9b59b6" opacity="0.9">
+                                    <animateMotion dur="2s" begin="2s" repeatCount="indefinite">
+                                        <mpath href="#path5"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path5" d="M 310 420 L 550 520" stroke="none" fill="none"/>
+                                
+                                <!-- Message 6: Human to Email (response) -->
+                                <circle class="flow-message" r="6" fill="#e74c3c" opacity="0.9">
+                                    <animateMotion dur="2s" begin="2.5s" repeatCount="indefinite">
+                                        <mpath href="#path6"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path6" d="M 550 520 L 310 440" stroke="none" fill="none"/>
+                                
+                                <!-- Message 7: Email to Result -->
+                                <circle class="flow-message" r="6" fill="#28a745" opacity="0.9">
+                                    <animateMotion dur="2s" begin="3s" repeatCount="indefinite">
+                                        <mpath href="#path7"/>
+                                    </animateMotion>
+                                </circle>
+                                <path id="path7" d="M 310 420 L 650 450" stroke="none" fill="none"/>
+                            </g>
+                        </svg>
+                        
+                        <!-- Agent Detail Panel -->
+                        <div class="agent-panel" id="agentPanel">
+                            <div class="panel-header">
+                                <span class="panel-title" id="panelTitle">Agent Details</span>
+                                <div class="panel-controls">
+                                    <div class="panel-status" id="panelStatus">Active</div>
+                                    <button class="panel-close" onclick="hideAgentPanel()">×</button>
+                                </div>
+                            </div>
+                            <div class="panel-content">
+                                <div class="panel-section">
+                                    <h4>Function</h4>
+                                    <p id="panelFunction">Agent function description</p>
+                                </div>
+                                <div class="panel-section">
+                                    <h4>Tools & Capabilities</h4>
+                                    <div class="tool-list" id="panelTools">
+                                        <span class="tool-item">Tool 1</span>
+                                        <span class="tool-item">Tool 2</span>
+                                    </div>
+                                </div>
+                                <div class="panel-section">
+                                    <h4>XMPP Messages</h4>
+                                    <div class="message-log" id="panelMessages">
+                                        <div class="log-entry">No messages yet</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- JavaScript for Interactive Graph -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                        const agentData = {
+                            chat: {
+                                title: "🛡️ Chat Agent",
+                                function: "Entry point with guardrails filtering. Validates GitHub-related requests and routes to appropriate agents.",
+                                tools: ["GitHub Keyword Guardrails", "Message Routing", "Input Validation"],
+                                messages: [
+                                    "Received: 'Analyze GitHub issues for spade_llm repository'",
+                                    "Guardrails: GitHub keyword detected ✅",
+                                    "Routing: Forwarding to GitHub Analyzer"
+                                ]
+                            },
+                            github: {
+                                title: "🔍 GitHub Analyzer",
+                                function: "Analyzes GitHub repositories using MCP integration. Collects issues, PRs, and generates comprehensive reports.",
+                                tools: ["GitHub MCP Server", "Repository Analysis", "Issue Tracking", "PR Management"],
+                                messages: [
+                                    "Received: Repository analysis request",
+                                    "MCP: Connecting to GitHub API",
+                                    "Analysis: Found 12 issues, 8 PRs, 3 urgent items",
+                                    "Sending: Complete analysis to Notion Manager"
+                                ]
+                            },
+                            notion: {
+                                title: "📚 Notion Manager",
+                                function: "Stores analysis results in Notion database with structured format. Maintains historical records and forwards data.",
+                                tools: ["Notion MCP Server", "Database Storage", "Data Formatting", "Record Management"],
+                                messages: [
+                                    "Received: GitHub analysis data",
+                                    "Storage: Creating Notion database entry",
+                                    "Format: Structuring data for readability",
+                                    "Forward: Sending to Email Manager"
+                                ]
+                            },
+                            email: {
+                                title: "📧 Email Manager",
+                                function: "Manages email notifications with human-in-the-loop confirmation. Ensures appropriate human oversight before sending.",
+                                tools: ["Human-in-the-Loop Tool", "Gmail MCP Server", "Email Formatting", "Approval Workflow"],
+                                messages: [
+                                    "Received: Analysis ready for notification",
+                                    "HITL: Asking human expert for approval",
+                                    "Received: Approval from human expert",
+                                    "Gmail: Sending formatted email to team"
+                                ]
+                            },
+                            human: {
+                                title: "👥 Human Expert",
+                                function: "Provides human oversight and decision-making. Reviews requests and approves actions that require human judgment.",
+                                tools: ["Web Interface", "Decision Making", "Email Approval", "Quality Control"],
+                                messages: [
+                                    "Received: Email approval request",
+                                    "Review: GitHub analysis summary",
+                                    "Decision: Approved for team notification",
+                                    "Response: Send to team@company.com"
+                                ]
+                            },
+                            user: {
+                                title: "👤 User Input",
+                                function: "Initiates multi-agent workflows through natural language requests. Triggers repository analysis, issue tracking, and automated notifications.",
+                                tools: ["Natural Language Processing", "GitHub Repository Queries", "Analysis Requests", "Workflow Triggers"],
+                                messages: [
+                                    "💬 \"Create a summary of the current issues on javipalanca/spade repository on github\"",
+                                    "💬 \"Analyze the latest pull requests in sosanzma/spade_llm and send a report\"",
+                                    "💬 \"Monitor spade-agents organization for new issues and notify the team\"",
+                                    "💬 \"Generate a weekly report of all SPADE-related repositories activity\"",
+                                    "💬 \"Check for urgent issues in all repositories and create action items\""
+                                ]
+                            }
+                        };
+                        
+                        let currentPanel = null;
+                        
+                        function showAgentPanel(agentType) {
+                            console.log('Showing panel for:', agentType);
+                            const panel = document.getElementById('agentPanel');
+                            const data = agentData[agentType];
+                            
+                            if (!panel) {
+                                console.error('Panel not found!');
+                                return;
+                            }
+                            
+                            if (!data) {
+                                console.error('Agent data not found for:', agentType);
+                                return;
+                            }
+                            
+                            // Si ya está mostrando el mismo panel, lo cerramos
+                            if (currentPanel === agentType) {
+                                hideAgentPanel();
+                                return;
+                            }
+                            
+                            // Actualizamos el contenido del panel
+                            document.getElementById('panelTitle').textContent = data.title;
+                            document.getElementById('panelFunction').textContent = data.function;
+                            
+                            const toolsContainer = document.getElementById('panelTools');
+                            toolsContainer.innerHTML = data.tools.map(tool => 
+                                `<span class="tool-item">${tool}</span>`
+                            ).join('');
+                            
+                            const messagesContainer = document.getElementById('panelMessages');
+                            messagesContainer.innerHTML = data.messages.map(msg => 
+                                `<div class="log-entry">${msg}</div>`
+                            ).join('');
+                            
+                            // Update section header for user node
+                            const messagesHeader = document.querySelector('#panelMessages').parentElement.querySelector('h4');
+                            if (messagesHeader && agentType === 'user') {
+                                messagesHeader.textContent = 'Example Prompts';
+                            } else if (messagesHeader) {
+                                messagesHeader.textContent = 'XMPP Messages';
+                            }
+                            
+                            // Mostramos el panel
+                            panel.style.display = 'block';
+                            panel.style.opacity = '1';
+                            
+                            console.log('Panel should be visible now');
+                            currentPanel = agentType;
+                        }
+                        
+                        function hideAgentPanel() {
+                            const panel = document.getElementById('agentPanel');
+                            panel.style.opacity = '0';
+                            setTimeout(() => {
+                                panel.style.display = 'none';
+                            }, 300);
+                            currentPanel = null;
+                        }
+                        
+                        // Cerrar panel al hacer click fuera
+                        document.addEventListener('click', function(event) {
+                            const panel = document.getElementById('agentPanel');
+                            const clickedElement = event.target;
+                            
+                            // Si el click no es en el panel ni en un agente, cerrar el panel
+                            if (!panel.contains(clickedElement) && !clickedElement.closest('.agent-group')) {
+                                hideAgentPanel();
+                            }
+                        });
+                        
+                        // Hacer funciones globales
+                        window.showAgentPanel = showAgentPanel;
+                        window.hideAgentPanel = hideAgentPanel;
+                        
+                        });
+                    </script>
+
+                    <div class="demo-footer">
+                        <small class="text-muted">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Multi-Agent Workflow: Guardrails → MCP Tools → Memory → Human-in-the-Loop → Actions
+                            <br>
+                            <i class="bi bi-cursor-fill me-1"></i>
+                            Click on each node to see detailed information and example prompts
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SpadeLLM Advantages -->
+        <div class="row">
+            <div class="col-12">
+                <div class="advantages-showcase">
+                    <h4 class="text-center mb-4 advantages-title">Why SpadeLLM? Key Advantages</h4>
+                    <div class="advantages-grid">
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🌐</div>
+                            <h5>XMPP-Based Distributed</h5>
+                            <p>Fully distributed and decentralized architecture based on XMPP protocol for robust, scalable agent communication.</p>
+                        </div>
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🎯</div>
+                            <h5>Flexible Orchestration</h5>
+                            <p>Advanced orchestration capabilities with conditional routing, dynamic workflows, and intelligent message handling.</p>
+                        </div>
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🔄</div>
+                            <h5>Intelligent Routing</h5>
+                            <p>Smart message routing with context-aware decision making, load balancing, and automatic failover mechanisms.</p>
+                        </div>
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🔧</div>
+                            <h5>Rich Tool Ecosystem</h5>
+                            <p>Extensive tool integration including MCP servers, LangChain tools, and custom function calling capabilities.</p>
+                        </div>
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🛡️</div>
+                            <h5>Safe & Secure Agents</h5>
+                            <p>Built-in security features, content filtering, guardrails system, and comprehensive safety controls for production use.</p>
+                        </div>
+                        <div class="advantage-block">
+                            <div class="advantage-icon">🔌</div>
+                            <h5>SPADE Extension Compatible</h5>
+                            <p>Seamlessly integrates with all SPADE extensions like BDI, PubSub, Artifacts, and Norms for enhanced functionality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .spade-llm-section {
+        padding: 6rem 0;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .spade-llm-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23dee2e6" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+        z-index: 0;
+    }
+
+    .spade-llm-section .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .section-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #8e44ad, #3498db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+    }
+
+    .llm-content {
+        padding: 2rem 0;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+    }
+
+    .feature-item h5 {
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .feature-item p {
+        margin: 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .btn-llm {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-llm:hover {
+        background: linear-gradient(135deg, #7d3c98, #8e44ad);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+    }
+
+    /* Demo Container Styles */
+    .demo-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border: 1px solid #e9ecef;
+    }
+
+    .demo-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .demo-title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .demo-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .status-indicator {
+        width: 8px;
+        height: 8px;
+        background: #2ecc71;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    .conversation-container {
+        padding: 1.5rem;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .message {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+
+    .human-message .message-avatar {
+        background: #e3f2fd;
+    }
+
+    .ai-message .message-avatar {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+    }
+
+    .message-content {
+        flex: 1;
+    }
+
+    .message-text {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 15px;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .ai-message .message-text {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+    }
+
+    .typing-indicator {
+        display: flex;
+        gap: 4px;
+        padding: 0.5rem 1rem;
+    }
+
+    .typing-indicator span {
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: typing 1.4s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-10px); }
+    }
+
+    .agent-network {
+        position: relative;
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .agent-node {
+        text-align: center;
+        padding: 1rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .agent-node:hover {
+        transform: translateY(-5px);
+    }
+
+    .agent-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .agent-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #666;
+    }
+
+    .demo-footer {
+        padding: 1rem 1.5rem;
+        background: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+    }
+
+    /* Orchestration Demo Styles */
+    .orchestration-container {
+        padding: 1.5rem;
+        max-height: 700px;
+        overflow-y: auto;
+    }
+
+    /* User Request Section */
+    .user-request-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+    }
+
+    .user-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .request-bubble {
+        background: #e3f2fd;
+        padding: 1rem 1.5rem;
+        border-radius: 20px;
+        border: 2px solid #2196f3;
+        position: relative;
+        font-style: italic;
+        max-width: 400px;
+    }
+
+    .request-bubble::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid #2196f3;
+    }
+
+    /* Agent Network Graph */
+    .agent-network-graph {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 2rem;
+        background: radial-gradient(circle at center, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        border: 2px solid #dee2e6;
+    }
+
+    .agent-node {
+        position: relative;
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 140px;
+    }
+
+    .agent-node:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .chat-agent {
+        border-color: #e74c3c;
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .github-agent {
+        border-color: #3498db;
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .notion-agent {
+        border-color: #2ecc71;
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .email-agent {
+        border-color: #f39c12;
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .human-expert {
+        border-color: #9b59b6;
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .agent-avatar {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .agent-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .agent-name {
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .agent-tools {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tool-tag {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .agent-status {
+        font-size: 0.8rem;
+        color: #666;
+        font-weight: 500;
+        text-align: center;
+        margin-top: auto;
+    }
+
+    /* Message Connections */
+    .message-connections {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .message-line {
+        position: absolute;
+        opacity: 0.8;
+        animation: messageFlow 3s ease-in-out infinite;
+    }
+
+    .message-bubble {
+        background: rgba(142, 68, 173, 0.9);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        max-width: 180px;
+        pointer-events: auto;
+        cursor: pointer;
+    }
+
+    .message-content {
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+
+    .message-meta {
+        opacity: 0.8;
+        font-size: 0.65rem;
+    }
+
+    /* Positioning for message lines */
+    .message-line[data-from="user"][data-to="chat"] {
+        top: 20%;
+        left: 15%;
+    }
+
+    .message-line[data-from="chat"][data-to="github"] {
+        top: 15%;
+        left: 45%;
+    }
+
+    .message-line[data-from="github"][data-to="notion"] {
+        top: 25%;
+        left: 75%;
+    }
+
+    .message-line[data-from="notion"][data-to="email"] {
+        top: 45%;
+        left: 65%;
+        transform: rotate(-45deg);
+    }
+
+    .message-line[data-from="email"][data-to="human"] {
+        top: 60%;
+        left: 35%;
+    }
+
+    .message-line[data-from="human"][data-to="email"] {
+        top: 65%;
+        left: 25%;
+    }
+
+    @keyframes messageFlow {
+        0% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+    }
+
+    /* Result Summary */
+    .result-summary {
+        grid-column: 3;
+        grid-row: 2;
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border-radius: 15px;
+        padding: 1.5rem;
+        border: 2px solid #28a745;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .summary-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        color: #155724;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .summary-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #28a745;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+        color: #155724;
+        font-weight: 500;
+    }
+
+    .workflow-step {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Agent Graph Styles */
+    .graph-container {
+        position: relative;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 15px;
+        border: 2px solid #dee2e6;
+    }
+
+    .agent-graph {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .agent-group {
+        transition: all 0.3s ease;
+    }
+
+    .agent-group:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+
+    .agent-node {
+        transition: all 0.3s ease;
+    }
+
+    .user-node {
+        cursor: pointer;
+    }
+
+    .result-node {
+        cursor: default;
+    }
+
+    .message-line {
+        opacity: 0.3;
+    }
+
+    .message-line-active {
+        opacity: 1;
+    }
+
+    .flow-message {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    /* Human Expert - Separated styling */
+    .human-expert-group {
+        opacity: 0.9;
+    }
+
+    .human-expert-group .agent-node {
+        stroke-width: 4;
+        stroke-dasharray: 5, 5;
+        animation: humanPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes humanPulse {
+        0%, 100% { 
+            stroke-dashoffset: 0;
+            opacity: 0.9;
+        }
+        50% { 
+            stroke-dashoffset: 10;
+            opacity: 1;
+        }
+    }
+
+    /* Agent Detail Panel */
+    .agent-panel {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 320px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 2px solid #8e44ad;
+        display: none;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .panel-header {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 13px 13px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .panel-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #8e44ad;
+    }
+
+    .panel-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .panel-status {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .panel-close {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .panel-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+
+    .panel-content {
+        padding: 1.5rem;
+    }
+
+    .panel-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .panel-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .panel-section h4 {
+        color: #2c3e50;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        border-bottom: 2px solid #8e44ad;
+        padding-bottom: 0.25rem;
+    }
+
+    .panel-section p {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    .tool-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tool-item {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        padding: 0.375rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .message-log {
+        max-height: 120px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 0.75rem;
+    }
+
+    .log-entry {
+        font-size: 0.85rem;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        border-left: 3px solid #8e44ad;
+    }
+
+    .log-entry:last-child {
+        margin-bottom: 0;
+    }
+
+    .step-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .step-number {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .step-title {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .request-box {
+        background: #e3f2fd;
+        padding: 1rem;
+        border-radius: 10px;
+        border-left: 4px solid #2196f3;
+        font-style: italic;
+    }
+
+    .agent-workflow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .workflow-arrow {
+        font-size: 1.5rem;
+        color: #8e44ad;
+        font-weight: bold;
+    }
+
+    .agent-step {
+        width: 100%;
+    }
+
+    .agent-box {
+        background: white;
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .agent-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .guardrails-agent {
+        border-left-color: #e74c3c;
+    }
+
+    .analyzer-agent {
+        border-left-color: #3498db;
+    }
+
+    .storage-agent {
+        border-left-color: #2ecc71;
+    }
+
+    .email-agent {
+        border-left-color: #f39c12;
+    }
+
+    .agent-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .agent-icon {
+        font-size: 1.5rem;
+    }
+
+    .agent-name {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .agent-status {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+
+    .agent-action {
+        font-size: 0.9rem;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    .hitl-interaction {
+        background: #fff3cd;
+        padding: 0.75rem;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        border: 1px solid #ffeaa7;
+    }
+
+    .hitl-question {
+        font-size: 0.85rem;
+        color: #856404;
+        margin-bottom: 0.5rem;
+        font-style: italic;
+    }
+
+    .hitl-response {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .hitl-approved {
+        color: #28a745;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .hitl-email {
+        color: #6c757d;
+        font-size: 0.8rem;
+    }
+
+    .result-step {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .result-box {
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #c3e6cb;
+    }
+
+    .result-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .result-details {
+        display: grid;
+        gap: 0.5rem;
+    }
+
+    .result-item {
+        font-size: 0.9rem;
+        color: #155724;
+        display: flex;
+        align-items: center;
+    }
+
+    /* SpadeLLM Advantages Showcase */
+    .advantages-showcase {
+        margin-top: 4rem;
+        padding: 3rem;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .advantages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .advantage-block {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border-left: 4px solid #8e44ad;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .advantage-block::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #8e44ad, #9b59b6);
+        z-index: 1;
+    }
+
+    .advantage-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        border-left-color: #9b59b6;
+    }
+
+    .advantages-title {
+        color: #2c3e50;
+        font-weight: 700;
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6, #3498db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 2px 4px rgba(142, 68, 173, 0.1);
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .advantages-title::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        border-radius: 2px;
+    }
+
+    .advantage-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: block;
+        position: relative;
+        filter: drop-shadow(0 2px 4px rgba(142, 68, 173, 0.2));
+    }
+
+
+    .advantage-block h5 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .advantage-block p {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Dark mode adjustments */
+    :global(body.dark-mode) .spade-llm-section {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    :global(body.dark-mode) .demo-container {
+        background: var(--dark-card-bg);
+        border-color: var(--dark-border);
+    }
+
+    :global(body.dark-mode) .message-text {
+        background: var(--dark-border);
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .ai-message .message-text {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        color: white;
+    }
+
+    :global(body.dark-mode) .agent-network {
+        background: var(--dark-border);
+    }
+
+    :global(body.dark-mode) .agent-node {
+        background: var(--dark-card-bg);
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .advantages-showcase {
+        background: linear-gradient(135deg, var(--dark-card-bg), var(--dark-border));
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .advantage-block {
+        background: var(--dark-card-bg);
+        border-left-color: #a569bd;
+    }
+
+    :global(body.dark-mode) .advantage-block::before {
+        background: linear-gradient(90deg, #a569bd, #bb8fce);
+    }
+
+    :global(body.dark-mode) .advantage-block:hover {
+        border-left-color: #bb8fce;
+    }
+
+    :global(body.dark-mode) .advantage-block h5 {
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .advantages-title {
+        background: linear-gradient(135deg, #a569bd, #bb8fce, #5dade2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 2px 4px rgba(165, 105, 189, 0.2);
+    }
+
+    :global(body.dark-mode) .advantages-title::after {
+        background: linear-gradient(135deg, #a569bd, #bb8fce);
+    }
+
+    :global(body.dark-mode) .advantage-icon {
+        filter: drop-shadow(0 2px 4px rgba(165, 105, 189, 0.3));
+    }
+
+
+    :global(body.dark-mode) .panel-title {
+        color: #a569bd;
+    }
+
+    :global(body.dark-mode) .advantage-block p {
+        color: var(--dark-text-muted);
+    }
+
+    :global(body.dark-mode) .feature-item h5 {
+        color: var(--dark-text);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .feature-grid {
+            gap: 1rem;
+        }
+        
+        .advantages-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .advantage-block {
+            padding: 1.5rem;
+        }
+
+        .advantage-icon {
+            font-size: 2rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .action-buttons .btn {
+            width: 100%;
+        }
+
+        /* Mobile adjustments for agent graph */
+        .graph-container {
+            padding: 0.5rem;
+        }
+
+        .agent-graph {
+            height: 400px;
+        }
+
+        .agent-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 350px;
+            right: auto;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .panel-content {
+            padding: 1rem;
+        }
+
+        .message-log {
+            max-height: 100px;
+        }
+    }
+</style>
