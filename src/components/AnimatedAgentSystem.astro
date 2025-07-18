@@ -204,6 +204,14 @@
     </div>
 </div>
 
+<!-- Interactive Instructions -->
+<div class="interactive-instructions">
+    <div class="instruction-content">
+        <div class="instruction-icon">👆</div>
+        <p>Make your own connections and create your multi-agent system</p>
+    </div>
+</div>
+
 <style>
     .agent-system {
         position: relative;
@@ -734,6 +742,48 @@
         background: rgba(187, 143, 206, 0.1);
     }
 
+    /* Interactive Instructions */
+    .interactive-instructions {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .instruction-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 25px;
+        padding: 10px 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .instruction-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .instruction-content p {
+        font-size: 13px;
+        color: #6c757d;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    /* Dark mode support for instructions */
+    :global(body.dark-mode) .instruction-content {
+        background: rgba(52, 73, 94, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    :global(body.dark-mode) .instruction-content p {
+        color: #bdc3c7;
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
         .agent-system {
@@ -770,6 +820,19 @@
         
         .behaviour-type {
             font-size: 9px;
+        }
+
+        .instruction-content {
+            padding: 8px 16px;
+            max-width: 300px;
+        }
+
+        .instruction-content p {
+            font-size: 12px;
+        }
+
+        .instruction-icon {
+            font-size: 18px;
         }
     }
 </style>
