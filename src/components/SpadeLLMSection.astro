@@ -1160,7 +1160,7 @@ const baseUrl = import.meta.env.BASE_URL;
     .panel-title {
         font-weight: 700;
         font-size: 1.1rem;
-        color: #8e44ad;
+        color: white;
     }
 
     .panel-controls {
@@ -1533,8 +1533,14 @@ const baseUrl = import.meta.env.BASE_URL;
     }
 
     :global(body.dark-mode) .demo-container {
-        background: var(--dark-card-bg);
+        background: var(--dark-card-bg) !important;
         border-color: var(--dark-border);
+        color: var(--dark-text);
+    }
+
+    /* Ensure column containing demo also has proper background */
+    :global(body.dark-mode) .spade-llm-section .col-lg-6 {
+        background: transparent;
     }
 
     :global(body.dark-mode) .message-text {
@@ -1554,6 +1560,21 @@ const baseUrl = import.meta.env.BASE_URL;
     :global(body.dark-mode) .agent-node {
         background: var(--dark-card-bg);
         color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .agent-network-graph {
+        background: radial-gradient(circle at center, var(--dark-bg) 0%, var(--dark-card-bg) 100%);
+        border-color: var(--dark-border);
+    }
+
+    :global(body.dark-mode) .request-bubble {
+        background: var(--dark-card-bg);
+        border-color: #3498db;
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .request-bubble::before {
+        border-right-color: #3498db;
     }
 
     :global(body.dark-mode) .advantages-showcase {
@@ -1605,6 +1626,44 @@ const baseUrl = import.meta.env.BASE_URL;
 
     :global(body.dark-mode) .feature-item h5 {
         color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .feature-item p {
+        color: var(--dark-text-muted);
+    }
+
+    /* Dark mode support for orchestration demo panels */
+    :global(body.dark-mode) .agent-panel {
+        background: var(--dark-card-bg);
+        border-color: #9b59b6;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    :global(body.dark-mode) .panel-content {
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .panel-section h4 {
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .panel-section p {
+        color: var(--dark-text-muted);
+    }
+
+    :global(body.dark-mode) .step-title {
+        color: var(--dark-text);
+    }
+
+    :global(body.dark-mode) .message-log {
+        background: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+    }
+
+    :global(body.dark-mode) .log-entry {
+        background: var(--dark-card-bg);
+        color: var(--dark-text-muted);
+        border-left-color: #9b59b6;
     }
 
     /* Responsive design */
