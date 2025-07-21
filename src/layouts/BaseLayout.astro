@@ -110,7 +110,6 @@ const baseUrl = import.meta.env.BASE_URL;
     <script is:inline>
         // Global dark mode toggle function - available immediately
         window.toggleDarkMode = function() {
-            console.log('toggleDarkMode called');
             const body = document.body;
             const icon = document.getElementById('darkModeIcon');
             
@@ -118,10 +117,13 @@ const baseUrl = import.meta.env.BASE_URL;
             body.classList.toggle('dark-mode');
             const isDarkMode = body.classList.contains('dark-mode');
             
-            console.log('Dark mode state:', isDarkMode, 'Body classes:', body.className);
-            
             // Save preference
             localStorage.setItem('darkMode', isDarkMode.toString());
+            
+            // Update logos if function is available
+            if (typeof window.updateLogos === 'function') {
+                window.updateLogos(isDarkMode);
+            }
             
             // Update icon immediately
             if (icon) {
@@ -130,15 +132,7 @@ const baseUrl = import.meta.env.BASE_URL;
                 } else {
                     icon.className = 'bi bi-moon-fill';
                 }
-                console.log('Icon updated to:', icon.className);
-            } else {
-                console.warn('Dark mode icon not found!');
             }
-            
-            // Trigger a style recalculation
-            document.body.style.display = 'none';
-            document.body.offsetHeight; // Force reflow
-            document.body.style.display = '';
             
             // Re-highlight code with new theme
             if (typeof rehighlightCode === 'function') {
@@ -153,15 +147,10 @@ const baseUrl = import.meta.env.BASE_URL;
 
         // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded - initializing dark mode');
-            
             // Initialize dark mode state
             const savedDarkMode = localStorage.getItem('darkMode');
             const icon = document.getElementById('darkModeIcon');
             const body = document.body;
-            
-            console.log('Saved dark mode preference:', savedDarkMode);
-            console.log('Icon element found:', !!icon);
             
             // Apply saved preference or default to light mode
             if (savedDarkMode === 'true') {
@@ -169,20 +158,19 @@ const baseUrl = import.meta.env.BASE_URL;
                 if (icon) {
                     icon.className = 'bi bi-sun-fill';
                 }
-                console.log('Dark mode enabled on load');
+                // Update logos on load
+                if (typeof window.updateLogos === 'function') {
+                    window.updateLogos(true);
+                }
             } else {
                 body.classList.remove('dark-mode');
                 if (icon) {
                     icon.className = 'bi bi-moon-fill';
                 }
-                console.log('Light mode enabled on load');
-            }
-            
-            // Test if toggle function is available
-            if (typeof window.toggleDarkMode === 'function') {
-                console.log('✅ toggleDarkMode function is available globally');
-            } else {
-                console.error('❌ toggleDarkMode function is NOT available globally');
+                // Update logos on load
+                if (typeof window.updateLogos === 'function') {
+                    window.updateLogos(false);
+                }
             }
             
             // Navbar scroll effect

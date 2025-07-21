@@ -129,64 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const interval = setInterval(updateCountdown, 1000);
   }
 
-  // 6. DARK MODE FUNCTIONALITY
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  const body = document.body;
-
-  // Check for saved theme preference
-  const savedTheme = localStorage.getItem("theme"); // Apply saved theme (default to light mode if no preference is saved)
-  if (savedTheme === "dark") {
-    body.classList.add("dark-mode");
-    setTimeout(() => {
-      updateDarkModeIcon(true);
-      updateLogos(true);
-    }, 50); // Slight delay to ensure DOM is ready
-  } else {
-    // Ensure light mode is default
-    body.classList.remove("dark-mode");
-    // If no theme is saved, save light as default
-    if (!savedTheme) {
-      localStorage.setItem("theme", "light");
-    }
-    setTimeout(() => {
-      updateDarkModeIcon(false);
-      updateLogos(false);
-    }, 50);
-  }
-
-  // Toggle dark/light mode
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener("click", function () {
-      body.classList.toggle("dark-mode");
-      const isDarkMode = body.classList.contains("dark-mode");
-
-      // Save preference to localStorage
-      localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-
-      // Update button icon
-      updateDarkModeIcon(isDarkMode);
-
-      // Update logos for dark mode
-      updateLogos(isDarkMode);
-    });
-  }
-
-  // Update dark mode toggle icon
-  function updateDarkModeIcon(isDarkMode) {
-    const icon = darkModeToggle.querySelector("i");
-    if (icon) {
-      if (isDarkMode) {
-        icon.classList.remove("bi-moon-fill");
-        icon.classList.add("bi-sun-fill");
-      } else {
-        icon.classList.remove("bi-sun-fill");
-        icon.classList.add("bi-moon-fill");
-      }
-    }
-  }
-
+  // 6. LOGO UPDATES FOR DARK/LIGHT MODE
   // Update logos based on dark/light mode (excluding hero image)
-  function updateLogos(isDarkMode) {
+  window.updateLogos = function(isDarkMode) {
     // Select only logo images in navbar and footer, NOT the hero image
     const logoImages = document.querySelectorAll(
       ".navbar-brand img, .footer img"
