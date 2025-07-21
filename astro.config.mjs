@@ -6,9 +6,9 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://spade-agents.github.io",
+  site: "https://spadeagents.eu",
   // Usar base path solo en producción (GitHub Pages)
-  base: isProduction ? "/spade_githubio/" : "/",
+  base: isProduction ? "/" : "/",
   output: "static",
   build: {
     assets: "_astro",
