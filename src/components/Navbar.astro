@@ -5,6 +5,7 @@ const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="scroll-progress-bar"></div>
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="#top">
             <img src={`${baseUrl}img/spade-agent-network-fixed.svg`} alt="SPADE Logo" height="40" class="me-2">
@@ -129,5 +130,76 @@ const baseUrl = import.meta.env.BASE_URL;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+
+    /* Active section highlighting */
+    .nav-link.active {
+        color: var(--primary-color) !important;
+        font-weight: 600;
+        position: relative;
+    }
+
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--primary-color);
+        border-radius: 1px;
+        opacity: 1;
+    }
+
+    /* Dark mode active styles */
+    :global(body.dark-mode) .nav-link.active {
+        color: #3498db !important;
+    }
+
+    :global(body.dark-mode) .nav-link.active::after {
+        background: #3498db;
+    }
+
+    /* Special styling for SPADE-LLM when active */
+    .nav-link-ai.active {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .nav-link-ai.active::after {
+        background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        opacity: 1;
+    }
+
+    /* Scroll Progress Bar */
+    .scroll-progress-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 6px;
+        background: linear-gradient(
+            90deg,
+            #3498db,
+            #2ecc71,
+            #8e44ad
+        );
+        width: 0%;
+        transition: width 0.1s ease-out;
+        z-index: 1031;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Dark mode progress bar */
+    :global(body.dark-mode) .scroll-progress-bar {
+        background: linear-gradient(
+            90deg,
+            #205080,
+            #1a573a,
+            #5d4e75
+        );
+        box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
     }
 </style>

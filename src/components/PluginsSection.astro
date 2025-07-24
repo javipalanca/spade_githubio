@@ -16,13 +16,13 @@ import PluginCard from './PluginCard.astro';
 
 <section id="plugins" class="plugins-section py-5">
     <div class="container">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 fade-in-up">
             <h2 class="fw-bold">Extend SPADE with Plugins</h2>
             <p class="lead text-muted">Enhance your agent platform with specialized capabilities</p>
         </div>
         <div class="row g-4">
-            {plugins.map((plugin) => (
-                <div class="col-md-6 col-lg-4">
+            {plugins.map((plugin, index) => (
+                <div class={`col-md-6 col-lg-4 scale-in stagger-${index + 1}`}>
                     <PluginCard plugin={plugin} />
                 </div>
             ))}
