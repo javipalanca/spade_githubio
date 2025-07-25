@@ -25,7 +25,7 @@ const baseUrl = import.meta.env.BASE_URL;
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5 d-none d-lg-block">
+            <div class="col-lg-5 d-none d-lg-block hero-demo-delayed">
                 <AnimatedAgentSystem />
             </div>
         </div>
@@ -94,6 +94,28 @@ const baseUrl = import.meta.env.BASE_URL;
         color: white;
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
+    }
+
+    /* Hero demo delayed animation */
+    .hero-demo-delayed {
+        opacity: 0;
+        transform: translateX(100%) scale(0.8);
+        animation: heroLateralEntrance 1.5s ease-out 2s forwards;
+    }
+
+    @keyframes heroLateralEntrance {
+        0% {
+            opacity: 0;
+            transform: translateX(100%) scale(0.8);
+        }
+        50% {
+            opacity: 0.7;
+            transform: translateX(20%) scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
     }
 
     /* Dark mode adjustments */
